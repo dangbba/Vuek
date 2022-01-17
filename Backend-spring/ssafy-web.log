@@ -91,3 +91,105 @@ Identify and stop the process that's listening on port 7000 or configure this ap
 2022-01-17 16:31:43.001  INFO 1656 --- [restartedMain] c.s.backend.BackendSpringApplication     : No active profile set, falling back to default profiles: default
 2022-01-17 16:31:43.033  INFO 1656 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
 2022-01-17 16:31:43.033  INFO 1656 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-01-17 17:37:24.498  INFO 1964 --- [restartedMain] c.s.backend.BackendSpringApplication     : Starting BackendSpringApplication using Java 1.8.0_192 on DESKTOP-KVCQHCD with PID 1964 (C:\Users\multicampus\Desktop\git_2\S06P12C205\Backend-spring\target\classes started by multicampus in C:\Users\multicampus\Desktop\git_2\S06P12C205\Backend-spring)
+2022-01-17 17:37:24.501  INFO 1964 --- [restartedMain] c.s.backend.BackendSpringApplication     : No active profile set, falling back to default profiles: default
+2022-01-17 17:37:24.570  INFO 1964 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-01-17 17:37:24.570  INFO 1964 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-01-17 17:37:26.133  INFO 1964 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 7000 (http)
+2022-01-17 17:37:26.143  INFO 1964 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-01-17 17:37:26.143  INFO 1964 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2022-01-17 17:37:26.240  INFO 1964 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-01-17 17:37:26.240  INFO 1964 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1669 ms
+2022-01-17 17:37:26.858 DEBUG 1964 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 14 mappings in 'requestMappingHandlerMapping'
+2022-01-17 17:37:26.939  INFO 1964 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-01-17 17:37:27.074  INFO 1964 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-17 17:37:27.132  INFO 1964 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-01-17 17:37:27.138 DEBUG 1964 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-01-17 17:37:27.163  INFO 1964 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-01-17 17:37:27.189 DEBUG 1964 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-01-17 17:37:27.198 DEBUG 1964 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-01-17 17:37:27.347  INFO 1964 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 7000 (http) with context path ''
+2022-01-17 17:37:27.349  INFO 1964 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-01-17 17:37:27.372  INFO 1964 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-01-17 17:37:27.429  INFO 1964 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-01-17 17:37:27.609  INFO 1964 --- [restartedMain] c.s.backend.BackendSpringApplication     : Started BackendSpringApplication in 3.568 seconds (JVM running for 4.567)
+2022-01-17 17:37:44.953  INFO 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-17 17:37:44.953  INFO 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-17 17:37:44.953 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-01-17 17:37:44.953 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-01-17 17:37:44.953 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-01-17 17:37:44.954 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7655692b
+2022-01-17 17:37:44.954 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@3a70737
+2022-01-17 17:37:44.954 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-01-17 17:37:44.954  INFO 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-01-17 17:37:44.960 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui.html", parameters={}
+2022-01-17 17:37:44.965 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2022-01-17 17:37:44.976 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:44.994 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/springfox.css?v=2.9.2", parameters={masked}
+2022-01-17 17:37:44.995 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:44.998 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.001 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/swagger-ui.css?v=2.9.2", parameters={masked}
+2022-01-17 17:37:45.002 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/swagger-ui-bundle.js?v=2.9.2", parameters={masked}
+2022-01-17 17:37:45.002 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.003 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.012 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.014 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js?v=2.9.2", parameters={masked}
+2022-01-17 17:37:45.015 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.042 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.044 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/springfox.js?v=2.9.2", parameters={masked}
+2022-01-17 17:37:45.045 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.052 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.079 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.205 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/ui", parameters={}
+2022-01-17 17:37:45.205 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#uiConfiguration()
+2022-01-17 17:37:45.240 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-01-17 17:37:45.241 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.UiConfiguration@68527c5c]
+2022-01-17 17:37:45.250 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.253 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/security", parameters={}
+2022-01-17 17:37:45.253 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#securityConfiguration()
+2022-01-17 17:37:45.258 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-01-17 17:37:45.258 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.SecurityConfiguration@6e8c85c4]
+2022-01-17 17:37:45.259 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.264 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources", parameters={}
+2022-01-17 17:37:45.264 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#swaggerResources()
+2022-01-17 17:37:45.266 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-01-17 17:37:45.267 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[springfox.documentation.swagger.web.SwaggerResource@5e057c0]]
+2022-01-17 17:37:45.269 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.303 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/v2/api-docs?group=Backend-spring", parameters={masked}
+2022-01-17 17:37:45.303 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/", parameters={}
+2022-01-17 17:37:45.306 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.w.s.v.ContentNegotiatingViewResolver : Selected '*/*' given [*/*]
+2022-01-17 17:37:45.306 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.w.servlet.view.InternalResourceView  : View name 'forward:', model {}
+2022-01-17 17:37:45.307 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.w.servlet.view.InternalResourceView  : Forwarding to [index.html]
+2022-01-17 17:37:45.308 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.web.servlet.DispatcherServlet        : "FORWARD" dispatch for GET "/index.html", parameters={}
+2022-01-17 17:37:45.309 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2022-01-17 17:37:45.311 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.web.servlet.DispatcherServlet        : Exiting from "FORWARD" dispatch, status 200
+2022-01-17 17:37:45.311 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.329 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/titillium-web-v6-latin-700.woff2", parameters={}
+2022-01-17 17:37:45.330 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.332 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/csrf", parameters={}
+2022-01-17 17:37:45.333 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2022-01-17 17:37:45.334 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.335 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2022-01-17 17:37:45.336 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2022-01-17 17:37:45.336 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2022-01-17 17:37:45.338 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-01-17 17:37:45.342 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-01-17 17:37:45.342 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Mon Jan 17 17:37:45 KST 2022, status=404, error=Not Found, message=No message available,  (truncated)...]
+2022-01-17 17:37:45.350 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-3] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2022-01-17 17:37:45.390 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-01-17 17:37:45.390 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.spring.web.json.Json@2383bd46]
+2022-01-17 17:37:45.391 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.464 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-700.woff2", parameters={}
+2022-01-17 17:37:45.464 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-300.woff2", parameters={}
+2022-01-17 17:37:45.464 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/open-sans-v15-latin-regular.woff2", parameters={}
+2022-01-17 17:37:45.465 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.465 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.465 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:45.467 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.467 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:45.468 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:37:46.736 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/source-code-pro-v7-latin-600.woff2", parameters={}
+2022-01-17 17:37:46.736 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2022-01-17 17:37:46.738 DEBUG 1964 --- [http-nio-127.0.0.1-7000-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-01-17 17:38:07.994  INFO 1964 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-01-17 17:38:08.056  INFO 1964 --- [RMI TCP Connection(2)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
