@@ -1,37 +1,5 @@
 <template>
-  <div class="hello">회의목록 보여주기
-    <div class="container">
-      <div class="carousel">
-      <div class="item"><router-link :to="{name: 'Book'}">1</router-link>
-      <img src="https://placeimg.com/200/200/any?1">
-      </div>
-      </div>
-      <div class="carousel">
-      <div class="item"><router-link :to="{name: 'Profile'}">2</router-link>
-      <img src="https://placeimg.com/200/200/any?2">
-      </div>
-      </div>
-      <div>
-      <p><router-link :to="{name: 'Board'}">3</router-link>
-      <img src="https://placeimg.com/200/200/any?3">
-      </p>
-      <p><router-link :to="{name: 'Conference'}">4</router-link>
-      <img src="https://placeimg.com/200/200/any?4">
-      </p>
-      <p><router-link :to="{name: 'About'}">5</router-link>
-      <img src="https://placeimg.com/200/200/any?5">
-      </p>
-      </div>
-    </div>
-    <div class="box2">
-      <p>리뷰1</p>
-      <p>리뷰2</p>
-      <p>리뷰3</p>
-      <p>리뷰4</p>
-      <p>리뷰5</p>
-    </div>
-
-  </div>
+  <div class="hello">회의목록 보여주기</div>
 </template>
 
 <script>
@@ -58,48 +26,5 @@ li {
 }
 a {
   color: #42b983;
-}
-.box {
-  position: absolute;
-  margin: 10px auto 100px;
-  border: 5px solid black;
-  width: 500px;
-  height: 500px;
-}
-.box2 {
-  position: relative;
-  margin: 10px auto 100px;
-  border: 5px solid black;
-  width: 900px;
-  height: 500px;
-}
-
-.fade-enter-active, .fade-leave-active {transition: opacity .5s;}
-.fade-enter, .fade-leave-to {opacity: 0; }
-
-.container {
-    display: flex;
-    border: 3px solid black;
-}
-
-.container>* {
-    margin: 0 auto 10px;
-    flex: 1;
-}
-.container2 {
-    display: flex;
-}
-
-.container2>* {
-    margin: 0 10px;
-    flex: 1;
-}
-
-.carousel {
-  width: 220px;
-  height: 150px;
-  position: relative;
-  transform-style: preserve-3d;
-  animation: spin 5s infinite linear;
 }
 </style>
