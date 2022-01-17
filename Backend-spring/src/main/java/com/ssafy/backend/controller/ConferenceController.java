@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceTypeDto;
 import com.ssafy.backend.model.service.ConferenceService;
 
 import io.swagger.annotations.ApiOperation;
@@ -35,5 +38,12 @@ public class ConferenceController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "방 카테고리를 조회한다.", response = ConferenceTypeDto.class)
+	@GetMapping
+	public ResponseEntity<ConferenceTypeDto> getConferenceCategory(@PathVariable int idconference_type) throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceCategory(idconference_type), HttpStatus.OK);
+		
 	}
 }
