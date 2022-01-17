@@ -1,0 +1,231 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema ssafy_web_db
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema ssafy_web_db
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `ssafy_web_db` DEFAULT CHARACTER SET utf8 ;
+USE `ssafy_web_db` ;
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`book_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`book_category` (
+  `idbook_category` INT NOT NULL,
+  `subject` VARCHAR(45) NULL,
+  PRIMARY KEY (`idbook_category`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`book_detail`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`book_detail` (
+  `idbook_detail` INT NOT NULL,
+  `book_category_idbook_category` INT NOT NULL,
+  `author` VARCHAR(45) NULL,
+  `publisher` VARCHAR(45) NULL,
+  `title` VARCHAR(45) NULL,
+  `overview` VARCHAR(45) NULL,
+  `sail_status` VARCHAR(45) NULL,
+  `price` VARCHAR(45) NULL,
+  PRIMARY KEY (`idbook_detail`, `book_category_idbook_category`),
+  CONSTRAINT `fk_book_detail_book_category1`
+    FOREIGN KEY (`book_category_idbook_category`)
+    REFERENCES `ssafy_web_db`.`book_category` (`idbook_category`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`rate`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`rate` (
+  `idrate` INT NOT NULL,
+  `rate_name` VARCHAR(45) NULL,
+  `rate_img` VARCHAR(45) NULL,
+  PRIMARY KEY (`idrate`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user` (
+  `iduser` INT NOT NULL,
+  `rate_idrate` INT NOT NULL,
+  `user_name` VARCHAR(45) NULL,
+  `user_id` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  PRIMARY KEY (`iduser`, `rate_idrate`),
+  CONSTRAINT `fk_user_rate1`
+    FOREIGN KEY (`rate_idrate`)
+    REFERENCES `ssafy_web_db`.`rate` (`idrate`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`review`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`review` (
+  `idreview` INT NOT NULL,
+  `book_detail_idbook_detail` INT NOT NULL,
+  `user_iduser` INT NOT NULL,
+  `user_rate_idrate` INT NOT NULL,
+  `review_content` VARCHAR(45) NULL,
+  `review_name` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`idreview`, `book_detail_idbook_detail`, `user_iduser`, `user_rate_idrate`),
+  CONSTRAINT `fk_review_book_detail1`
+    FOREIGN KEY (`book_detail_idbook_detail`)
+    REFERENCES `ssafy_web_db`.`book_detail` (`idbook_detail`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_review_user1`
+    FOREIGN KEY (`user_iduser` , `user_rate_idrate`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser` , `rate_idrate`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`conference_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_type` (
+  `idconference_type` INT NOT NULL,
+  `conference_type_name` VARCHAR(45) NULL,
+  PRIMARY KEY (`idconference_type`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`conference`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
+  `idconference` INT NOT NULL,
+  `conference_type_idconference_type` INT NOT NULL,
+  `book_detail_idbook_detail` INT NOT NULL,
+  `user_iduser` INT NOT NULL,
+  `call_start_time` DATETIME NULL,
+  `call_end_time` DATETIME NULL,
+  `thumbnail_url` VARCHAR(45) NULL,
+  `conference_title` VARCHAR(45) NULL,
+  `is_active` TINYINT NULL,
+  PRIMARY KEY (`idconference`, `conference_type_idconference_type`, `book_detail_idbook_detail`, `user_iduser`),
+  CONSTRAINT `fk_conference_conference_type1`
+    FOREIGN KEY (`conference_type_idconference_type`)
+    REFERENCES `ssafy_web_db`.`conference_type` (`idconference_type`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_conference_book_detail1`
+    FOREIGN KEY (`book_detail_idbook_detail`)
+    REFERENCES `ssafy_web_db`.`book_detail` (`idbook_detail`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_conference_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`conference_history`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_history` (
+  `idconference_history` INT NOT NULL,
+  `user_iduser` INT NOT NULL,
+  `conference_idconference` INT NOT NULL,
+  `action` VARCHAR(45) NULL,
+  `inserted_time` VARCHAR(45) NULL,
+  PRIMARY KEY (`idconference_history`, `user_iduser`, `conference_idconference`),
+  CONSTRAINT `fk_conference_history_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_conference_history_conference1`
+    FOREIGN KEY (`conference_idconference`)
+    REFERENCES `ssafy_web_db`.`conference` (`idconference`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`user_book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user_book` (
+  `user_iduser` INT NOT NULL,
+  `book_detail_idbook_detail` INT NOT NULL,
+  `user_book` INT NOT NULL,
+  PRIMARY KEY (`user_iduser`, `book_detail_idbook_detail`, `user_book`),
+  CONSTRAINT `fk_user_book_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_book_book_detail1`
+    FOREIGN KEY (`book_detail_idbook_detail`)
+    REFERENCES `ssafy_web_db`.`book_detail` (`idbook_detail`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`user_category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user_category` (
+  `book_category_idbook_category` INT NOT NULL,
+  `user_iduser` INT NOT NULL,
+  `iduser_category` INT NOT NULL,
+  PRIMARY KEY (`book_category_idbook_category`, `user_iduser`, `iduser_category`),
+  CONSTRAINT `fk_user_category_book_category1`
+    FOREIGN KEY (`book_category_idbook_category`)
+    REFERENCES `ssafy_web_db`.`book_category` (`idbook_category`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_category_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`user_conference`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user_conference` (
+  `user_iduser` INT NOT NULL,
+  `conference_idconference` INT NOT NULL,
+  `iduser_conferenc` INT NOT NULL,
+  PRIMARY KEY (`user_iduser`, `conference_idconference`, `iduser_conferenc`),
+  CONSTRAINT `fk_user_conference_user1`
+    FOREIGN KEY (`user_iduser`)
+    REFERENCES `ssafy_web_db`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_conference_conference1`
+    FOREIGN KEY (`conference_idconference`)
+    REFERENCES `ssafy_web_db`.`conference` (`idconference`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
