@@ -15,4 +15,6 @@ public interface ConferenceMapper {
 	List<ConferenceTypeDto> getConferenceCategory() throws SQLException;
 	
 	ConferenceDto getConferenceInfo(int idconference) throws SQLException;
+	
+	boolean updateConferenceInfo(ConferenceDto conferenceDto) throws SQLException;
 }

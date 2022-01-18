@@ -30,5 +30,10 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public ConferenceDto getConferenceInfo(int idconference) throws Exception {
 		return conferenceMapper.getConferenceInfo(idconference);
 	}
+	
+	@Override
+	public boolean updateConferenceInfo(ConferenceDto conferenceDto) throws Exception {
+		return conferenceMapper.updateConferenceInfo(conferenceDto);
+	}
 
 }

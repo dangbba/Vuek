@@ -13,9 +13,14 @@
 		from conference_type
 	</select>
  
- 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceTypeDto">
+ 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceDto">
 		select *
 		from conference
 		where idconference = #{idconference}
 	</select>
+	
+	<update id="updateConferenceInfo" parameterType="ConferenceDto">
+		update conference set conference_type_idconference_type = #{conference_type_idconference_type}, book_detail_idbook_detail = #{book_detail_idbook_detail}, user_iduser = #{user_iduser}, thumbnail_url = #{thumbnail_url}, conference_title = #{conference_title}, is_active = #{is_active}
+		where idconference = #{idconference}
+	</update>
  </mapper>
