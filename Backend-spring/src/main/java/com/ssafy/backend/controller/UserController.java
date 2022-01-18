@@ -92,9 +92,9 @@ public class UserController {
 	}
 	
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
-	@GetMapping("/info/{user_id}")
+	@GetMapping("/info/{userid}")
 	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("user_id") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
+			@PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
 			HttpServletRequest request) {
 		logger.debug("getInfo - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
