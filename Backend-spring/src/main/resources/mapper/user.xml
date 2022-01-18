@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getUser" parameterType="String" resultType="UserDto">
-		select * from user where id_user = #{id_user}
+		select * from user where user_id = #{user_id}
 	</select>
 	
 	<update id="updateUser" parameterType="UserDto">
