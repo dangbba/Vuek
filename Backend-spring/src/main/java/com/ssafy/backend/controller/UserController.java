@@ -74,7 +74,7 @@ public class UserController {
 		try {
 			UserDto loginUser = userService.login(userDto);
 			if (loginUser != null) {
-				String token = jwtService.create("user_id", loginUser.getUser_id(), "access-token");// key, data, subject
+				String token = jwtService.create("userid", loginUser.getUser_id(), "access-token");// key, data, subject
 				logger.debug("로그인 토큰정보 : {}", token);
 				resultMap.put("access-token", token);
 				resultMap.put("message", SUCCESS);
@@ -92,9 +92,9 @@ public class UserController {
 	}
 	
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
-	@GetMapping("/info/{user_id}")
+	@GetMapping("/info/{userid}")
 	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("user_id") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
+			@PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
 			HttpServletRequest request) {
 		logger.debug("getInfo - 호출");
 		Map<String, Object> resultMap = new HashMap<>();

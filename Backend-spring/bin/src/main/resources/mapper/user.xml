@@ -15,14 +15,14 @@
 		values (#{iduser}, #{rate_idrate}, #{user_name}, #{user_id}, #{password})
 	</insert>
 	
-	<select id="login" parameterType="UserDto" resultType="UserDto">
+	<select id="login" parameterType="USerDto" resultType="UserDto">
 		select *
 		from user
 		where user_id = #{user_id} and password = #{password}
 	</select>
 	
 	<select id="getUser" parameterType="String" resultType="UserDto">
-		select * from user where user_id = #{user_id}
+		select * from user where id_user = #{id_user}
 	</select>
 	
 	<update id="updateUser" parameterType="UserDto">

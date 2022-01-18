@@ -1,11 +1,17 @@
 package com.ssafy.backend.model.service;
 
 
+import java.util.List;
+
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 
 public interface ConferenceService {
 	boolean createConference(ConferenceDto conferenceDto) throws Exception;
 	
-	ConferenceTypeDto getConferenceCategory(int idconference_type) throws Exception; 
+	List<ConferenceTypeDto> getConferenceCategory() throws Exception; 
+	
+	ConferenceDto getConferenceInfo(int idconference) throws Exception;
+	
+	boolean updateConferenceInfo(ConferenceDto conferenceDto) throws Exception;
 }
