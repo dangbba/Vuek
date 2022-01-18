@@ -48,8 +48,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`rate` (
   `idrate` INT NOT NULL,
-  `rate_name` VARCHAR(45) NULL,
-  `rate_img` VARCHAR(45) NULL,
+  `rate_name` VARCHAR(45) NULL DEFAULT '1',
+  `rate_img` VARCHAR(45) NULL DEFAULT '1',
   PRIMARY KEY (`idrate`))
 ENGINE = InnoDB;
 
@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user` (
   `iduser` INT NOT NULL,
-  `rate_idrate` INT NOT NULL,
+  `rate_idrate` INT NOT NULL DEFAULT 1,
   `user_name` VARCHAR(45) NULL,
   `user_id` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
