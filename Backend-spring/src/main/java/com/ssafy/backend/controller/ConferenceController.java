@@ -48,4 +48,11 @@ public class ConferenceController {
 		return new ResponseEntity<>(conferenceService.getConferenceCategory(), HttpStatus.OK);
 		
 	}
+	
+//	@ApiOperation(value = "방 상세정보를 조회한다.", response = ConferenceDto.class)
+//	@GetMapping("/conference-info")
+//	public ResponseEntity<ConferenceDto> getConferenceInfo(@PathV int idconference) throws Exception {
+//		return new ResponseEntity<>(conferenceService.getConferenceInfo(idconference), HttpStatus.OK);
+//		
+//	}
 }

@@ -13,4 +13,9 @@
 		from conference_type
 	</select>
  
+ 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceTypeDto">
+		select *
+		from conference
+		where idconference = #{idconference}
+	</select>
  </mapper>

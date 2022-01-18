@@ -12,5 +12,7 @@ import com.ssafy.backend.model.ConferenceTypeDto;
 public interface ConferenceMapper {
 	boolean createConference(ConferenceDto conferenceDto) throws SQLException;
 	
-	List<ConferenceTypeDto> getConferenceCategory() throws SQLException; 
+	List<ConferenceTypeDto> getConferenceCategory() throws SQLException;
+	
+	ConferenceDto getConferenceInfo(int idconference) throws SQLException;
 }

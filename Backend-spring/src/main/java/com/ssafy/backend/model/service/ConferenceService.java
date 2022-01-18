@@ -10,4 +10,6 @@ public interface ConferenceService {
 	boolean createConference(ConferenceDto conferenceDto) throws Exception;
 	
 	List<ConferenceTypeDto> getConferenceCategory() throws Exception; 
+	
+	ConferenceDto getConferenceInfo(int idconference) throws Exception;
 }
