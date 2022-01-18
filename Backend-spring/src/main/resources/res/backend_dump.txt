@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`book_detail` (
   `idbook_detail` INT NOT NULL,
-  `book_category_idbook_category` INT NOT NULL,
+  `book_category_idbook_category` INT NOT NULL DEFAULT '1',
   `author` VARCHAR(45) NULL,
   `publisher` VARCHAR(45) NULL,
   `title` VARCHAR(45) NULL,
@@ -102,8 +102,8 @@ ENGINE = InnoDB;
 -- Table `ssafy_web_db`.`conference_type`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_type` (
-  `idconference_type` INT NOT NULL,
-  `conference_type_name` VARCHAR(45) NULL,
+  `idconference_type` INT NOT NULL ,
+  `conference_type_name` VARCHAR(45) NULL DEFAULT '1',
   PRIMARY KEY (`idconference_type`))
 ENGINE = InnoDB;
 
@@ -113,8 +113,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
   `idconference` INT NOT NULL,
-  `conference_type_idconference_type` INT NOT NULL,
-  `book_detail_idbook_detail` INT NOT NULL,
+  `conference_type_idconference_type` INT NOT NULL DEFAULT 1,
+  `book_detail_idbook_detail` INT NOT NULL DEFAULT 1,
   `user_iduser` INT NOT NULL,
   `call_start_time` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `call_end_time` DATETIME NULL,
