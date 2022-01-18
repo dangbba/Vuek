@@ -1,6 +1,7 @@
 package com.ssafy.backend.model.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +12,5 @@ import com.ssafy.backend.model.ConferenceTypeDto;
 public interface ConferenceMapper {
 	boolean createConference(ConferenceDto conferenceDto) throws SQLException;
 	
-	ConferenceTypeDto getConferenceCategory(int idconference_type) throws SQLException; 
+	List<ConferenceTypeDto> getConferenceCategory() throws SQLException; 
 }

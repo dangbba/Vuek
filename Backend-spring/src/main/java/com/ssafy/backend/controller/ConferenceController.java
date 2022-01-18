@@ -1,5 +1,7 @@
 package com.ssafy.backend.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
-@RequestMapping("/conference")
+@RequestMapping("/conferences")
 public class ConferenceController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ConferenceController.class);
@@ -41,9 +43,9 @@ public class ConferenceController {
 	}
 	
 	@ApiOperation(value = "방 카테고리를 조회한다.", response = ConferenceTypeDto.class)
-	@GetMapping
-	public ResponseEntity<ConferenceTypeDto> getConferenceCategory(@PathVariable int idconference_type) throws Exception {
-		return new ResponseEntity<>(conferenceService.getConferenceCategory(idconference_type), HttpStatus.OK);
+	@GetMapping("/conference-categories")
+	public ResponseEntity<List<ConferenceTypeDto>> getConferenceCategory() throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceCategory(), HttpStatus.OK);
 		
 	}
 }

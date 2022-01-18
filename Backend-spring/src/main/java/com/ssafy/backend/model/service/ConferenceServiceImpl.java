@@ -1,6 +1,8 @@
 package com.ssafy.backend.model.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,8 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public ConferenceTypeDto getConferenceCategory(int idconference_type) throws Exception {
-		return conferenceMapper.getConferenceCategory(idconference_type);
+	public List<ConferenceTypeDto> getConferenceCategory() throws Exception {
+		return conferenceMapper.getConferenceCategory();
 	}
 
 }
