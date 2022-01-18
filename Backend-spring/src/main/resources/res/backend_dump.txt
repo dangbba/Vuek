@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user` (
   `iduser` INT NOT NULL,
-  `rate_idrate` INT NOT NULL DEFAULT 1,
+  `rate_idrate` INT NOT NULL DEFAULT '1',
   `user_name` VARCHAR(45) NULL,
   `user_id` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,

@@ -25,5 +25,10 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<ConferenceTypeDto> getConferenceCategory() throws Exception {
 		return conferenceMapper.getConferenceCategory();
 	}
+	
+	@Override
+	public ConferenceDto getConferenceInfo(int idconference) throws Exception {
+		return conferenceMapper.getConferenceInfo(idconference);
+	}
 
 }
