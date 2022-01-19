@@ -262,5 +262,5 @@ values (1, 1, 1, 1, 1, 1, 1);
 select * from book_category;
 insert into book_category
 values (1, 1);
-insert into review(id, user_user_id, book_detail_id, review_content, review_name, created_at, updated_at)
-values (1, 1, 1, 1, 1, 1, 1)
+insert into review(id, user_user_id, book_detail_id, review_content, review_name)
+values (1, 1, 1, 1, 1)
