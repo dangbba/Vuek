@@ -4,8 +4,8 @@
  
  <mapper namespace="com.ssafy.backend.model.mapper.ConferenceMapper">
  	<insert id="createConference" parameterType="ConferenceDto">
-		insert into conference (idconference, conference_type_idconference_type, book_detail_idbook_detail, user_iduser, call_start_time, call_end_time, thumbnail_url, conference_title, is_active)
-		values (#{idconference}, #{conference_type_idconference_type}, #{book_detail_idbook_detail}, #{user_iduser}, #{call_start_time}, #{call_end_time}, #{thumbnail_url}, #{conference_title}, #{is_active})
+		insert into conference (id, user_user_id, book_detail_id, conference_type_name, call_start_time, call_end_time, thumbnail_url, title, is_active)
+		values (#{id}, #{user_user_id}, #{book_detail_id}, #{conference_type_name}, #{call_start_time}, #{call_end_time}, #{thumbnail_url}, #{title}, #{is_active})
 	</insert>
 	
 	<select id="getConferenceCategory" resultType="ConferenceTypeDto">
@@ -16,11 +16,11 @@
  	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceDto">
 		select *
 		from conference
-		where idconference = #{idconference}
+		where id = #{id}
 	</select>
 	
 	<update id="updateConferenceInfo" parameterType="ConferenceDto">
-		update conference set conference_type_idconference_type = #{conference_type_idconference_type}, book_detail_idbook_detail = #{book_detail_idbook_detail}, user_iduser = #{user_iduser}, thumbnail_url = #{thumbnail_url}, conference_title = #{conference_title}, is_active = #{is_active}
-		where idconference = #{idconference}
+		update conference set conference_type_name = #{conference_type_name}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
+		where id = #{id}
 	</update>
  </mapper>

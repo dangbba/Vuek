@@ -11,8 +11,8 @@
 	</select>
 	
 	<insert id="registerUser" parameterType="UserDto">
-		insert into user (iduser, rate_idrate, user_name, user_id, password)
-		values (#{iduser}, #{rate_idrate}, #{user_name}, #{user_id}, #{password})
+		insert into user (user_id, password, user_name)
+		values (#{user_id}, #{password}, #{user_name})
 	</insert>
 	
 	<select id="login" parameterType="UserDto" resultType="UserDto">
@@ -27,7 +27,7 @@
 	
 	<update id="updateUser" parameterType="UserDto">
 		update user
-		set iduser = #{iduser}, rate_idrate = #{rate_idrate}, user_name = #{user_name}, user_id = #{user_id}, password = #{password} 
+		set   user_id = #{user_id}, password = #{password}, user_name = #{user_name} 
 		where user_id = #{user_id}
 	</update>
 	
