@@ -54,7 +54,10 @@ public class ReviewController {
 	@ApiOperation(value = "리뷰를 삭제한다, SUCCESS/FAIL", response = String.class)
 	@DeleteMapping("/{review_id}")
 	public ResponseEntity<String> deleteReview(@PathVariable int review_id) throws Exception {
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		if (reviewService.deleteReview(review_id)) {			
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
 	@ApiOperation(value = "리뷰를 수정한다, SUCCESS/FAIL", response = String.class)

@@ -9,7 +9,7 @@
 		values (#{id}, #{user_user_id}, #{book_detail_id}, #{review_content}, #{review_name}, #{created_at}, #{updated_at})
 	</insert>
 	
-	<select id="getReviews" resultType="UserDto">
+	<select id="getReviews" resultType="ReviewDto">
 		select *
 		from review
 	</select>
@@ -26,8 +26,12 @@
 	</delete>
 
 	<update id="updateReviewOne" parameterType="ReviewDto">
-		update user
-		set   book_detail_id = #{book_detail_id}, reveiw_content = #{review_content}, review_name = #{review_name}, created_at = #{created_at}, updated_at = #{updated_at}
+		update review set book_detail_id = #{book_detail_id}, 
+		review_content = #{review_content}, 
+		review_name = #{review_name}, 
+		created_at = #{created_at}, 
+		updated_at = #{updated_at},
+		user_user_id = #{user_user_id}
 		where id = #{id}
 	</update>
 	
