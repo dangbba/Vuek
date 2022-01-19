@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backend.model.ConferenceDto;
@@ -65,5 +67,33 @@ public class ConferenceController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "방 목록을 조회한다.", response = ConferenceDto.class)
+	@GetMapping
+	public ResponseEntity<List<ConferenceDto>> getConference() throws Exception {
+		return new ResponseEntity<>(conferenceService.getConference(), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "방 목록을 방생성시간, 타이틀로  정렬한다.", response = ConferenceDto.class)
+	@GetMapping("/getConferenceBySort")
+	public ResponseEntity<List<ConferenceDto>> getConferenceBySort(@RequestParam String sort, @RequestParam String asc) throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceBySort(sort, asc), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "방 목록을 타이틀로 검색한다.", response = ConferenceDto.class)
+	@GetMapping("/searchByTitle")
+	public ResponseEntity<List<ConferenceDto>> searchByTitle(@RequestParam String word) throws Exception {
+		return new ResponseEntity<>(conferenceService.searchByTitle(word), HttpStatus.OK);
+		
+	}
+	
+	@ApiOperation(value = "방 목록을 카테고리로 필터링한다.", response = ConferenceDto.class)
+	@GetMapping("/getConferenceByCategory")
+	public ResponseEntity<List<ConferenceDto>> getConferenceByCategory(@RequestParam String categoryType) throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceByCategory(categoryType), HttpStatus.OK);
+		
 	}
 }

@@ -23,4 +23,58 @@
 		update conference set conference_type_name = #{conference_type_name}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
 		where id = #{id}
 	</update>
+	
+	<select id="getConference" resultType="ConferenceDto">
+		select *
+		from conference
+	</select>
+	
+	<sql id="sort">
+		<if test="sort == 'call_start_time'">
+			<if test="asc == 'asc'">
+				order by call_start_time asc
+			</if>
+		</if>
+		<if test="sort == 'call_start_time'">
+			<if test="asc == 'desc'">
+				order by call_start_time desc
+			</if>
+		</if>
+		<if test="sort == 'title'">
+			<if test="asc == 'asc'">
+				order by title asc
+			</if>
+		</if>
+		<if test="sort == 'title'">
+			<if test="asc == 'desc'">
+				order by title desc
+			</if>
+		</if>
+	</sql>
+	
+	<select id="getConferenceBySort" parameterType="String" resultType="ConferenceDto">
+		select *
+		from conference
+		<include refid="sort"></include>
+	</select>
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			where title like concat('%', #{word}, '%')
+		</if>
+		
+	</sql>
+	
+	<select id="searchByTitle" parameterType="String" resultType="ConferenceDto">
+		select *
+		from conference
+		<include refid="search"></include>
+	</select>
+	
+	<select id="getConferenceByCategory" parameterType="String" resultType="ConferenceDto">
+		select *
+		from conference
+		where conference_type_name = #{conference_type_name}
+	</select>
+	
  </mapper>
