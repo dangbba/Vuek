@@ -245,3 +245,20 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+select * from user;
+select * from conference;
+select * from conference_type;
+use ssafy_web_db;
+insert into user ( user_name, user_id, password)
+values (1, 1, 1);
+insert into conference_type (name)
+values (1);
+select * from book_detail;
+insert into book_detail
+values (1, 1, 1, 1, 1, 1, 1, 1);
+insert into conference (id, user_user_id, book_detail_id, conference_type_name, thumbnail_url, title, is_active)
+values (1, 1, 1, 1, 1, 1, 1);
+select * from book_category;
+insert into book_category
+values (1, 1);
