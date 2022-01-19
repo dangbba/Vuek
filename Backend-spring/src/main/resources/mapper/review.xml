@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.backend.model.mapper.ReviewMapper">
+
+	<insert id="addReview" parameterType="ReviewDto">
+		insert into review (id, user_user_id, book_detail_id, review_content, review_name, created_at, updated_at)
+		values (#{id}, #{user_user_id}, #{book_detail_id}, #{review_content}, #{review_name}, #{created_at}, #{updated_at})
+	</insert>
+	
+	<select id="getReviews" resultType="UserDto">
+		select *
+		from review
+	</select>
+	
+	<select id="getReviewOne" parameterType="INT" resultType="ReviewDto">
+		select *
+		from review
+		where id = #{id}
+	</select>
+	
+	<delete id="deleteReview" parameterType="INT">
+		delete from review
+		where id = #{id}
+	</delete>
+
+	<update id="updateReviewOne" parameterType="ReviewDto">
+		update user
+		set   book_detail_id = #{book_detail_id}, reveiw_content = #{review_content}, review_name = #{review_name}, created_at = #{created_at}, updated_at = #{updated_at}
+		where id = #{id}
+	</update>
+	
+</mapper>
