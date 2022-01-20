@@ -14,11 +14,11 @@
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
 | | | :black_square_button: Kotlin | |
 
-<!-- 필수 항목 -->111
+<!-- 필수 항목 -->11111
 
 ## 프로젝트 소개
 
-* 프로젝트명: 그룹 비디오 컨퍼런스 서비스
+* 프로젝트명: 그룹 비디오 컨퍼런스 서비스1
 * 서비스 특징: 웹/모바일(웹 기술) 프로젝트를 위한 스켈레톤 프로젝트
 * 주요 기능
   - 회원 관리
