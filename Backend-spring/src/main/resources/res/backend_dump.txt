@@ -31,13 +31,12 @@ ENGINE = InnoDB;
 -- Table `ssafy_web_db`.`book_category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ssafy_web_db`.`book_category` ;
-
+comment
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`book_category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `subject` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `ssafy_web_db`.`book_detail`
@@ -72,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`review` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_user_id` VARCHAR(45) NOT NULL,
   `book_detail_id` INT NOT NULL,
-  `review_content` VARCHAR(45) NULL,
+  `review_content` TEXT NULL,
   `review_name` VARCHAR(45) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
@@ -91,7 +90,29 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`review` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `ssafy_web_db`.`comment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafy_web_db`.`comment`;
 
+CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`comment` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_user_id` VARCHAR(45) NOT NULL,
+    `review_id` INT NOT NULL,
+    `content` TEXT NULL,
+    `created_at` DATETIME NULL,
+    `updated_at` DATETIME NULL,
+    CONSTRAINT `fk_comment_user`
+		FOREIGN KEY(`user_user_id`)
+        REFERENCES `ssafy_web_db`.`user` (`user_id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+	CONSTRAINT `fk_comment_review1`
+		FOREIGN KEY(`review_id`)
+        REFERENCES `ssafy_web_db`.`review` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ssafy_web_db`.`conference_type`
 -- -----------------------------------------------------
