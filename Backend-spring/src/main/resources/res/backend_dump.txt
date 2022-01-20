@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`comment` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `review_id` INT NOT NULL,
   `user_user_id` VARCHAR(45) NOT NULL,
-  `content` VARCHAR(45) NULL,
+  `comment_content` VARCHAR(45) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
   PRIMARY KEY (`id`, `review_id`, `user_user_id`),

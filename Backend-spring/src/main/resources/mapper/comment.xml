@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.backend.model.mapper.CommentMapper">
+
+	<insert id="addComment" parameterType="CommentDto">
+		insert into comment (id, user_user_id, review_id, comment_content, created_at, updated_at)
+		values (#{id}, #{user_user_id}, #{review_id}, #{comment_content}, #{created_at}, #{updated_at})
+	</insert>
+	
+	<select id="getComments" resultType="CommentDto">
+		select *
+		from comment
+	</select>
+	
+	<delete id="deleteComment" parameterType="INT">
+		delete from comment
+		where id = #{id}
+	</delete>
+
+	<update id="updateCommentOne" parameterType="CommentDto">
+		update comment set 
+		review_id = #{review_id}, 
+		comment_content = #{comment_content}, 
+		created_at = #{created_at}, 
+		updated_at = #{updated_at},
+		user_user_id = #{user_user_id}
+		where id = #{id}
+	</update>
+	
+</mapper>
