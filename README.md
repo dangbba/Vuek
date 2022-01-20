@@ -14,7 +14,7 @@
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
 | | | :black_square_button: Kotlin | |
 
-<!-- 필수 항목 -->11111
+<!-- 필수 항목 -->111111
 
 ## 프로젝트 소개
 
