@@ -28,5 +28,5 @@
 		user_user_id = #{user_user_id}
 		where id = #{id}
 	</update>
-	
+		
 </mapper>

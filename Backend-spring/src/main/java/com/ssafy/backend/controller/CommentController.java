@@ -39,7 +39,11 @@ public class CommentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
+<<<<<<< Updated upstream
 	@ApiOperation(value = "댓글 조회하여 반환", response = String.class)
+=======
+	@ApiOperation(value = "전체 댓글을 조회하여 반환", response = String.class)
+>>>>>>> Stashed changes
 	@GetMapping("/index")
 	public ResponseEntity<List<CommentDto>> getComments() throws Exception {
 		return new ResponseEntity<>(commentService.getComments(), HttpStatus.OK);
@@ -64,9 +68,12 @@ public class CommentController {
 	}
 	
 }
+<<<<<<< Updated upstream
 
 
 
 
 
 
+=======
+>>>>>>> Stashed changes
