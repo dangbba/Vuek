@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`review` (
   CONSTRAINT `fk_review_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -118,8 +118,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
   CONSTRAINT `fk_conference_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -145,8 +145,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_history` (
   CONSTRAINT `fk_conference_history_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -170,8 +170,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user_book` (
   CONSTRAINT `fk_user_book_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -190,8 +190,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`user_conference` (
   CONSTRAINT `fk_user_conference_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_user_conference_conference1`
     FOREIGN KEY (`conference_id`)
     REFERENCES `ssafy_web_db`.`conference` (`id`)
@@ -215,8 +215,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`maraton` (
   CONSTRAINT `fk_maraton_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -243,8 +243,8 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`comment` (
   CONSTRAINT `fk_comment_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
