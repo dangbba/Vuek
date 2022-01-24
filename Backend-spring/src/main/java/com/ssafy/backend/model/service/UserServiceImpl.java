@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean idCheck(String id) throws Exception {
 		int cnt = userMapper.idCheck(id);
-		return cnt == 0 ? true : false;
+		return cnt == 1 ? true : false;
 	}
 
 	@Override
@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto login(UserDto userDto) throws Exception {
-		return userMapper.login(userDto);
+	public UserDto login(String id) throws Exception {
+		return userMapper.login(id);
 	}
 
 	@Override
@@ -47,8 +47,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDto> listUser() throws Exception {
-		// TODO Auto-generated method stub
 		return userMapper.listUser();
+	}
+
+	@Override
+	public UserDto getMyInfo() throws Exception {
+		return userMapper.getMyInfo();
 	}
 
 }

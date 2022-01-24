@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.backend.model.LoginDto;
 import com.ssafy.backend.model.UserDto;
 import com.ssafy.backend.model.service.JwtService;
 import com.ssafy.backend.model.service.UserService;
@@ -37,6 +38,7 @@ public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String ALREADYEXISTS = "이미 존재하는 사용자 ID입니다.";
 	
 	@Autowired
 	private JwtService jwtService;
@@ -44,57 +46,73 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	//중복확인 완료
 	@ApiOperation(value = "회원가입시 아이디 중복 확인한다. 사용 가능 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@GetMapping("/idcheck")
+	@GetMapping("/{user_id}")
 	public ResponseEntity<String> idCheck(@RequestParam("user_id") String checkId) throws Exception{
 		logger.debug("idCheck - 호출");
 		if(userService.idCheck(checkId)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			return new ResponseEntity<String>(ALREADYEXISTS, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
+	//회원가입 완료
 	@ApiOperation(value = "회원가입을 한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
 	public ResponseEntity<String> register(@RequestBody UserDto userDto) throws Exception{
 		logger.debug("idCheck - 호출");
-		if(userService.registerUser(userDto)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		
+		if(userService.idCheck(userDto.getUser_id())) {
+			if(userService.registerUser(userDto)) {
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			}
+		}
+		else {
+			return new ResponseEntity<String>(ALREADYEXISTS, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
-	
+	//로그인 완료
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
-	@PostMapping("/login")
+	@PostMapping("/auth/login")
 	public ResponseEntity<Map<String, Object>> login(
-			@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) UserDto userDto) {
+			@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) LoginDto loginDto) {
 		logger.debug("login - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			UserDto loginUser = userService.login(userDto);
-			if (loginUser != null) {
-				String token = jwtService.create("userid", loginUser.getUser_id(), "access-token");// key, data, subject
-				logger.debug("로그인 토큰정보 : {}", token);
-				resultMap.put("access-token", token);
-				resultMap.put("message", SUCCESS);
-				status = HttpStatus.ACCEPTED;
+			if (userService.idCheck(loginDto.getUser_id())) {
+				UserDto loginUser = userService.getUser(loginDto.getUser_id());
+				if (loginDto.getPassword().equals(loginUser.getPassword())) {
+					System.out.print(loginDto.getPassword());
+					System.out.print(loginUser.getPassword());
+					String token = jwtService.create("user_id", loginUser.getUser_id(), "access-token");// key, data, subject
+					logger.debug("로그인 토큰정보 : {}", token);
+					resultMap.put("access-token", token);
+					resultMap.put("message", SUCCESS);
+					status = HttpStatus.ACCEPTED;					
+				} else {
+					resultMap.put("login failed", "잘못된 비밀번호입니다.");
+					status = HttpStatus.UNAUTHORIZED;
+				}
 			} else {
-				resultMap.put("message", FAIL);
-				status = HttpStatus.ACCEPTED;
+				resultMap.put("message", "존재하지 않는 계정입니다.");
+				status = HttpStatus.NOT_FOUND;					
 			}
-		} catch (Exception e) {
-			logger.error("로그인 실패 : {}", e);
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch(Exception error) {
+			logger.error("로그인 실패 : {}", error);
+			resultMap.put("message", error.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;			
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
+	
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
-	@GetMapping("/info/{userid}")
+	@GetMapping("/info/{user_id}")
 	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("userid") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userid,
+			@PathVariable("user_id") @ApiParam(value = "인증할 회원의 아이디.", required = true) String user_id,
 			HttpServletRequest request) {
 		logger.debug("getInfo - 호출");
 		Map<String, Object> resultMap = new HashMap<>();
@@ -104,7 +122,11 @@ public class UserController {
 			logger.info("사용 가능한 토큰!!!");
 			try {
 //				로그인 사용자 정보.
-				UserDto userDto = userService.getUser(userid);
+				UserDto userDto = userService.getUser(user_id);
+				LoginDto loginDto = new LoginDto();
+				loginDto.setUser_id(user_id);
+				loginDto.setPassword(userDto.getPassword());
+				
 				resultMap.put("userInfo", userDto);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
