@@ -10,6 +10,7 @@ import com.ssafy.backend.model.ConferenceTypeDto;
 
 public interface ConferenceService {
 	boolean createConference(ConferenceDto conferenceDto) throws Exception;
+	boolean closeConference(ConferenceDto conferenceDto) throws Exception;
 	
 	List<ConferenceTypeDto> getConferenceCategory() throws Exception; 
 	

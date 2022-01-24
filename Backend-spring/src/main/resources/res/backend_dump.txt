@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
   `conference_type_name` VARCHAR(45) NOT NULL,
   `book_detail_id` INT NOT NULL,
   `user_user_id` VARCHAR(45) NOT NULL,
-  `call_start_time` DATETIME NULL,
+  `call_start_time` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `call_end_time` DATETIME NULL,
   `thumbnail_url` VARCHAR(45) NULL,
   `title` VARCHAR(45) NULL,

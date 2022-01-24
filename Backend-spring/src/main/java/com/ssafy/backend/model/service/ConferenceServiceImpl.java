@@ -23,6 +23,11 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
+	public boolean closeConference(ConferenceDto conferenceDto) throws Exception {
+		return conferenceMapper.closeConference(conferenceDto);
+	}
+	
+	@Override
 	public List<ConferenceTypeDto> getConferenceCategory() throws Exception {
 		return conferenceMapper.getConferenceCategory();
 	}

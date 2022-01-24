@@ -8,6 +8,12 @@
 		values (#{id}, #{user_user_id}, #{book_detail_id}, #{conference_type_name}, #{call_start_time}, #{call_end_time}, #{thumbnail_url}, #{title}, #{is_active})
 	</insert>
 	
+	<update id="closeConference" parameterType="ConferenceDto">
+		update conference
+		set call_end_time = now()
+		where id = #{id}
+	</update>
+	
 	<select id="getConferenceCategory" resultType="ConferenceTypeDto">
 		select *
 		from conference_type
