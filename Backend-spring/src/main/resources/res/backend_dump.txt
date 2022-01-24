@@ -81,7 +81,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ssafy_web_db`.`conference_type` ;
 
 CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_type` (
-  `id' INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
