@@ -19,13 +19,13 @@
 		from conference_type
 	</select>
  
- 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceDto">
+ 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceInfoDto">
 		select *
 		from conference
 		where id = #{id}
 	</select>
 	
-	<update id="updateConferenceInfo" parameterType="ConferenceDto">
+	<update id="updateConferenceInfo" parameterType="ConferenceInfoDto">
 		update conference 
 		set conference_type_name = #{conference_type_name}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
 		where id = #{id}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 import com.ssafy.backend.model.mapper.ConferenceMapper;
 
@@ -33,13 +34,13 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public ConferenceDto getConferenceInfo(int idconference) throws Exception {
+	public ConferenceInfoDto getConferenceInfo(int idconference) throws Exception {
 		return conferenceMapper.getConferenceInfo(idconference);
 	}
 	
 	@Override
-	public boolean updateConferenceInfo(ConferenceDto conferenceDto) throws Exception {
-		return conferenceMapper.updateConferenceInfo(conferenceDto);
+	public boolean updateConferenceInfo(ConferenceInfoDto conferenceInfoDto) throws Exception {
+		return conferenceMapper.updateConferenceInfo(conferenceInfoDto);
 	}
 	
 	@Override
