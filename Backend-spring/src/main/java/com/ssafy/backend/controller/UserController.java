@@ -122,7 +122,7 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "회원수정 한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping
+	@PutMapping("/{user_id}")
 	public ResponseEntity<String> update(@RequestBody UserDto userDto) throws Exception{
 		logger.debug("update - 호출");
 		if(userService.updateUser(userDto)) {

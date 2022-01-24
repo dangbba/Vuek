@@ -27,7 +27,7 @@
 	
 	<update id="updateUser" parameterType="UserDto">
 		update user
-		set   user_id = #{user_id}, password = #{password}, user_name = #{user_name} 
+		set   password = #{password}, user_name = #{user_name} 
 		where user_id = #{user_id}
 	</update>
 	

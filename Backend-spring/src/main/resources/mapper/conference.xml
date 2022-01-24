@@ -4,8 +4,8 @@
  
  <mapper namespace="com.ssafy.backend.model.mapper.ConferenceMapper">
  	<insert id="createConference" parameterType="ConferenceDto">
-		insert into conference (id, user_user_id, book_detail_id, conference_type_name, call_start_time, call_end_time, thumbnail_url, title, is_active)
-		values (#{id}, #{user_user_id}, #{book_detail_id}, #{conference_type_name}, #{call_start_time}, #{call_end_time}, #{thumbnail_url}, #{title}, #{is_active})
+		insert into conference (id, user_user_id, book_detail_id, conference_type_name, thumbnail_url, title, is_active)
+		values (#{id}, #{user_user_id}, #{book_detail_id}, #{conference_type_name}, #{thumbnail_url}, #{title}, #{is_active})
 	</insert>
 	
 	<update id="closeConference" parameterType="ConferenceDto">
