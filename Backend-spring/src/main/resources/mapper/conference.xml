@@ -27,7 +27,7 @@
 	
 	<update id="updateConferenceInfo" parameterType="ConferenceInfoDto">
 		update conference 
-		set conference_type_name = #{conference_type_name}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
+		set conference_type = #{conference_type}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
 		where id = #{id}
 	</update>
 	

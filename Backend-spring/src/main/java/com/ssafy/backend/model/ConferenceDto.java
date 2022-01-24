@@ -7,7 +7,7 @@ public class ConferenceDto {
 	private int id;
 	private int user_user_id;
 	private int book_detail_id;
-	private int conference_type_name;
+	private int conference_type;
 	private String call_start_time;
 	private String call_end_time;
 	private String thumbnail_url;
