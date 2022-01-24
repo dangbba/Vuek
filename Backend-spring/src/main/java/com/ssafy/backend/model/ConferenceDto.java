@@ -13,4 +13,20 @@ public class ConferenceDto {
 	private String thumbnail_url;
 	private String title;
 	private int is_active;
+	
+	private int empty;
+	private int first;
+	private int last;
+	private int number;
+	private int numberOfElements;
+	
+	private int offset;
+	private int pageNumber;
+	private int pageSize;
+	private int paged;
+	private int unpaged;
+	
+	private int size;
+	private int totalElements;
+	private int totalPages;
 }
