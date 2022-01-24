@@ -15,7 +15,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     //이유는 왜 그런지 아직 찾지 못함
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/")
+        registry.addEndpoint("/chat")
                 .setAllowedOrigins("http://localhost:7080")
                 .withSockJS();
     }
