@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 import com.ssafy.backend.model.service.ConferenceService;
 
@@ -63,16 +64,16 @@ public class ConferenceController {
 	
 	@ApiOperation(value = "방 상세정보를 조회한다.", response = ConferenceDto.class)
 	@GetMapping("/conference-info/{idconference}")
-	public ResponseEntity<ConferenceDto> getConferenceInfo(@PathVariable int idconference) throws Exception {
+	public ResponseEntity<ConferenceInfoDto> getConferenceInfo(@PathVariable int idconference) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceInfo(idconference), HttpStatus.OK);
 		
 	}
 	
 	@ApiOperation(value = "idconference에 해당하는 글의 내용을 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/conference-info/{idconference}")
-	public ResponseEntity<String> updateConferenceInfo(@RequestBody ConferenceDto conferenceDto) throws Exception {
+	public ResponseEntity<String> updateConferenceInfo(@RequestBody ConferenceInfoDto conferenceInfoDto) throws Exception {
 		logger.debug("updateConferenceInfo - 호출");
-		if(conferenceService.updateConferenceInfo(conferenceDto)) {
+		if(conferenceService.updateConferenceInfo(conferenceInfoDto)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

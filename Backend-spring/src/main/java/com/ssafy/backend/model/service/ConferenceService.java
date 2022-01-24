@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 
 public interface ConferenceService {
@@ -14,9 +15,9 @@ public interface ConferenceService {
 	
 	List<ConferenceTypeDto> getConferenceCategory() throws Exception; 
 	
-	ConferenceDto getConferenceInfo(int idconference) throws Exception;
+	ConferenceInfoDto getConferenceInfo(int idconference) throws Exception;
 	
-	boolean updateConferenceInfo(ConferenceDto conferenceDto) throws Exception;
+	boolean updateConferenceInfo(ConferenceInfoDto conferenceInfoDto) throws Exception;
 	
 	List<ConferenceDto> getConference() throws Exception;
 	List<ConferenceDto> getConferenceBySort(@RequestParam String sort, @RequestParam String asc) throws Exception;
