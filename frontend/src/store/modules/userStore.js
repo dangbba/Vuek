@@ -1,4 +1,3 @@
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { findById, login } from "../../api/user";
 
@@ -12,15 +11,6 @@ const userStore = {
   getters: {
     checkUserInfo: function (state) {
       return state.userInfo;
-    },
-    isNaverLogin: (state) => {
-      console.log(state.userInfo);
-      try {
-        if (state.userInfo == null) return false;
-        return state.userInfo["userId"] == null;
-      } catch (e) {
-        return true;
-      }
     },
   },
   mutations: {
@@ -56,7 +46,7 @@ const userStore = {
     getUserInfo({ commit }, token) {
       let decode_token = jwt_decode(token);
       findById(
-        decode_token["userid"],
+        decode_token["user_id"],
         (response) => {
           if (response.data.message === "success") {
             console.log(response.data.userInfo);
@@ -70,20 +60,6 @@ const userStore = {
         }
       );
     },
-    signup: function (context, credentials) {
-      axios({
-        method: 'post',
-        url: 'URL',
-        data: credentials,
-      })
-        .then((res) => {
-          console.log(res)
-          this.dispatch('login', credentials)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
   },
 };
 

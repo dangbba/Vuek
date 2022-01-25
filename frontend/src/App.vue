@@ -2,16 +2,18 @@
   <div id="app">
     <navi-bar />
     <router-view />
+    <spinner :loading="$store.state.LoadingStatus" />
   </div>
 </template>
 
 <script>
 import NaviBar from "./components/layout/NaviBar.vue";
-
+import Spinner from "./components/layout/Spinner.vue";
 export default {
   name: "App",
   components: {
     NaviBar,
+    Spinner,
   },
 };
 </script>

@@ -2,11 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
-import Naver from "../components/user/NaverLogin.vue";
-import CallBack from "../components/user/CallBack.vue";
 import Profile from "../components/user/Profile.vue";
+import Signup from "../components/user/Signup.vue";
 import Board from "../components/board/Board.vue";
+import BoardDetail from "../components/board/BoardDetail";
+import BoardCreate from "../components/board/BoardCreate";
 import Book from "../components/book/Book.vue";
+import Conference from "../components/conference/Conference.vue";
+import Conference_detail from "../components/conference/Conference_detail.vue";
+import store from "../store/index";
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,19 +25,14 @@ const routes = [
     component: About,
   },
   {
-    path: "/login",
-    name: "Naver",
-    component: Naver,
-  },
-  {
-    path: "/login/naver",
-    name: "CallBack",
-    component: CallBack,
-  },
-  {
     path: "/profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
   },
   {
     path: "/board",
@@ -41,10 +40,30 @@ const routes = [
     component: Board,
   },
   {
+    path: "/board/detail/:contentId",
+    name: "BoardDetail",
+    component: BoardDetail,
+  },
+  {
+    path: "/board/create/:contentId?",
+    name: "BoardCreate",
+    component: BoardCreate,
+  },
+  {
     path: "/book",
     name: "Book",
     component: Book,
-  }
+  },
+  {
+    path: "/conference",
+    name: "Conference",
+    component: Conference,
+  },
+  {
+    path: "/conference/view",
+    name: "Conference_detail",
+    component: Conference_detail,
+  },
 ];
 
 const router = new VueRouter({
@@ -52,5 +71,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  store.commit("startSpinner");
+  setTimeout(() => {
+    next();
+  }, 30);
+});
+
+// router.afterEach((to, from) => {
+//   store.commit("endSpinner");
+// });
 
 export default router;

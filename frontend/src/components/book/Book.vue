@@ -1,35 +1,50 @@
 <template>
-  <div>
-      베스트셀러/신간
-
-    <carousel :autoplay="true" :nav="false" :dots="false" class="marginTop50">
-    <div> 베스트셀러 </div>
-    </carousel>
-    <carousel :autoplay="true" :nav="false" :dots="false" class="marginTop50">
-      <img src="https://placeimg.com/200/200/any?1">
-      <img src="https://placeimg.com/200/200/any?2">
-      <img src="https://placeimg.com/200/200/any?3">
-      <img src="https://placeimg.com/200/200/any?4">
-    </carousel>
-    
-    <carousel :autoplay="true" :nav="false" :dots="false" class="marginTop50">
-    <div> 신간 </div>
-    </carousel>
-    <carousel :autoplay="true" :nav="false" :dots="false" class="marginTop50">
-      <img src="https://placeimg.com/200/200/any?1">
-      <img src="https://placeimg.com/200/200/any?2">
-      <img src="https://placeimg.com/200/200/any?3">
-      <img src="https://placeimg.com/200/200/any?4">
-    </carousel>
+  <div id="app">
+    <Book
+      title="The Thinker's Guide to The Art of Socratic Questioning"
+      cover="https://images-na.ssl-images-amazon.com/images/I/81WmLFAO4yL.jpg"
+      authors="Richard Paul, Linda Elder"
+      link="https://maciejsmolinski.com/books/socratic"
+    />
+    <Book
+      title="Docker in Action"
+      cover="https://images-na.ssl-images-amazon.com/images/I/81J4b6i9KyL.jpg"
+      authors="Jeff Nickoloff"
+    />
+    <Book
+      title="On Writing Well: The Classic Guide to Writing Nonfiction"
+      cover="https://images-na.ssl-images-amazon.com/images/I/610AIYRtaDL.jpg"
+      authors="William Zinsser"
+      link="https://maciejsmolinski.com/books/writing"
+    />
+    <Book
+      title="Extreme Programming Explained: Embrace Change"
+      cover="https://images-na.ssl-images-amazon.com/images/I/51iupjtHU%2BL._SX342_QL70_ML2_.jpg"
+      authors="Kent Beck"
+    />
+    <Book
+      title="Site Reliability Engineering: How Google Runs Production Systems"
+      cover="https://images-eu.ssl-images-amazon.com/images/I/51XswOmuLqL.jpg"
+      authors="Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy"
+    />
+    <Book
+      title="Structure and Interpretation of Computer Programs"
+      cover="https://images-na.ssl-images-amazon.com/images/I/51H17R%2BbW8L._SX331_BO1,204,203,200_.jpg"
+      authors="Harold Abelson, Geerald Jay Sussman, Julie Sussman"
+    />
   </div>
 </template>
 
 <script>
-export default {
+import Book from "./BookDetail";
 
-}
+export default {
+  name: "App",
+  components: {
+    Book
+  }
+};
 </script>
 
 <style>
-
 </style>

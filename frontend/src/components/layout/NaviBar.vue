@@ -17,6 +17,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-button v-b-toggle.sidebar-variant>메뉴</b-button>
         <b-sidebar
+          v-if="userInfo"
           id="sidebar-variant"
           title="메뉴"
           bg-variant="dark"
@@ -25,7 +26,7 @@
         >
           <div class="px-3 py-2">
             <div class="icon-bar">
-              <router-link to="/" id="tooltip-1"
+              <router-link to="/Conference" id="tooltip-1"
                 ><b-iconstack font-scale="1" animation="spin">
                   <b-icon
                     stacked
@@ -67,91 +68,48 @@
             </div>
           </div>
         </b-sidebar>
+        <b-sidebar
+          v-else
+          id="sidebar-variant"
+          title="메뉴"
+          bg-variant="dark"
+          text-variant="light"
+          shadow
+        >
+          <div class="px-3 py-2">
+            <div class="icon-bar">
+              <router-link to="/board" id="tooltip-4"
+                ><b-icon-clipboard></b-icon-clipboard
+              ></router-link>
+              <b-tooltip target="tooltip-4" triggers="hover">
+                게시판
+              </b-tooltip>
+              <router-link to="/book" id="tooltip-5"
+                ><b-icon-book></b-icon-book
+              ></router-link>
+              <b-tooltip target="tooltip-5" triggers="hover">
+                베스트셀러/신간도서
+              </b-tooltip>
+            </div>
+          </div>
+        </b-sidebar>
 
-        <b-navbar-nav class="ml-auto" v-if="isNaverLogin">
-          <b-nav-item class="align-self-center"> 네이버로그인 성공</b-nav-item>
-          <b-nav-item
+        <b-navbar-nav class="ml-auto" v-if="userInfo">
+          <b-nav-item class="align-self-center">
+            <h5 class="Hello">{{ userInfo.user_name }} 님 안녕하세요</h5>
+          </b-nav-item>
+          <b-button
             class="link align-self-center"
-            @click.prevent="onClickNaverLogout"
-            >로그아웃</b-nav-item
-          >
+            @click.prevent="onClickLogout"
+            >로그아웃
+          </b-button>
         </b-navbar-nav>
 
         <b-navbar-nav class="but" v-else>
           <div>
-            <b-button v-b-modal.modal-prevent-closing>회원가입</b-button>
-            <b-modal
-              id="modal-prevent-closing"
-              ref="modal"
-              title="회원가입"
-              hide-footer
-            >
-              <form ref="form">
-                <b-form-group
-                  class="signupmodal"
-                  label="이름"
-                  label-for="name-input"
-                >
-                  <b-form-input
-                    id="name-input"
-                    v-model="signupCredential.userName"
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-              <form ref="form">
-                <b-form-group
-                  class="signupmodal"
-                  label="아이디"
-                  label-for="Id-input"
-                >
-                  <b-form-input
-                    id="name-input"
-                    v-model="signupCredential.userId"
-                  ></b-form-input>
-                  <b-button
-                    class="mt-3"
-                    @click="isIdExist(signupCredential.userId)"
-                  >
-                    ID 중복확인
-                  </b-button>
-                </b-form-group>
-              </form>
-              <form ref="form">
-                <b-form-group
-                  class="signupmodal"
-                  label="비밀번호"
-                  label-for="password-input"
-                >
-                  <b-form-input
-                    type="password"
-                    id="password-input"
-                    v-model="signupCredential.password"
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-              <form ref="form">
-                <b-form-group
-                  class="signupmodal"
-                  label="비밀번호 확인"
-                  label-for="passwordConfirmation-input"
-                >
-                  <b-form-input
-                    type="password"
-                    id="passwordConfirmation-input"
-                    v-model="signupCredential.passwordConfirmation"
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-              <hr />
-              <b-button @click="signupIsValid(signupCredential)">
-                가입하기
-              </b-button>
-            </b-modal>
-            <b-button variant="success"
-              ><router-link :to="{ name: 'Naver' }"
-                >네이버</router-link
-              ></b-button
-            >
+            <router-link to="/signup">
+              <b-button>회원가입</b-button>
+            </router-link>
             <b-button v-b-modal.modal2-prevent-closing>로그인</b-button>
             <b-modal
               id="modal2-prevent-closing"
@@ -159,15 +117,19 @@
               title="로그인"
               hide-footer
             >
+              <b-alert show variant="danger" v-if="isLoginError">
+                아이디 또는 비밀번호를 확인하세요
+              </b-alert>
               <form ref="form">
                 <b-form-group
                   class="loginmodal"
                   label="아이디"
-                  label-for="id-logininput"
+                  label-for="user_id"
                 >
                   <b-form-input
-                    id="id-input"
-                    v-model="credentials.userId"
+                    id="user_id"
+                    v-model="user.user_id"
+                    @keyup.enter="confirm"
                   ></b-form-input>
                 </b-form-group>
               </form>
@@ -175,12 +137,13 @@
                 <b-form-group
                   class="loginmodal"
                   label="비밀번호"
-                  label-for="password-input"
+                  label-for="user_pw"
                 >
                   <b-form-input
                     type="password"
-                    id="password-input"
-                    v-model="credentials.password"
+                    id="user_pw"
+                    v-model="user.user_pw"
+                    @keyup.enter="confirm"
                   ></b-form-input>
                 </b-form-group>
               </form>
@@ -190,17 +153,19 @@
                 >
               </div>
               <hr />
-              <b-button @click="loginIsValid(credentials)"> 로그인 </b-button>
+              <b-button @click="confirm"> 로그인 </b-button>
             </b-modal>
           </div>
         </b-navbar-nav>
+        <b-form-input placeholder="검색할 게시글 입력" style="width: 600px">
+        </b-form-input>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 import Swal from "sweetalert2";
 import jwt_decode from "jwt-decode";
@@ -217,22 +182,32 @@ export default {
         password: "",
         passwordConfirmation: "",
       },
-      credentials: {
-        userId: "",
-        password: "",
+      user: {
+        user_Id: null,
+        user_pw: null,
       },
     };
   },
   mounted() {
-    console.log(sessionStorage.getItem("access token"));
     console.log(jwt_decode());
   },
   computed: {
-    ...mapState(userStore, ["isLogin", "userInfo"]),
-    ...mapGetters(userStore, ["isNaverLogin"]),
+    ...mapState(userStore, ["isLogin", "userInfo", "isLoginError"]),
+  },
+  destroyed() {
+    this.onClickLogout();
   },
   methods: {
     ...mapMutations(userStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    ...mapActions(userStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("access-token");
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        this.$router.push({ name: "Book" });
+      }
+    },
     signupIsValid: function (cred) {
       console.log(cred);
       if (
@@ -286,49 +261,13 @@ export default {
           text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
         });
       } else {
-        console.log(cred);
+        this.signupCredential.signupUser();
       }
     },
     isIdExist: function (id) {
       console.log(id);
     },
-
-    loginIsValid: function (cred) {
-      console.log(cred);
-      if (cred.userId === "" || cred.password === "") {
-        Swal.fire({
-          icon: "error",
-          title: "Stop!",
-          text: "아이디, 비밀번호는 필수 입력사항입니다.",
-        });
-      } else if (cred.userId.length > 16) {
-        Swal.fire({
-          icon: "error",
-          title: "IdError",
-          text: "아이디는 16자를 넘을 수 없습니다.",
-        });
-      } else if (16 < cred.password.length || 9 > cred.password.length) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 길이 오류",
-          text: "비밀번호는 9자 이상 16자 이하여야 합니다.",
-        });
-      } else if (
-        cred.password.search(/[0-9]/g) < 0 ||
-        cred.password.search(/[a-z]/gi) < 0 ||
-        cred.password.search(/[`~!@#$%^&*/?;:]/gi) < 0
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 유형 오류",
-          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
-        });
-      } else {
-        console.log(cred);
-      }
-    },
-    onClickNaverLogout() {
-      sessionStorage.removeItem("access token");
+    onClickLogout() {
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
       if (this.$route.path != "/") this.$router.push({ name: "Home" });
@@ -379,5 +318,9 @@ export default {
 .signupmodal {
   margin: 2rem;
   font-size: 1.8rem;
+}
+
+.Hello {
+  color: gold;
 }
 </style>
