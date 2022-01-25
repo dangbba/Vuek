@@ -8,9 +8,8 @@ import userStore from "@/store/modules/userStore.js";
 Vue.use(Vuex);
 
 const state = {
-  LoadingStatus: false
-}
-
+  LoadingStatus: false,
+};
 
 const store = new Vuex.Store({
   modules: {
