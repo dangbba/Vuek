@@ -44,6 +44,8 @@ export default {
     };
   },
   methods: {
+    // 작성한 유저와 같다면 삭제 => 구현 목표
+    // 아닐시 alert창 알림과 함께 무효
     deleteData() {
       http({
         method: "delete",
