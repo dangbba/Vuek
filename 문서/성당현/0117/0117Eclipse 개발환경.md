@@ -10,7 +10,7 @@
 
 ### Eclipse 프로젝트 Import
 
-![image-20220117230715706](image-20220117230715706.png)
+![maven](maven.png)
 
 Description	Resource	Path	Location	Type
 The method getUser_id() is undefined for the type UserDto	UserController.java	/Backend-spring/src/main/java/com/ssafy/backend/controller	line 77	Java Problem
