@@ -1,6 +1,7 @@
 package com.ssafy.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
+import com.ssafy.backend.model.UserDto;
 import com.ssafy.backend.model.service.ConferenceService;
 
 import io.swagger.annotations.ApiOperation;
@@ -105,5 +107,14 @@ public class ConferenceController {
 	public ResponseEntity<List<ConferenceDto>> getConferenceByCategory(@RequestParam String categoryType) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceByCategory(categoryType), HttpStatus.OK);
 		
+	}
+	
+	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/enter/{idconference}")
+	public ResponseEntity<String> enterConference(@RequestBody Map<String, Integer> enterMap ) throws Exception {
+		if(conferenceService.enterConference(enterMap)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 }

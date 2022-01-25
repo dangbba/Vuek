@@ -2,12 +2,14 @@ package com.ssafy.backend.model.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
+import com.ssafy.backend.model.UserDto;
 
 public interface ConferenceService {
 	boolean createConference(ConferenceDto conferenceDto) throws Exception;
@@ -24,5 +26,5 @@ public interface ConferenceService {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws Exception;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception;
 	
-	boolean enterConference(ConferenceInfoDto conferenceInfoDto) throws Exception;
+	boolean enterConference(Map<String, Integer> enterMap) throws Exception;
 }

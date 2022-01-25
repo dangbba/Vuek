@@ -2,6 +2,7 @@ package com.ssafy.backend.model.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
+import com.ssafy.backend.model.UserDto;
 
 @Mapper
 public interface ConferenceMapper {
@@ -26,5 +28,5 @@ public interface ConferenceMapper {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws SQLException;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws SQLException;
 	
-	boolean enterConference(ConferenceInfoDto conferenceInfoDto) throws SQLException;
+	boolean enterConference(Map<String, Integer> enterMap) throws SQLException;
 }

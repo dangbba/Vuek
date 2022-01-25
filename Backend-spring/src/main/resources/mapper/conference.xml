@@ -99,15 +99,10 @@
 		#{conference_type_name}
 	</select>
 
-	<insert id="enterConference" parameterType="java.util.List">
-		INSERT INTO conference (
-		participant
-		) VALUES
-		<foreach collection="list" item="item" separator=",">
-			(
-			#{item.user_user_id}
-			
-		</foreach>
+	<insert id="enterConference" parameterType="hashmap">
+		update conference join user on conference.participant = user.user_id
+		set participant	= #{user.user_user_id}
+		where id = #{conference.id}
 	</insert>
 
 </mapper>
