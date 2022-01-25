@@ -140,13 +140,7 @@ export default {
           title: "RoomnameError",
           text: "제목은 최대 30자까지 입력 가능합니다.",
         });
-      } else if (
-        cred.file !== cred.file.png ||
-        cred.file.jpg ||
-        cred.file.jpeg ||
-        cred.file.gif ||
-        ""
-      ) {
+      } else if (cred.file !== cred.file.png || cred.file.jpg || cred.file.jpeg || cred.file.gif || "") {
         Swal.fire({
           icon: "error",
           title: "ImgError",
@@ -162,7 +156,7 @@ export default {
         console.log(cred);
       }
     },
-  },
+  }
 };
 </script>
 

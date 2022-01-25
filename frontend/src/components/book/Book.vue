@@ -41,9 +41,10 @@ import Book from "./BookDetail";
 export default {
   name: "App",
   components: {
-    Book,
-  },
+    Book
+  }
 };
 </script>
 
-<style></style>
+<style>
+</style>
