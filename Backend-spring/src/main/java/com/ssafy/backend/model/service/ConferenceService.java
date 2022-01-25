@@ -23,4 +23,6 @@ public interface ConferenceService {
 	List<ConferenceDto> getConferenceBySort(@RequestParam String sort, @RequestParam String asc) throws Exception;
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws Exception;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception;
+	
+	boolean enterConference(ConferenceInfoDto conferenceInfoDto) throws Exception;
 }

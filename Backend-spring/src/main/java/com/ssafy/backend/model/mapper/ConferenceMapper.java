@@ -26,4 +26,5 @@ public interface ConferenceMapper {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws SQLException;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws SQLException;
 	
+	boolean enterConference(ConferenceInfoDto conferenceInfoDto) throws SQLException;
 }

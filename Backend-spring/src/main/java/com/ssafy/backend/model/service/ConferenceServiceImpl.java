@@ -61,4 +61,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception {
 		return conferenceMapper.getConferenceByCategory(categoryType);
 	}
+	
+	@Override
+	public boolean enterConference(ConferenceInfoDto conferenceInfoDto) throws Exception {
+		return conferenceMapper.enterConference(conferenceInfoDto);
+	}
 }

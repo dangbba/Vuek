@@ -63,7 +63,7 @@ public class UserController {
 	public ResponseEntity<String> register(@RequestBody UserDto userDto) throws Exception{
 		logger.debug("idCheck - 호출");
 		
-		if(userService.idCheck(userDto.getUser_id())) {
+		if(!userService.idCheck(userDto.getUser_id())) {
 			if(userService.registerUser(userDto)) {
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 			}

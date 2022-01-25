@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <mapper namespace="com.ssafy.backend.model.mapper.ConferenceMapper">
- 	<insert id="createConference" parameterType="ConferenceDto">
-		insert into conference (id, user_user_id, book_detail_id, conference_type_name, thumbnail_url, title, is_active)
-		values (#{id}, #{user_user_id}, #{book_detail_id}, #{conference_type_name}, #{thumbnail_url}, #{title}, #{is_active})
+
+<mapper
+	namespace="com.ssafy.backend.model.mapper.ConferenceMapper">
+	<insert id="createConference" parameterType="ConferenceDto">
+		insert into
+		conference (id, user_user_id, book_detail_id, conference_type_name,
+		thumbnail_url, title, is_active)
+		values (#{id}, #{user_user_id},
+		#{book_detail_id}, #{conference_type_name}, #{thumbnail_url},
+		#{title}, #{is_active})
 	</insert>
-	
+
 	<update id="closeConference" parameterType="ConferenceDto">
 		update conference
-		set call_end_time = now()
+		set
+		call_end_time = now()
 		where id = #{id}
 	</update>
-	
-	<select id="getConferenceCategory" resultType="ConferenceTypeDto">
+
+	<select id="getConferenceCategory"
+		resultType="ConferenceTypeDto">
 		select *
 		from conference_type
 	</select>
- 
- 	<select id="getConferenceInfo" parameterType="int" resultType="ConferenceInfoDto">
+
+	<select id="getConferenceInfo" parameterType="int"
+		resultType="ConferenceInfoDto">
 		select *
 		from conference
 		where id = #{id}
 	</select>
-	
-	<update id="updateConferenceInfo" parameterType="ConferenceInfoDto">
-		update conference 
-		set conference_type = #{conference_type}, book_detail_id = #{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title}, is_active = #{is_active}
+
+	<update id="updateConferenceInfo"
+		parameterType="ConferenceInfoDto">
+		update conference
+		set conference_type = #{conference_type}, book_detail_id =
+		#{book_detail_id}, thumbnail_url = #{thumbnail_url}, title = #{title},
+		is_active = #{is_active}
 		where id = #{id}
 	</update>
-	
+
 	<select id="getConference" resultType="ConferenceDto">
 		select *
 		from conference
 	</select>
-	
+
 	<sql id="sort">
 		<if test="sort == 'call_start_time'">
 			<if test="asc == 'asc'">
@@ -58,30 +69,45 @@
 			</if>
 		</if>
 	</sql>
-	
-	<select id="getConferenceBySort" parameterType="String" resultType="ConferenceDto">
+
+	<select id="getConferenceBySort" parameterType="String"
+		resultType="ConferenceDto">
 		select *
 		from conference
 		<include refid="sort"></include>
 	</select>
-	
+
 	<sql id="search">
 		<if test="word != null and word != ''">
 			where title like concat('%', #{word}, '%')
 		</if>
-		
+
 	</sql>
-	
-	<select id="searchByTitle" parameterType="String" resultType="ConferenceDto">
+
+	<select id="searchByTitle" parameterType="String"
+		resultType="ConferenceDto">
 		select *
 		from conference
 		<include refid="search"></include>
 	</select>
-	
-	<select id="getConferenceByCategory" parameterType="String" resultType="ConferenceDto">
+
+	<select id="getConferenceByCategory" parameterType="String"
+		resultType="ConferenceDto">
 		select *
 		from conference
-		where conference_type_name = #{conference_type_name}
+		where conference_type_name =
+		#{conference_type_name}
 	</select>
-	
- </mapper>
+
+	<insert id="enterConference" parameterType="java.util.List">
+		INSERT INTO conference (
+		participant
+		) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.user_user_id}
+			
+		</foreach>
+	</insert>
+
+</mapper>
