@@ -10,12 +10,12 @@
 
 ### Eclipse 프로젝트 Import
 
-![image-20220117230715706](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20220117230715706.png)
+![image-20220117230715706](image-20220117230715706.png)
 
 Description	Resource	Path	Location	Type
 The method getUser_id() is undefined for the type UserDto	UserController.java	/Backend-spring/src/main/java/com/ssafy/backend/controller	line 77	Java Problem
 
-![eclipse_error](C:\Users\multicampus\Desktop\C205\S06P12C205\문서\성당현\0117\eclipse_error.png)
+![eclipse_error](eclipse_error.png)
 
 
 
