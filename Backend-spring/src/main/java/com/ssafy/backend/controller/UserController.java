@@ -85,8 +85,7 @@ public class UserController {
 			if (userService.idCheck(loginDto.getUser_id())) {
 				UserDto loginUser = userService.getUser(loginDto.getUser_id());
 				if (loginDto.getPassword().equals(loginUser.getPassword())) {
-					System.out.print(loginDto.getPassword());
-					System.out.print(loginUser.getPassword());
+					
 					String token = jwtService.create("user_id", loginUser.getUser_id(), "access-token");// key, data, subject
 					logger.debug("로그인 토큰정보 : {}", token);
 					resultMap.put("access-token", token);

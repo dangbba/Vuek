@@ -12,15 +12,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 	
-	// 테스트용 front와 연동 이후 링크 보고  수정[시작 ]
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/").setViewName("home");
-        registry.addViewController("/hello").setViewName("hello");
-        registry.addViewController("/login").setViewName("login");
-    }
-	// 테스트용 front와 연동 이후 링크 보고  수정[끝 ]
-	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		/*registry.addInterceptor(interceptor)
