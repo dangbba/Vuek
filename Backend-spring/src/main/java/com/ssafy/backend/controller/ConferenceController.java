@@ -3,6 +3,7 @@ package com.ssafy.backend.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,8 +111,11 @@ public class ConferenceController {
 	}
 	
 	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/enter/{idconference}")
-	public ResponseEntity<String> enterConference(@RequestBody Map<String, Integer> enterMap ) throws Exception {
+	@PostMapping("/enter")
+//	@PostMapping("/enter/1")
+//	@PostMapping("/test")
+	public ResponseEntity<String> enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws Exception {
+		//System.out.print("신호가 온다");
 		if(conferenceService.enterConference(enterMap)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

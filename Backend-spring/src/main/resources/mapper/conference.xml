@@ -99,10 +99,10 @@
 		#{conference_type_name}
 	</select>
 
-	<insert id="enterConference" parameterType="hashmap">
+	<insert id="enterConference" parameterType="map">
 		update conference join user on conference.participant = user.user_id
-		set participant	= #{user.user_user_id}
-		where id = #{conference.id}
+		set participant	= #{user_id}
+		where id = #{idconference}
 	</insert>
 
 </mapper>
