@@ -4,8 +4,10 @@ package com.ssafy.backend.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
@@ -65,7 +67,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public boolean enterConference(Map<String, Integer> enterMap) throws Exception {
+	public boolean enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws Exception {
 		return conferenceMapper.enterConference(enterMap);
 	}
 }
