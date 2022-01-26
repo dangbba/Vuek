@@ -5,9 +5,13 @@ import java.util.Set;
 
 import org.springframework.web.socket.WebSocketSession;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class ChatRoomDto {
 	private int Conferenceid;
 	private Set<WebSocketSession> sessions = new HashSet<>();
