@@ -43,7 +43,7 @@ public class BookSearchController {
 			.queryParam("QueryType", "ItemNewSpecial")
 			.queryParam("SearchTarget", "Book")
 			.queryParam("Version", "20131101")
-			.queryParam("output", "XML")
+			.queryParam("output", "js")
 			.build()
 		)
 		.exchangeToMono(response -> {
@@ -62,7 +62,7 @@ public class BookSearchController {
 			.queryParam("QueryType", "Bestseller")
 			.queryParam("SearchTarget", "Book")
 			.queryParam("Version", "20131101")
-			.queryParam("output", "XML")
+			.queryParam("output", "js")
 			.build()
 		)
 		.exchangeToMono(response -> {
