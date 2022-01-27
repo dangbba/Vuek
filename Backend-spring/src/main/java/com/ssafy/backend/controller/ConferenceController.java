@@ -110,20 +110,6 @@ public class ConferenceController {
 	public ResponseEntity<List<ConferenceDto>> getConferenceByCategory(@RequestParam String categoryType) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceByCategory(categoryType), HttpStatus.OK);
 		
-	}
-	
-	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/enter")
-//	@PostMapping("/enter/1")
-//	@PostMapping("/test")
-	public ResponseEntity<String> enterConference( @RequestBody EnterWrapperDto enterWrapperDto ) throws Exception {
-		System.out.print(enterWrapperDto.getConferenceInfoDto());
-		System.out.println(enterWrapperDto.getUserDto());
-		if(conferenceService.enterConference(enterWrapperDto)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	
 }

@@ -99,10 +99,16 @@
 		#{conference_type}
 	</select>
 
-	<insert id="enterConference" parameterType="EnterWrapperDto">
+	<update id="enterConference" parameterType="EnterWrapperDto">
 		update conference
 		set participant	= CONCAT(participant, ', ', #{userDto.user_id})
 		where id = #{conferenceInfoDto.id}
+	</update>
+	
+	<insert id="createConferenceHistory" parameterType="ConferenceHistoryDto">
+		insert into
+		conference_history (id, conference_id, user_user_id, action)
+		values (#{id}, #{conference_id}, #{user_user_id}, #{action} )
 	</insert>
-
+	
 </mapper>

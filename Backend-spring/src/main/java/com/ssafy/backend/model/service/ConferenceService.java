@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceHistoryDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 import com.ssafy.backend.model.EnterWrapperDto;
@@ -31,4 +32,6 @@ public interface ConferenceService {
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception;
 	
 	boolean enterConference(@RequestBody EnterWrapperDto enterWrapper) throws Exception;
+	
+	boolean createConferenceHistory(@RequestBody ConferenceHistoryDto conferenceHistoryDto) throws Exception;
 }

@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference_history` (
   `conference_id` INT NOT NULL,
   `user_user_id` VARCHAR(45) NOT NULL,
   `action` INT NULL,
-  `inserted_time` DATETIME NULL,
+  `inserted_time` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`, `conference_id`, `user_user_id`),
   INDEX `fk_conference_history_conference1_idx` (`conference_id` ASC),
   INDEX `fk_conference_history_user1_idx` (`user_user_id` ASC),
@@ -301,3 +301,5 @@ insert into conference (id, user_user_id, book_detail_id, conference_type, thumb
 values (1, 1, 1, 1, 1, 1, 1, 1);
 insert into review(id, user_user_id, book_detail_id, review_content, review_name)
 values (1, 1, 1, 1, 1);
+
+select * from conference_history;
