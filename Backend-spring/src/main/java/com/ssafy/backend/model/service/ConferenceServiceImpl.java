@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
-import com.ssafy.backend.model.EnterWrapper;
+import com.ssafy.backend.model.EnterWrapperDto;
 import com.ssafy.backend.model.UserDto;
 import com.ssafy.backend.model.mapper.ConferenceMapper;
 
@@ -69,7 +69,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public boolean enterConference(@RequestBody EnterWrapper enterWrapper) throws Exception {
-		return conferenceMapper.enterConference(enterWrapper);
+	public boolean enterConference(@RequestBody EnterWrapperDto enterWrapperDto) throws Exception {
+		return conferenceMapper.enterConference(enterWrapperDto);
 	}
 }

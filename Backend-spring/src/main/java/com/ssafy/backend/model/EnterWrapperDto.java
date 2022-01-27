@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnterWrapper {
+public class EnterWrapperDto {
 	private UserDto userDto;
-	private ConferenceInfoDto conferneceInfoDto;
+	private ConferenceInfoDto conferenceInfoDto;
 }

@@ -17,5 +17,5 @@ public class ConferenceInfoDto {
 	private String title;
 	private int is_active;
 	
-	private int participant;
+	private String participant;
 }

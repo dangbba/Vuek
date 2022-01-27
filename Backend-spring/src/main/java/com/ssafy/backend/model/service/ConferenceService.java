@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
-import com.ssafy.backend.model.EnterWrapper;
+import com.ssafy.backend.model.EnterWrapperDto;
 import com.ssafy.backend.model.UserDto;
 
 public interface ConferenceService {
@@ -30,5 +30,5 @@ public interface ConferenceService {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws Exception;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception;
 	
-	boolean enterConference(@RequestBody EnterWrapper enterWrapper) throws Exception;
+	boolean enterConference(@RequestBody EnterWrapperDto enterWrapper) throws Exception;
 }
