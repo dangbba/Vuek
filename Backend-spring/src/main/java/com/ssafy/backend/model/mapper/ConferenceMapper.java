@@ -30,5 +30,5 @@ public interface ConferenceMapper {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws SQLException;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws SQLException;
 	
-	boolean enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws SQLException;
+	boolean enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws SQLException;
 }

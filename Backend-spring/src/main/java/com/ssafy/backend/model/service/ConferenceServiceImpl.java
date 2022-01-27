@@ -67,7 +67,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public boolean enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws Exception {
+	public boolean enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws Exception {
 		return conferenceMapper.enterConference(enterMap);
 	}
 }

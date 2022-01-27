@@ -28,5 +28,5 @@ public interface ConferenceService {
 	List<ConferenceDto> searchByTitle(@RequestParam String word) throws Exception;
 	List<ConferenceDto> getConferenceByCategory(@RequestParam String categoryType) throws Exception;
 	
-	boolean enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws Exception;
+	boolean enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws Exception;
 }

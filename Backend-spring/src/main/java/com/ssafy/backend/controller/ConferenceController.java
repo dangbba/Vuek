@@ -114,7 +114,7 @@ public class ConferenceController {
 	@PostMapping("/enter")
 //	@PostMapping("/enter/1")
 //	@PostMapping("/test")
-	public ResponseEntity<String> enterConference(@Param("user_id") Map<Integer, UserDto> enterMap) throws Exception {
+	public ResponseEntity<String> enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws Exception {
 		//System.out.print("신호가 온다");
 		if(conferenceService.enterConference(enterMap)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
