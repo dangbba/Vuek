@@ -6,10 +6,10 @@
 	namespace="com.ssafy.backend.model.mapper.ConferenceMapper">
 	<insert id="createConference" parameterType="ConferenceDto">
 		insert into
-		conference (id, user_user_id, book_detail_id, conference_type_name,
+		conference (id, user_user_id, book_detail_id, conference_type,
 		thumbnail_url, title, is_active)
 		values (#{id}, #{user_user_id},
-		#{book_detail_id}, #{conference_type_name}, #{thumbnail_url},
+		#{book_detail_id}, #{conference_type}, #{thumbnail_url},
 		#{title}, #{is_active})
 	</insert>
 
@@ -95,8 +95,8 @@
 		resultType="ConferenceDto">
 		select *
 		from conference
-		where conference_type_name =
-		#{conference_type_name}
+		where conference_type =
+		#{conference_type}
 	</select>
 
 	<insert id="enterConference" parameterType="map">

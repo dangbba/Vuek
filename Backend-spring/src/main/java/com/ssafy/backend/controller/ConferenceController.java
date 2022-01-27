@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
+import com.ssafy.backend.model.EnterWrapper;
 import com.ssafy.backend.model.UserDto;
 import com.ssafy.backend.model.service.ConferenceService;
+import com.ssafy.backend.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -111,14 +113,16 @@ public class ConferenceController {
 	}
 	
 	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/enter")
+	@PostMapping("/enter/{idconference}")
 //	@PostMapping("/enter/1")
 //	@PostMapping("/test")
-	public ResponseEntity<String> enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws Exception {
+	public ResponseEntity<String> enterConference( @RequestBody EnterWrapper enterWrapper ) throws Exception {
 		//System.out.print("신호가 온다");
-		if(conferenceService.enterConference(enterMap)) {
+		if(conferenceService.enterConference(enterWrapper)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+	
+	
 }

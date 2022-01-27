@@ -8,11 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.backend.model.ConferenceDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
+import com.ssafy.backend.model.EnterWrapper;
 import com.ssafy.backend.model.UserDto;
 import com.ssafy.backend.model.mapper.ConferenceMapper;
 
@@ -67,7 +69,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 	
 	@Override
-	public boolean enterConference(@Param("user_id") Map<Integer, Object> enterMap) throws Exception {
-		return conferenceMapper.enterConference(enterMap);
+	public boolean enterConference(@RequestBody EnterWrapper enterWrapper) throws Exception {
+		return conferenceMapper.enterConference(enterWrapper);
 	}
 }
