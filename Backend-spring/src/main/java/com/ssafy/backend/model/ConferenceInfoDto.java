@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class ConferenceInfoDto {
 	private int id;
-	private int user_user_id;
+	private String user_user_id;
 	private int book_detail_id;
 	private int conference_type;
 	private String call_start_time;
