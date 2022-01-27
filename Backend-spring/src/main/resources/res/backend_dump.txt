@@ -102,12 +102,11 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
   `thumbnail_url` VARCHAR(45) NULL,
   `title` VARCHAR(45) NULL,
   `is_active` TINYINT NULL,
-  `participant` VARCHAR(360) NULL,
+  `participant` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `conference_type`, `book_detail_id`, `user_user_id`),
   INDEX `fk_conference_conference_type1_idx` (`conference_type` ASC),
   INDEX `fk_conference_book_detail1_idx` (`book_detail_id` ASC),
   INDEX `fk_conference_user1_idx` (`user_user_id` ASC),
-  INDEX `fk_conference_user2_idx` (`user_user_id` ASC),
   CONSTRAINT `fk_conference_conference_type1`
     FOREIGN KEY (`conference_type`)
     REFERENCES `ssafy_web_db`.`conference_type` (`id`)
@@ -120,11 +119,6 @@ CREATE TABLE IF NOT EXISTS `ssafy_web_db`.`conference` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_conference_user1`
     FOREIGN KEY (`user_user_id`)
-    REFERENCES `ssafy_web_db`.`user` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_conference_user2`
-    FOREIGN KEY (`participant`)
     REFERENCES `ssafy_web_db`.`user` (`user_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -292,6 +286,8 @@ select * from conference_type;
 use ssafy_web_db;
 insert into user ( user_name, user_id, password)
 values (1, 1, 1);
+insert into user ( user_name, user_id, password)
+values (2, 2, 2);
 insert into conference_type (id, name)
 values (1, '업무');
 insert into conference_type (id, name)
@@ -301,7 +297,7 @@ values (3, '기타');
 select * from book_detail;
 insert into book_detail
 values (1, 1, 1, 1, 1, 1, 1, 1, 1);
-insert into conference (id, user_user_id, book_detail_id, conference_type, thumbnail_url, title, is_active)
-values (1, 1, 1, 1, 1, 1, 1);
+insert into conference (id, user_user_id, book_detail_id, conference_type, thumbnail_url, title, is_active, participant)
+values (1, 1, 1, 1, 1, 1, 1, 1);
 insert into review(id, user_user_id, book_detail_id, review_content, review_name)
 values (1, 1, 1, 1, 1);
