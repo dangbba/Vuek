@@ -78,4 +78,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public boolean createConferenceHistory(@RequestBody ConferenceHistoryDto conferenceHistoryDto) throws Exception {
 		return conferenceMapper.createConferenceHistory(conferenceHistoryDto);
 	}
+	
+	@Override
+	public List<ConferenceHistoryDto> getConferenceHistory(@RequestParam String user_id) throws Exception {
+		return conferenceMapper.getConferenceHistory(user_id);
+	}
 }

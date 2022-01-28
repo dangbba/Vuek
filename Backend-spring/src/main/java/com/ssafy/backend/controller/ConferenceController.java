@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backend.model.ConferenceDto;
+import com.ssafy.backend.model.ConferenceHistoryDto;
 import com.ssafy.backend.model.ConferenceInfoDto;
 import com.ssafy.backend.model.ConferenceTypeDto;
 import com.ssafy.backend.model.EnterWrapperDto;
@@ -110,6 +111,13 @@ public class ConferenceController {
 	public ResponseEntity<List<ConferenceDto>> getConferenceByCategory(@RequestParam String categoryType) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceByCategory(categoryType), HttpStatus.OK);
 		
-	}	
+	}
+	
+	@ApiOperation(value = "지난 회의 이력을 조회한다.", response = ConferenceDto.class)
+	@GetMapping("/getConferenceHistory")
+	public ResponseEntity<List<ConferenceHistoryDto>> getConferenceHistory(@RequestParam String user_id) throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceHistory(user_id), HttpStatus.OK);
+		
+	}
 	
 }

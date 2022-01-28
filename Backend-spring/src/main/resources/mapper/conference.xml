@@ -7,10 +7,10 @@
 	<insert id="createConference" parameterType="ConferenceDto">
 		insert into
 		conference (id, user_user_id, book_detail_id, conference_type,
-		thumbnail_url, title, is_active)
+		thumbnail_url, title, is_active, participant)
 		values (#{id}, #{user_user_id},
 		#{book_detail_id}, #{conference_type}, #{thumbnail_url},
-		#{title}, #{is_active})
+		#{title}, #{is_active}, #{user_user_id})
 	</insert>
 
 	<update id="closeConference" parameterType="ConferenceDto">
@@ -110,5 +110,13 @@
 		conference_history (id, conference_id, user_user_id, action)
 		values (#{id}, #{conference_id}, #{user_user_id}, #{action} )
 	</insert>
+	
+	<select id="getConferenceHistory" parameterType="String"
+		resultType="ConferenceHistoryDto">
+		select *
+		from conference_history
+		where user_user_id =
+		#{user_id}
+	</select>
 	
 </mapper>

@@ -37,4 +37,6 @@ public interface ConferenceMapper {
 	
 	boolean createConferenceHistory(@RequestBody ConferenceHistoryDto conferenceHistoryDto) throws SQLException;
 	
+	List<ConferenceHistoryDto> getConferenceHistory(@RequestParam String user_id) throws SQLException;
+	
 }

@@ -34,4 +34,6 @@ public interface ConferenceService {
 	boolean enterConference(@RequestBody EnterWrapperDto enterWrapper) throws Exception;
 	
 	boolean createConferenceHistory(@RequestBody ConferenceHistoryDto conferenceHistoryDto) throws Exception;
+	
+	List<ConferenceHistoryDto> getConferenceHistory(@RequestParam String user_id) throws Exception;
 }
