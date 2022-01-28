@@ -115,8 +115,7 @@
 		resultType="ConferenceHistoryDto">
 		select *
 		from conference_history
-		where user_user_id =
-		#{user_id}
+		where user_user_id = #{user_id}
 	</select>
 	
 </mapper>
