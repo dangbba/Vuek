@@ -40,7 +40,7 @@ public class EnterConferenceController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 	
-	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "방에 참여한다. 이력을 생성한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/createHistory")
 	public ResponseEntity<String> createConferenceHistory( @RequestBody ConferenceHistoryDto conferenceHistoryDto ) throws Exception {
 		if(conferenceService.createConferenceHistory(conferenceHistoryDto)) {
