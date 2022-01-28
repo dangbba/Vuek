@@ -9,7 +9,7 @@
     <b-button variant="primary" size="sm" @click="updateData">수정</b-button
     >&nbsp;
     <b-button variant="danger" size="sm" @click="deleteData">삭제</b-button>
-    <p class="mt-3">작성일: {{ created }}</p>
+    <p class="mt-3">작성일: {{ created_at }}</p>
     <hr />
     <p class="mb-5">{{ context }}</p>
 
@@ -40,7 +40,7 @@ export default {
       title: "",
       context: "",
       user: "",
-      created: "",
+      created_at : "",
     };
   },
   methods: {

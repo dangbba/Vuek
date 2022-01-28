@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <b-form-select v-model="selected" :options="options" class="mb-3">
+      <!-- This slot appears above the options from 'options' prop -->
+      <template #first>
+        <b-form-select-option :value="null" disabled>--카테고리를 선택해주세요--</b-form-select-option>
+      </template>
+    </b-form-select>
+    <b-button class="ms-2" @click="getFilter">선택</b-button>
+
+    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+  </div>
+
+</template>
+
+<script>
+import { mapActions } from "vuex";
+
+const conferenceStore = "conferenceStore";
+
+export default {
+  name: 'ConferenceFilter',
+  methods: {
+    ...mapActions(conferenceStore, ['getConferenceByCategory']),
+    getFilter() {
+      // console.log(this.selected)
+      if (this.selected == null) {
+        alert('카테고리를 선택해주세요')
+      } else {
+        this.getConferenceByCategory(this.selected)
+      }
+  }
+  },
+  data: function () {
+    return {
+      selected: null,
+      options: [
+        { value: '1', text: '업무' },
+        { value: '2', text: '교육' },
+        { value: '3', text: '기타' },
+      ]
+    }
+  },
+
+}
+</script>
+
+<style>
+
+</style>

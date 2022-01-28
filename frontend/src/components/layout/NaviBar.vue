@@ -157,8 +157,11 @@
             </b-modal>
           </div>
         </b-navbar-nav>
-        <b-form-input placeholder="검색할 게시글 입력" style="width: 600px">
-        </b-form-input>
+        <b-form inline>
+          <b-form-input class="d-inline" placeholder="검색할 게시글 입력" style="width: 600px">
+          </b-form-input>
+          <b-button>검색</b-button>
+        </b-form>
       </b-collapse>
     </b-navbar>
   </div>

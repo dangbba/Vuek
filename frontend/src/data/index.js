@@ -1,36 +1,4 @@
 export default {
-  Books: [
-    {
-      title: "인간의 종말",
-      img_path:
-        "http://image.kyobobook.co.kr/images/book/xlarge/893/x9791196961893.jpg",
-      recommended: 0,
-    },
-    {
-      title: "인간의 종말",
-      img_path:
-        "http://image.kyobobook.co.kr/images/book/xlarge/893/x9791196961893.jpg",
-      recommended: 0,
-    },
-    {
-      title: "인간의 종말",
-      img_path:
-        "http://image.kyobobook.co.kr/images/book/xlarge/893/x9791196961893.jpg",
-      recommended: 0,
-    },
-    {
-      title: "인간의 종말",
-      img_path:
-        "http://image.kyobobook.co.kr/images/book/xlarge/893/x9791196961893.jpg",
-      recommended: 0,
-    },
-    {
-      title: "인간의 종말",
-      img_path:
-        "http://image.kyobobook.co.kr/images/book/xlarge/893/x9791196961893.jpg",
-      recommended: 0,
-    },
-  ],
   User: [
     {
       user_id: 1,
@@ -335,63 +303,6 @@ export default {
     },
   ],
   Comment: [
-    {
-      comment_id: 1,
-      content_id: 2,
-      user_id: 1,
-      context: "안녕하세요1",
-      created_at: "2018-09-15",
-      updated_at: null,
-    },
-    {
-      comment_id: 2,
-      content_id: 1,
-      user_id: 1,
-      context: "안녕하세요2",
-      created_at: "2018-09-12",
-      updated_at: null,
-    },
-    {
-      comment_id: 3,
-      content_id: 3,
-      user_id: 3,
-      context: "안녕하세요3",
-      created_at: "2018-09-15",
-      updated_at: null,
-    },
-    {
-      comment_id: 4,
-      content_id: 3,
-      user_id: 1,
-      context: "안녕하세요4",
-      created_at: "2018-09-19",
-      updated_at: null,
-    },
-    {
-      comment_id: 5,
-      content_id: 3,
-      user_id: 2,
-      context: "안녕하세요6",
-      created_at: "2018-09-20",
-      updated_at: null,
-    },
-  ],
-  SubComment: [
-    {
-      subcomment_id: 1,
-      comment_id: 3,
-      user_id: 3,
-      context: "서브 댓글 1",
-      created_at: "2018-09-15",
-      updated_at: null,
-    },
-    {
-      subcomment_id: 2,
-      comment_id: 3,
-      user_id: 1,
-      context: "서브 댓글 2",
-      created_at: "2018-09-16",
-      updated_at: null,
-    },
+    
   ],
 };

@@ -88,28 +88,7 @@ export default {
     return {
       showBooks: window.innerWidth <= 768 ? true : false,
       items,
-      slides: [
-        {
-          title: "The Thinker's Guide to The Art of Socratic Questioning",
-          cover:
-            "https://images-na.ssl-images-amazon.com/images/I/81WmLFAO4yL.jpg",
-          authors: "Richard Paul, Linda Elder",
-          link: "https://maciejsmolinski.com/books/socratic",
-        },
-        {
-          title: "Docker in Action",
-          cover:
-            "https://images-na.ssl-images-amazon.com/images/I/81J4b6i9KyL.jpg",
-          authors: "Jeff Nickoloff",
-        },
-        {
-          title: "On Writing Well: The Classic Guide to Writing Nonfiction",
-          cover:
-            "https://images-na.ssl-images-amazon.com/images/I/610AIYRtaDL.jpg",
-          authors: "William Zinsser",
-          link: "https://maciejsmolinski.com/books/writing",
-        },
-      ],
+      slides: 5
     };
   },
   methods: {

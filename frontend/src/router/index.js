@@ -64,6 +64,11 @@ const routes = [
     name: "Conference_detail",
     component: Conference_detail,
   },
+  {
+    path: "/conference/view/:contentId?",
+    name: "Conference_detail",
+    component: Conference_detail,
+  }, // 임시?
 ];
 
 const router = new VueRouter({
@@ -79,8 +84,9 @@ router.beforeEach((to, from, next) => {
   }, 30);
 });
 
-// router.afterEach((to, from) => {
-//   store.commit("endSpinner");
-// });
+// eslint-disable-next-line
+router.afterEach((to, from) => {
+  store.commit("endSpinner");
+});
 
 export default router;

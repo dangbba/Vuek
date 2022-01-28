@@ -3,6 +3,7 @@
     회의목록 보여주기
     <div id="app">
       <carousel-3d
+        :space="300" :width="600" :height="500"
         :controls-visible="true"
         :clickable="false"
         :autoplay="true"
@@ -12,6 +13,7 @@
       >
         <slide v-for="(slide, i) in slides" :key="slide" :index="i">
           <figure>
+            <router-link to="/board">
             <img
               src="https://images-na.ssl-images-amazon.com/images/I/81WmLFAO4yL.jpg"
             />
@@ -19,6 +21,7 @@
               src="https://images-na.ssl-images-amazon.com/images/I/81J4b6i9KyL.jpg"
             />
             <figcaption>각 페이지</figcaption>
+            </router-link>
           </figure>
         </slide>
       </carousel-3d>
@@ -26,8 +29,10 @@
       리뷰
       <carousel-3d :space="300" :width="200" :height="100">
         <slide v-for="(slide, i) in slides" :key="i" :index="i" class="item">
+          <router-link to="/board/detail/1">
           <span class="title">리뷰</span>
           <p>내용</p>
+          </router-link>
         </slide>
       </carousel-3d>
     </div>

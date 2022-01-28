@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <div class="searchBox">
-      <b-form-input
-        class="form-control"
-        v-model="text"
-        placeholder="회의 제목 입력"
-      ></b-form-input>
-      <button>검색</button>
+  <div class="container">
+
+    <div class="header">
+      <h1 class="fw-bold my-5">Conference List</h1>
     </div>
-    <b-button v-b-modal.modal3-prevent-closing variant="primary"
-      >방 생성하기</b-button
+
+
+    <conference-search></conference-search>
+
+  
+    <b-button v-b-modal.modal3-prevent-closing variant="primary" class="col-4 mb-3"
+      >컨퍼런스 생성하기</b-button
     >
-    <b-modal
+        <b-modal
       id="modal3-prevent-closing"
       ref="modal"
       title="컨퍼런스 생성하기"
@@ -25,13 +26,23 @@
           label="용도"
           label-for="usage-roominput"
         >
-          <b-dropdown id="dropdown-1" text="아이템 목록" class="m-md-2">
-            <b-dropdown-item active>업무</b-dropdown-item>
-            <b-dropdown-item>교육</b-dropdown-item>
-            <b-dropdown-item>기타</b-dropdown-item>
+          <b-dropdown
+            id="ddCommodity"
+            name="ddCommodity"
+            v-model="dd.ddSelectedOption"
+            text="아이템 목록"
+            variant="primary"
+            class="m-md-2" v-on:change="changeItem"
+          >
+            <b-dropdown-item
+              v-for="option in dd.options" 
+              :key="option.value" 
+              :value="option.value"
+              @click="dd.ddSelectedOption = option.value">{{ option.text }}</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item disabled>Disabled action</b-dropdown-item>
           </b-dropdown>
+          <span>Selected: {{ dd.ddSelectedOption }}</span>
         </b-form-group>
       </form>
       <form ref="form">
@@ -71,19 +82,26 @@
         >
           <b-form-file
             accept=".png, .jpg, .jpeg, .gif"
-            v-model="file"
+            v-model="roomCredentials.thumbnail"
             class="mt-3"
             plain
           ></b-form-file>
-          <div class="mt-3">Selected file: {{ file ? file.name : "" }}</div>
+          <div class="mt-3">Selected file: {{ roomCredentials.thumbnail ? roomCredentials.thumbnail.name : "" }}</div>
         </b-form-group>
       </form>
       <br />
-      <b-button @click="roomIsValid(roomCredentials)"> 생성 </b-button>
+      <b-button variant="outline-primary" @click="roomIsValid(roomCredentials)"> 생성 </b-button>&nbsp;
+      <b-button @click="resetValue"> 취소 </b-button>
     </b-modal>
-    <div class="header">
-      <span>Video Chat</span>
+
+
+    <div class="row">
+      <conference-sort class="offset-5 col-4"></conference-sort>
+      <conference-filter class="col-3"></conference-filter>
     </div>
+
+    <conference-list></conference-list>
+
     <div class="page-content">
       <div class="main-panel">
         <div class="video-navigation">
@@ -107,8 +125,19 @@
 
 <script>
 import Swal from "sweetalert2";
+import ConferenceList from './ConferenceList.vue';
+import ConferenceFilter from './ConferenceFilter.vue';
+import ConferenceSearch from './ConferenceSearch.vue';
+import ConferenceSort from './ConferenceSort.vue';
+
 export default {
   name: "Conference",
+  components: {
+    ConferenceList,
+    ConferenceFilter,
+    ConferenceSearch,
+    ConferenceSort,
+  },
   data() {
     return {
       text: "",
@@ -117,6 +146,31 @@ export default {
         content: "",
         file: "",
       },
+      //
+      someOtherProperty: null,
+      dd: {
+        originalValue: [],
+        ddSelectedOption: "업무",
+        disabled: false,
+        readonly: false,
+        visible: true,
+        color: "",
+        options: [
+          {
+            "value": "업무",
+            "text": "업무"
+          },
+          {
+            "value": "교육",
+            "text": "교육"
+          },
+          {
+            "value": "기타",
+            "text": "기타"
+          }
+        ]
+      }
+      //
     };
   },
   methods: {
@@ -156,11 +210,35 @@ export default {
         console.log(cred);
       }
     },
-  }
+    //
+    changeItem: async function () {
+      //grab some remote data
+      try {
+        let response = await this.$http.get('https://www.example.com/api/' + this.dd.ddSelectedOption + '.json');
+        console.log(response.data);
+        this.someOtherProperty = response.data;
+      } catch (error) {
+          console.log(error)
+        }
+    },
+    resetValue() {
+      this.$router.push("/");
+    },
+    //
+  },
+  watch: {
+
+  },
+  async created() {
+
+  },
+  resetValue() {
+      this.$router.push("/");
+    },
 };
 </script>
 
-<style lang="scss">
+<style>
 body {
   margin: 0;
   padding: 0;
@@ -301,11 +379,5 @@ body {
   font-size: 1.8rem;
 }
 
-.form-control {
-  width: 80%;
-}
-.searchBox {
-  display: inline;
-  width: 800px;
-}
+
 </style>
