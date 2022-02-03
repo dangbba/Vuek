@@ -1,0 +1,47 @@
+{
+        "id": 1,
+        "Review" : {
+            "bookDetail": {
+            "author": "string",
+            "id": 1,
+            "overview": "string",
+            "price": 0,
+            "publish_date": "string",
+            "publisher": "string",
+            "sail_status": "string",
+            "title": "string",
+            "title_url": "string"
+            },
+        "id" : 1,
+        "review_content" : "1",
+        "reivew_name" : "1"
+        },
+        "comment_content": "1",
+        "user": {
+        "userId": "1",
+        "username": "1"
+        }
+}
+
+{
+"Review" : {
+            "bookDetail": {
+            "author": "string",
+            "id": 1,
+            "overview": "string",
+            "price": 0,
+            "publish_date": "string",
+            "publisher": "string",
+            "sail_status": "string",
+            "title": "string",
+            "title_url": "string"
+            },
+        "user": {
+        "userId": "1",
+        "username": "1"
+        },
+        "id" : 2,
+        "review_content" : "2",
+        "reivew_name" : "2"
+        }
+        }
