@@ -104,13 +104,12 @@ public class ConferenceRepositorySupport {
 	@Modifying
 	@Transactional
 	public void updateConferenceInfo(Conference conference) {
-		Query query = em.createNativeQuery("update Conference set conference_type_id = :conference_type_id, book_detail_id = :book_detail_id, thumbnail_url = :thumbnail_url, title = :title, is_active = :is_active, description = :description where conference_id = :conference_id", Conference.class)
+		Query query = em.createNativeQuery("update Conference set conference_type_id = :conference_type_id, book_detail_id = :book_detail_id, thumbnail_url = :thumbnail_url, title = :title, description = :description where conference_id = :conference_id", Conference.class)
 				.setParameter("conference_id", conference.getId())
 				.setParameter("conference_type_id", conference.getConferenceType().getId())
 				.setParameter("book_detail_id", conference.getBookDetail().getId())
 				.setParameter("thumbnail_url", conference.getThumbnail_url())
 				.setParameter("title", conference.getTitle())
-				.setParameter("is_active", conference.getIs_active())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
 		em.close();
