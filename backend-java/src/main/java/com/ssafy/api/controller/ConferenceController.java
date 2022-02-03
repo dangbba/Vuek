@@ -37,7 +37,7 @@ public class ConferenceController {
 	@Autowired
 	private ConferenceService conferenceService;
 	//////////
-	@ApiOperation(value = "방을 생성한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "방을 생성한다. 그리고 방 ID를 반환한다.", response = String.class)
 	@PostMapping
 	public Long createConference(@RequestBody Conference conference) throws Exception {
 		conferenceService.createConference(conference);

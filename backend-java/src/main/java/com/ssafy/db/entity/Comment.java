@@ -30,4 +30,8 @@ public class Comment {
     public void created_at() {
         this.created_at = LocalDateTime.now();
     }
+
+    public void updated_at() {
+        this.updated_at = LocalDateTime.now();
+    }
 }

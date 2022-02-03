@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ssafy.db.entity.Comment;
 import com.ssafy.db.repository.CommentRepository;
+import com.ssafy.db.repository.CommentRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentRepository commentRepository;
+
+	@Autowired
+	private CommentRepositorySupport commentRepositorySupport;
 
 	@Override
 	public void addComment(@RequestBody Comment comment) throws  Exception {
@@ -29,11 +33,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	@Override
 	public void updateCommentOne(Comment comment) throws Exception {
-		Comment findComment = getComments().get(comment.getId());
-		findComment.setReview(comment.getReview());
-		findComment.setComment_content(comment.getComment_content());
-		findComment.setUpdated_at(LocalDateTime.now());
-		commentRepository.saveAndFlush(findComment);
+		commentRepositorySupport.updateCommentOne(comment);
 	}
 
 	@Override
