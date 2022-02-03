@@ -33,6 +33,7 @@ public class Conference {
     private String title;
     private int is_active;
     private String participant;
+    private String description;
 
     @PrePersist
     public void callStartTime() {
