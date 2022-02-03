@@ -19,8 +19,9 @@ public class ConferenceInfoDto {
     private String title;
     private int is_active;
     private String participant;
+    private String description;
 
-    public ConferenceInfoDto(int id, String user_id, int book_detail_id, int conference_type_id, String call_start_time, String thumbnail_url, String title, int is_active, String participant) {
+    public ConferenceInfoDto(int id, String user_id, int book_detail_id, int conference_type_id, String call_start_time, String thumbnail_url, String title, int is_active, String participant, String description) {
         this.id = id;
         this.user_id = user_id;
         this.book_detail_id = book_detail_id;
@@ -30,5 +31,6 @@ public class ConferenceInfoDto {
         this.title = title;
         this.is_active = is_active;
         this.participant = participant;
+        this.description = description;
     }
 }

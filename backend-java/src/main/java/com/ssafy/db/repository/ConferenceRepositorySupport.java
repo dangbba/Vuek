@@ -40,10 +40,10 @@ public class ConferenceRepositorySupport {
 		Query query = em.createQuery(
 						"insert into" +
 								"conference (conference_id, user_id, book_detail_id, conference_type_id," +
-								"thumbnail_url, title, is_active, participant, call_start_time)" +
+								"thumbnail_url, title, is_active, participant, call_start_time, description)" +
 								"values (:conference_id, :user_id," +
 								":book_detail_id, :conference_type_id, :thumbnail_url," +
-								":title, :is_active, :participant, :call_start_time)")
+								":title, :is_active, :participant, :call_start_time, :description)")
 				.setParameter("conference_id", conference.getId())
 				.setParameter("user_id", conference.getUser().getUserId())
 				.setParameter("book_detail_id", conference.getBookDetail().getId())
@@ -52,7 +52,8 @@ public class ConferenceRepositorySupport {
 				.setParameter("title", conference.getTitle())
 				.setParameter("is_active", conference.getIs_active())
 				.setParameter("participant", conference.getParticipant())
-				.setParameter("call_start_time", conference.getCallStartTime());
+				.setParameter("call_start_time", conference.getCallStartTime())
+				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
 
 		return conference.getId();
@@ -100,13 +101,14 @@ public class ConferenceRepositorySupport {
 	@Modifying
 	@Transactional
 	public void updateConferenceInfo(Conference conference) {
-		Query query = em.createNativeQuery("update Conference set conference_type_id = :conference_type_id, book_detail_id = :book_detail_id, thumbnail_url = :thumbnail_url, title = :title, is_active = :is_active where conference_id = :conference_id", Conference.class)
+		Query query = em.createNativeQuery("update Conference set conference_type_id = :conference_type_id, book_detail_id = :book_detail_id, thumbnail_url = :thumbnail_url, title = :title, is_active = :is_active, description = :description where conference_id = :conference_id", Conference.class)
 				.setParameter("conference_id", conference.getId())
 				.setParameter("conference_type_id", conference.getConferenceType().getId())
 				.setParameter("book_detail_id", conference.getBookDetail().getId())
 				.setParameter("thumbnail_url", conference.getThumbnail_url())
 				.setParameter("title", conference.getTitle())
-				.setParameter("is_active", conference.getIs_active());
+				.setParameter("is_active", conference.getIs_active())
+				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
 	}
 
