@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-// test 링크로 연결했습니다 front와 연동 이후 링크만 수정 하면됩니다
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -16,8 +15,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
         		"/",
-                "/v2/api-docs", "/configuration/ui", "/swagger-resoureces",
-                "/configuration/security", "/swagger-ui.html", "/webjars/**", "/swagger/**");
+                "/v2/api-docs", "/configuration/**", "/swagger-resoureces/**",
+                "/configuration/security", "/swagger-ui.html/**", "/webjars/**", "/swagger/**");
     }
 
 	@Override
@@ -26,11 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .and() // Session 전략 설정
             .csrf().disable()  // axios post 요청시 csrf token이 없으면 요청이 거절당한다. 일시적으로 사용안함으로 바꿈.
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()  // 페이지 권한 설정
             .authorizeRequests()
             .antMatchers("/css/**", "/js/**", "/static/**").permitAll()
-            .antMatchers("/search/**",  "/**").permitAll()
+            .antMatchers("/search/**",  "/").permitAll()
             .antMatchers("/signup/**").authenticated()
 //            .antMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
