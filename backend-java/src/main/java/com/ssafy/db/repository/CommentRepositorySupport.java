@@ -17,7 +17,6 @@ import javax.persistence.Query;
 @RequiredArgsConstructor
 public class CommentRepositorySupport {
     private final EntityManager em;
-    private final JPAQueryFactory queryFactory;
 
     @Modifying
     @Transactional
@@ -35,5 +34,6 @@ public class CommentRepositorySupport {
                 .set(qComment.updated_at, comment.getUpdated_at())
                 .where(qComment.id.eq(comment.getId()))
                 .execute();
+        em.close();
     }
 }

@@ -14,7 +14,8 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    Review saveAndFlush(Review review);
+    Review save(Review review);
+//    Review findById(long id);
     List<Review> findAll();
     void deleteById(int id);
 }

@@ -15,8 +15,8 @@
         "userId": "1",
         "username": "1"
         },
-        "id" : 2,
-        "review_content" : "2",
-        "reivew_name" : "2"
+        "id" : 1,
+        "review_content" : "1",
+        "reivew_name" : "1"
         }
 }

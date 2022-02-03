@@ -46,13 +46,13 @@ public class ReviewController {
 	
 	@ApiOperation(value = "단일 리뷰를 조회하여 반환", response = String.class)
 	@GetMapping("/{review_id}")
-	public ResponseEntity<Review> getReviewOne(@PathVariable int review_id) throws Exception {
+	public ResponseEntity<Review> getReviewOne(@PathVariable long review_id) throws Exception {
 		return new ResponseEntity<>(reviewService.getReviewOne(review_id), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "리뷰를 삭제한다, SUCCESS/FAIL", response = String.class)
 	@DeleteMapping("/{review_id}")
-	public ResponseEntity<String> deleteReview(@PathVariable int review_id) throws Exception {
+	public ResponseEntity<String> deleteReview(@PathVariable long review_id) throws Exception {
 		reviewService.deleteReview(review_id);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}

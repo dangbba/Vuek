@@ -55,7 +55,7 @@ public class ConferenceRepositorySupport {
 				.setParameter("call_start_time", conference.getCallStartTime())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
-
+		em.close();
 		return conference.getId();
 	}
 
@@ -69,10 +69,13 @@ public class ConferenceRepositorySupport {
 				.setParameter("call_end_time", conference.getCallEndTime())
 				.setParameter("is_active", conference.getIs_active());
 		query.executeUpdate();
+		em.close();
 	}
 
 	public List<ConferenceType> getConferenceCategory() {
-		return em.createQuery("select c from ConferenceType c", ConferenceType.class).getResultList();
+		List<ConferenceType> list =  em.createQuery("select c from ConferenceType c", ConferenceType.class).getResultList();
+		em.close();
+		return list;
 	}
 
 	public Conference getConferenceInfo(int idconference) {
@@ -110,6 +113,7 @@ public class ConferenceRepositorySupport {
 				.setParameter("is_active", conference.getIs_active())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
+		em.close();
 	}
 
 //	public List<Conference> getConference() {
@@ -147,6 +151,7 @@ public class ConferenceRepositorySupport {
 		long count = updateClause.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
 				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
 				.execute();
+		em.close();
 //		Query query = em.createNativeQuery(
 //				"update conference set participant = CONCAT(participant, ', ', :user_id) where conference_id = :id")
 //						.setParameter("user_id", enterWrapperDto.getUser().getUserId())
@@ -169,11 +174,14 @@ public class ConferenceRepositorySupport {
 				.setParameter("action", conferenceHistory.getAction())
 				.setParameter("inserted_time", conferenceHistory.getInserted_time());
 		query.executeUpdate();
+		em.close();
 	}
 
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
-		return em.createNativeQuery("select conference_history_id, conference_id, user_id, action, inserted_time from conference_history  where user_id = :user_id", ConferenceHistory.class)
+		List<ConferenceHistory> list = em.createNativeQuery("select conference_history_id, conference_id, user_id, action, inserted_time from conference_history  where user_id = :user_id", ConferenceHistory.class)
 				.setParameter("user_id", user_id).getResultList();
+		em.close();
+		return list;
 	}
 
 	///////////////////////////////////////////////////

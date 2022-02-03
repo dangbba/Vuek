@@ -15,7 +15,7 @@ public class Review {
     @Id
     @GeneratedValue
     @Column(name = "review_id")
-    private int id;
+    private long id;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "book_detail_id")
     private BookDetail bookDetail;
@@ -26,5 +26,14 @@ public class Review {
     private String review_name;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+    @PrePersist
+    public void created_at() {
+        this.created_at = LocalDateTime.now();
+    }
+
+    public void updated_at() {
+        this.updated_at = LocalDateTime.now();
+    }
 
 }

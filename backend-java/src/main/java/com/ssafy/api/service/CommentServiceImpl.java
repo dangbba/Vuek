@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> getComments() throws Exception {
 		return commentRepository.findAll();
 	}
-/////////////////////////////
+
 	@Transactional
 	@Override
 	public void updateCommentOne(Comment comment) throws Exception {
