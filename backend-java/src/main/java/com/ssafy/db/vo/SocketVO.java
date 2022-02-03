@@ -7,6 +7,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 public class SocketVO {
-	private String username;
+	private String userName;
 	private String content;
 }
