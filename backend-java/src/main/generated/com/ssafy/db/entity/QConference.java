@@ -30,6 +30,8 @@ public class QConference extends EntityPathBase<Conference> {
 
     public final QConferenceType conferenceType;
 
+    public final StringPath description = createString("description");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> is_active = createNumber("is_active", Integer.class);
