@@ -19,7 +19,7 @@ public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
     public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 
-    public QBaseEntity(String variable) {
+    public QBaseEntity(QUser variable) {
         super(BaseEntity.class, forVariable(variable));
     }
 

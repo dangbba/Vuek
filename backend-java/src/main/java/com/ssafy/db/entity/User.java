@@ -17,16 +17,19 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-public class User extends BaseEntity implements Serializable {
+public class User implements Serializable {
 
-    @Id @Column(name = "user_id")
+    @Id
+    @Column(name = "user_id")
     String userId;
+
+    @Column(name = "user_name")
+    String username;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 
-    @Column(name = "user_name")
-    String username;
+
 
 }
