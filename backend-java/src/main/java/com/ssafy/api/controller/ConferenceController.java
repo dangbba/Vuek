@@ -3,7 +3,6 @@ package com.ssafy.api.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import com.ssafy.api.service.ConferenceService;
 import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
@@ -12,6 +11,7 @@ import com.ssafy.db.entity.ConferenceType;
 import io.openvidu.java.client.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,19 @@ import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpSession;
 
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.OpenViduRole;
+import io.openvidu.java.client.Session;
+import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.ConnectionType;
+import retrofit2.http.POST;
+
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/api/v1/conferences")
 public class ConferenceController {
-	
 	public static final Logger logger = LoggerFactory.getLogger(ConferenceController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
@@ -58,84 +66,119 @@ public class ConferenceController {
 	@Autowired
 	private ConferenceService conferenceService;
 	//////////
-	@ApiOperation(value = "방을 생성한다. 그리고 JSON객체를 반환한다.", response = String.class)
+	@ApiOperation(value = "방을 생성한다. 그리고 DB저장 여부에 따라 성공/실패를 반환한다.", response = String.class)
 	@PostMapping("/create")
 	public ResponseEntity<String> createConference(@RequestBody Conference conference) throws Exception {
 		conferenceService.createConference(conference);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "존재하는 방에 참여하며 Json객체를 반환한다", response = JSONObject.class)
 	@PostMapping("/join")
-	public ResponseEntity<JSONObject> getToken(@RequestBody String sessionNameParam, HttpSession httpSession, EnterWrapperDto enterWrapperDto) throws Exception {
+	public ResponseEntity<JSONObject> getToken(@RequestBody String sessionNameParam, HttpSession httpSession) throws Exception {
 		System.out.println("Getting a token from OpenVidu Server | {sessionName}=" + sessionNameParam);
+
 		JSONObject sessionJSON = (JSONObject) new JSONParser().parse(sessionNameParam);
 
-		String sessionName = (String) sessionJSON.get("sessionId");
-		String serverData = "{\"serverData\": \"" + httpSession.getAttribute("loggedUser") + "\"}";
+		// The video-call to connect
+		String sessionName = (String) sessionJSON.get("sessionName");
+
+		// Role associated to this user
 		OpenViduRole role = OpenViduRole.SUBSCRIBER;
-		if (httpSession.getAttribute("role") == "SUBSCRIBER") {
-			role = OpenViduRole.PUBLISHER;
-		}
+
+		// Optional data to be passed to other users when this user connects to the
+		// video-call. In this case, a JSON with the value we stored in the HttpSession
+		// object on login
+		String serverData = "{\"serverData\": \"" + httpSession.getAttribute("loggedUser") + "\"}";
+		// Build connectionProperties object with the serverData and the role
 		ConnectionProperties connectionProperties = new ConnectionProperties.Builder().type(ConnectionType.WEBRTC).data(serverData).role(role).build();
+
 
 		JSONObject responseJson = new JSONObject();
 
 		if (this.mapSessions.get(sessionName) != null) {
-			System.out.println("Existing session" + sessionName);
+			// Session already exists
+			System.out.println("Existing session " + sessionName);
 			try {
+
+				// Generate a new Connection with the recently created connectionProperties
 				String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
 
+				// Update our collection storing the new token
 				this.mapSessionNamesTokens.get(sessionName).put(token, role);
+
+				// Prepare the response with the token
 				responseJson.put(0, token);
-				conferenceService.enterConference(enterWrapperDto);
+
+				// Return the response to the client
 				return new ResponseEntity<>(responseJson, HttpStatus.OK);
+
 			} catch (OpenViduJavaClientException e1) {
+				// If internal error generate an error message and return it to client
 				return getErrorResponse(e1);
 			} catch (OpenViduHttpException e2) {
 				if (404 == e2.getStatus()) {
+					// Invalid sessionId (user left unexpectedly). Session object is not valid
+					// anymore. Clean collections and continue as new session
 					this.mapSessions.remove(sessionName);
 					this.mapSessionNamesTokens.remove(sessionName);
 				}
 			}
 		}
-		return new ResponseEntity<>(responseJson, HttpStatus.CONFLICT);
+		try {
+			// Create a new OpenVidu Session
+			Session session = this.openVidu.createSession();
+			// Generate a new Connection with the recently created connectionProperties
+			String token = session.createConnection(connectionProperties).getToken();
+
+			// Store the session and the token in our collections
+			this.mapSessions.put(sessionName, session);
+			this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
+			this.mapSessionNamesTokens.get(sessionName).put(token, role);
+
+			// Prepare the response with the token
+			responseJson.put(0, token);
+
+			// Return the response to the client
+			return new ResponseEntity<>(responseJson, HttpStatus.OK);
+		} catch (Exception e) {
+			// If error generate an error message and return it to client
+			return getErrorResponse(e);
+		}
 	}
 
-	@ApiOperation(value = "방에서 나간다.", response = HttpStatus.class)
 	@PostMapping("/remove")
-	public ResponseEntity<JSONObject> removeUser(@RequestBody String sessionNameToken, HttpSession httpSession) throws Exception {
+	public ResponseEntity<JSONObject> removeUser(@RequestBody String sessionNameToken) throws Exception {
 		System.out.println("Removing user | {sessionName, token}=" + sessionNameToken);
 
+		// Retrieve the params from BODY
 		JSONObject sessionNameTokenJSON = (JSONObject) new JSONParser().parse(sessionNameToken);
 		String sessionName = (String) sessionNameTokenJSON.get("sessionName");
 		String token = (String) sessionNameTokenJSON.get("token");
 
-		//세션 존재성 검사
+		// If the session exists
 		if (this.mapSessions.get(sessionName) != null && this.mapSessionNamesTokens.get(sessionName) != null) {
+
+			// If the token exists
 			if (this.mapSessionNamesTokens.get(sessionName).remove(token) != null) {
+				// User left the session
 				if (this.mapSessionNamesTokens.get(sessionName).isEmpty()) {
+					// Last user left: session must be removed
 					this.mapSessions.remove(sessionName);
 				}
-				//DB에서 지우는 과정 수행 필요
 				return new ResponseEntity<>(HttpStatus.OK);
-
 			} else {
-				//토큰 유효성 에러
+				// The TOKEN wasn't valid
+				System.out.println("Problems in the app server: the TOKEN wasn't valid");
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+
 		} else {
+			// The SESSION does not exist
+			System.out.println("Problems in the app server: the SESSION does not exist");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	private ResponseEntity<JSONObject> getErrorResponse(Exception e) {
-		JSONObject json = new JSONObject();
-		json.put("cause", e.getCause());
-		json.put("error", e.getMessage());
-		json.put("exception", e.getClass());
-		return new ResponseEntity<>(json, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 
 	/////// is_active 수정
 	@ApiOperation(value = "방을 종료한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
@@ -208,5 +251,12 @@ public class ConferenceController {
 		conferenceService.createConferenceHistory(conferenceHistory);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-	
+
+	private ResponseEntity<JSONObject> getErrorResponse(Exception e) {
+		JSONObject json = new JSONObject();
+		json.put("cause", e.getCause());
+		json.put("error", e.getMessage());
+		json.put("exception", e.getClass());
+		return new ResponseEntity<>(json, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
