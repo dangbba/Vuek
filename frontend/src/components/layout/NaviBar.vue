@@ -72,12 +72,6 @@
         >
           <div class="px-3 py-2">
             <div class="icon-bar">
-              <router-link to="/board" id="tooltip-4"
-                ><b-icon-clipboard></b-icon-clipboard
-              ></router-link>
-              <b-tooltip target="tooltip-4" triggers="hover">
-                게시판
-              </b-tooltip>
               <router-link to="/book" id="tooltip-5"
                 ><b-icon-book></b-icon-book
               ></router-link>

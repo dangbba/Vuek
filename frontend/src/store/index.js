@@ -4,7 +4,7 @@ import mutations from "../store/mutaition";
 import createPersistedState from "vuex-persistedstate";
 
 import userStore from "@/store/modules/userStore.js";
-import conferenceStore from "@/store/modules/ConferenceStore.js";
+import conferenceStore from "@/store/modules/conferenceStore.js";
 
 Vue.use(Vuex);
 
