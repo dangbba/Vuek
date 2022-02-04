@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ConferenceService {
-	Long createConference(Conference conference) throws Exception;
+	long createConference(Conference conference) throws Exception;
 	void closeConference(Conference conference) throws Exception;
 	
 	List<ConferenceType> getConferenceCategory() throws Exception;
