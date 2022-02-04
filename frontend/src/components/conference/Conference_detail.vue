@@ -22,8 +22,8 @@
     </div>
     <hr>
     <div> <!-- 방 종료 / 수정 관련 --> <!-- 방 개설자(주최자)만 표시되도록 추후 수정-->
-      <!-- <conference-detail-update></conference-detail-update>
-      <conference-detail-close></conference-detail-close> -->
+      <conference-detail-update></conference-detail-update>
+      <conference-detail-close></conference-detail-close>
     </div>
   </div>
 </template>
@@ -31,8 +31,8 @@
 <script>
 
 import { mapState, mapActions } from "vuex";
-// import ConferenceDetailUpdate from './ConferenceDetailUpdate';
-// import ConferenceDetailClose from './ConferenceDetailClose';
+import ConferenceDetailUpdate from './ConferenceDetailUpdate';
+import ConferenceDetailClose from './ConferenceDetailClose';
 
 const userStore = "userStore";
 const conferenceStore = "conferenceStore";
@@ -40,8 +40,8 @@ const conferenceStore = "conferenceStore";
 export default {
   name: "Conference_detail",
   components: {
-    // ConferenceDetailUpdate,
-    // ConferenceDetailClose
+    ConferenceDetailUpdate,
+    ConferenceDetailClose
   },
   data() {
     return {
@@ -68,23 +68,26 @@ export default {
     // 카테고리 아이디와 일치하는 카테고리명 찾기
     this.matchCategory();
 
+    
+    // 방 참여 기능 실행
+    // this.createParticipant(this.createData());
+
+    // 방 참여 이력 생성 기능 실행
+    // this.createHistory(this.historyData());
   },
   watch: {
     conferenceDetail(){
       this.matchCategory();
-    } // conferenceDetail 항목이 변하면(수정되면) 카테고리명 다시 찾아서 렌더링하도록...
+    } 
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
     ...mapState(conferenceStore, ["conferenceDetail", "conferenceCategory"]),
   },
   methods: {
-    ...mapActions(conferenceStore, ["getConferenceInfo", "getConferenceCategories"]),
+    ...mapActions(conferenceStore, ["getConferenceInfo", "getConferenceCategories", "createHistory", "createParticipant"]),
     // 카테고리 아이디와 일치하는 카테고리명 찾기
     matchCategory() {
-      // this.category = this.conferenceCategory.filter((conferenceCategory) => {
-      //     return conferenceCategory.id === this.conferenceDetail.conference_type
-      //   })
       for (const cc of this.conferenceCategory)
         if (cc.id === this.conferenceDetail.conference_type) {
           this.categoryName = cc.name

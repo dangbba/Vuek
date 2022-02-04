@@ -47,11 +47,13 @@ export default {
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
-    ...mapState(conferenceStore, ["conferenceDetail", "conferenceCategory"]),
+    // ...mapState(conferenceStore, ["conferenceDetail", "conferenceCategory"]),
   },
   methods: {
-    ...mapActions("conferenceStore", ["createRoom"]),
+    ...mapActions(conferenceStore, ["createRoom", "getConferenceInfo", "getConferenceCategories"]),
     enterConference() {
+      this.getConferenceInfo(this.item.id)
+      this.getConferenceCategories(this.item.id)
       this.$router.push({
         path: `conference/view/${this.item.id}`,
       });

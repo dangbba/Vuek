@@ -51,6 +51,9 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
+    scrollBehavior() { 
+    return { x: 0, y: 0 } 
+  }, // 라우팅 될 때 스크롤 위치 상단으로
   routes,
 });
 

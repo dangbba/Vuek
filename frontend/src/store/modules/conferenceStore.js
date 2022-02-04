@@ -171,6 +171,8 @@ const conferenceStore = {
           console.dir(error);
         }); //왜 is_active = 0으로 바뀌는지..? -> 종료할 때 바뀌고 수정할 때는 안바뀌어야 함 => 백엔드에 수정 요청함
     },
+
+        ///////////////////////////////////////////////////////////////////
     // 방 참여 및 참여 이력 생성
     createHistory: function ({dispatch}, conference_data) {
       http({
@@ -187,7 +189,6 @@ const conferenceStore = {
           console.dir(error);
         });
     },
-    ///////////////////////////////////////////////////////////////////
     // 방 참여 (?)
     createParticipant: function ({dispatch}, conference_data) {
       http({
