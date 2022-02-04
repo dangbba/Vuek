@@ -26,7 +26,7 @@
         >
           <div class="px-3 py-2">
             <div class="icon-bar">
-              <router-link to="/Conference" id="tooltip-1"
+              <router-link to="/conference" id="tooltip-1"
                 ><b-iconstack font-scale="1" animation="spin">
                   <b-icon
                     stacked
@@ -52,12 +52,6 @@
               ></router-link>
               <b-tooltip target="tooltip-3" triggers="hover">
                 프로필
-              </b-tooltip>
-              <router-link to="/board" id="tooltip-4"
-                ><b-icon-clipboard></b-icon-clipboard
-              ></router-link>
-              <b-tooltip target="tooltip-4" triggers="hover">
-                게시판
               </b-tooltip>
               <router-link to="/book" id="tooltip-5"
                 ><b-icon-book></b-icon-book
@@ -157,11 +151,6 @@
             </b-modal>
           </div>
         </b-navbar-nav>
-        <b-form inline>
-          <b-form-input class="d-inline" placeholder="검색할 게시글 입력" style="width: 600px">
-          </b-form-input>
-          <b-button>검색</b-button>
-        </b-form>
       </b-collapse>
     </b-navbar>
   </div>

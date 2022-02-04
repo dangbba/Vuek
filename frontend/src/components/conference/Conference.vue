@@ -6,103 +6,10 @@
 
     <conference-search></conference-search>
 
-    <b-button
-      v-b-modal.modal3-prevent-closing
-      variant="primary"
-      class="col-4 mb-3"
-      >컨퍼런스 생성하기</b-button
-    >
-    <b-modal
-      id="modal3-prevent-closing"
-      ref="modal"
-      title="컨퍼런스 생성하기"
-      hide-footer
-    >
-      <form ref="form">
-        <b-form-group
-          class="roommodal"
-          id="dropdown-1"
-          text="Dropdown Button"
-          label="용도"
-          label-for="usage-roominput"
-        >
-          <b-dropdown
-            id="ddCommodity"
-            name="ddCommodity"
-            v-model="dd.ddSelectedOption"
-            text="아이템 목록"
-            variant="primary"
-            class="m-md-2"
-            v-on:change="changeItem"
-          >
-            <b-dropdown-item
-              v-for="option in dd.options"
-              :key="option.value"
-              :value="option.value"
-              @click="dd.ddSelectedOption = option.value"
-              >{{ option.text }}</b-dropdown-item
-            >
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item disabled>Disabled action</b-dropdown-item>
-          </b-dropdown>
-          <span>Selected: {{ dd.ddSelectedOption }}</span>
-        </b-form-group>
-      </form>
-      <form ref="form">
-        <b-form-group
-          class="roommodal"
-          label="방 제목"
-          label-for="name-roominput"
-        >
-          <b-form-input
-            id="name-input"
-            v-model="roomCredentials.name"
-          ></b-form-input>
-        </b-form-group>
-      </form>
-      <form ref="form">
-        <b-form-group
-          type="textarea"
-          class="roommodal"
-          label="설명"
-          label-for="content-roominput"
-        >
-          <b-form-textarea
-            id="textarea"
-            v-model="roomCredentials.content"
-            placeholder="Enter something..."
-            row="3"
-            max-rows="6"
-          ></b-form-textarea>
-        </b-form-group>
-      </form>
-      <form ref="form">
-        <b-form-group
-          type="file"
-          class="roommodal"
-          label="썸네일"
-          label-for="thumbnail-roominput"
-        >
-          <b-form-file
-            accept=".png, .jpg, .jpeg, .gif"
-            v-model="roomCredentials.thumbnail"
-            class="mt-3"
-            plain
-          ></b-form-file>
-          <div class="mt-3">
-            Selected file:
-            {{
-              roomCredentials.thumbnail ? roomCredentials.thumbnail.name : ""
-            }}
-          </div>
-        </b-form-group>
-      </form>
-      <br />
-      <b-button variant="outline-primary" @click="roomIsValid(roomCredentials)">
-        생성 </b-button
-      >&nbsp;
-      <b-button @click="resetValue"> 취소 </b-button>
-    </b-modal>
+    <conference-create></conference-create>
+
+
+
     <div id="main-container" class="container">
       <div id="join" v-if="!session">
         <div id="join-dialog" class="jumbotron vertical-center">
@@ -182,11 +89,11 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
-import ConferenceList from "./ConferenceList.vue";
-import ConferenceFilter from "./ConferenceFilter.vue";
-import ConferenceSearch from "./ConferenceSearch.vue";
-import ConferenceSort from "./ConferenceSort.vue";
+import ConferenceList from './ConferenceList.vue';
+import ConferenceFilter from './ConferenceFilter.vue';
+import ConferenceSearch from './ConferenceSearch.vue';
+import ConferenceSort from './ConferenceSort.vue';
+import ConferenceCreate from './ConferenceCreate.vue';
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
@@ -205,6 +112,7 @@ export default {
     ConferenceFilter,
     ConferenceSearch,
     ConferenceSort,
+    ConferenceCreate,
     UserVideo,
   },
   data() {
@@ -252,48 +160,7 @@ export default {
     ...mapState(userStore, ["userInfo"]),
   },
   methods: {
-    roomIsValid: function (cred) {
-      console.log(cred);
-      if (
-        cred.usage ||
-        cred.username === "" ||
-        cred.content === "" ||
-        cred.thumbnail === "" ||
-        cred.userid
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "Stop!",
-          text: "제목, 설명, 썸네일은 필수 입력사항입니다.",
-        });
-      } else if (cred.roomName.length > 31) {
-        Swal.fire({
-          icon: "error",
-          title: "RoomnameError",
-          text: "제목은 최대 30자까지 입력 가능합니다.",
-        });
-      } else if (
-        cred.file !== cred.file.png ||
-        cred.file.jpg ||
-        cred.file.jpeg ||
-        cred.file.gif ||
-        ""
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "ImgError",
-          text: "업로드 가능한 파일의 확장자는 png, jpg, jpeg, gif입니다.",
-        });
-      } else if (cred.file.size > 2) {
-        Swal.fire({
-          icon: "error",
-          title: "ImgsizeError",
-          text: "업로드 가능한 파일의 최대 사이즈는 2MB입니다.",
-        });
-      } else {
-        console.log(cred);
-      }
-    },
+
     //
     changeItem: async function () {
       //grab some remote data

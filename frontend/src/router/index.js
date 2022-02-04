@@ -4,9 +4,6 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Profile from "../components/user/Profile.vue";
 import Signup from "../components/user/Signup.vue";
-import Board from "../components/board/Board.vue";
-import BoardDetail from "../components/board/BoardDetail";
-import BoardCreate from "../components/board/BoardCreate";
 import Book from "../components/book/Book.vue";
 import Conference from "../components/conference/Conference.vue";
 import Conference_detail from "../components/conference/Conference_detail.vue";
@@ -35,21 +32,6 @@ const routes = [
     component: Signup,
   },
   {
-    path: "/board",
-    name: "Board",
-    component: Board,
-  },
-  {
-    path: "/board/detail/:contentId",
-    name: "BoardDetail",
-    component: BoardDetail,
-  },
-  {
-    path: "/board/create/:contentId?",
-    name: "BoardCreate",
-    component: BoardCreate,
-  },
-  {
     path: "/book",
     name: "Book",
     component: Book,
@@ -58,11 +40,6 @@ const routes = [
     path: "/conference",
     name: "Conference",
     component: Conference,
-  },
-  {
-    path: "/conference/view",
-    name: "Conference_detail",
-    component: Conference_detail,
   },
   {
     path: "/conference/view/:contentId?",
