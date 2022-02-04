@@ -36,7 +36,7 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	@Modifying
 	public long createConference(Conference conference) {
-		conference.setParticipant(conference.getUser().getUserId());
+		conference.setParticipant(conference.getUser().getUser_id());
 		Query query = em.createQuery(
 						"insert into" +
 								"conference (conference_id, user_id, book_detail_id, conference_type_id," +
@@ -45,7 +45,7 @@ public class ConferenceRepositorySupport {
 								":book_detail_id, :conference_type_id, :thumbnail_url," +
 								":title, :is_active, :participant, :call_start_time, :description)")
 				.setParameter("conference_id", conference.getId())
-				.setParameter("user_id", conference.getUser().getUserId())
+				.setParameter("user_id", conference.getUser().getUser_id())
 				.setParameter("book_detail_id", conference.getBookDetail().getId())
 				.setParameter("conference_type_id", conference.getConferenceType().getId())
 				.setParameter("thumbnail_url", conference.getThumbnail_url())
@@ -148,7 +148,7 @@ public class ConferenceRepositorySupport {
 				.fetchOne();
 
 		long count = updateClause.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
-				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
+				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUser_id()))
 				.execute();
 		em.close();
 //		Query query = em.createNativeQuery(
@@ -169,7 +169,7 @@ public class ConferenceRepositorySupport {
 								":action, :inserted_time)")
 				.setParameter("conference_history_id", conferenceHistory.getId())
 				.setParameter("conference_id", conferenceHistory.getConference().getId())
-				.setParameter("user_id", conferenceHistory.getUser().getUserId())
+				.setParameter("user_id", conferenceHistory.getUser().getUser_id())
 				.setParameter("action", conferenceHistory.getAction())
 				.setParameter("inserted_time", conferenceHistory.getInserted_time());
 		query.executeUpdate();

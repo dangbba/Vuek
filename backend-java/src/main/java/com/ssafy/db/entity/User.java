@@ -20,7 +20,7 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "user_id")
-    String userId;
+    String user_id;
 
     @Column(name = "user_name")
     String username;
