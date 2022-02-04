@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/search/**",  "/**").permitAll() // 개발을 위해 모든 링크을 풀어놈
                     .antMatchers("/signup/**").authenticated()
                     .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-                    .anyRequest().authenticated();
+                    .anyRequest().permitAll();
                 /*.and() // 로그인 설정
                     .formLogin()
                     .loginPage("/user/auth/login")
