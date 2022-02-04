@@ -13,10 +13,10 @@ public class ChatController {
 	@SendTo("/send")
 	
 	public SocketVO SocketHandler(SocketVO socketVO) {
-		String username = socketVO.getUsername();
+		String userName = socketVO.getUserName();
 		String content = socketVO.getContent();
 		
-		SocketVO result = new SocketVO(username, content);
+		SocketVO result = new SocketVO(userName, content);
 		return result;
 	}
 

@@ -15,7 +15,7 @@ public class ConferenceHistory {
     @Id
     @GeneratedValue
     @Column(name = "conference_history_id")
-    private Long id;
+    private long id;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "conference_id")
     private Conference conference;

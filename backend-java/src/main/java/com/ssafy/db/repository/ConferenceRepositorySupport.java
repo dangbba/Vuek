@@ -35,7 +35,7 @@ public class ConferenceRepositorySupport {
 
 	@Transactional
 	@Modifying
-	public Long createConference(Conference conference) {
+	public long createConference(Conference conference) {
 		conference.setParticipant(conference.getUser().getUserId());
 		Query query = em.createQuery(
 						"insert into" +

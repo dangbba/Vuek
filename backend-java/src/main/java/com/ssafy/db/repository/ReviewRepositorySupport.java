@@ -36,7 +36,7 @@ public class ReviewRepositorySupport {
                         "review (review_id, book_detail_id, user_id, review_content, review_name, created_at)" +
                         "values (:review_id, :book_detail_id, :user_id, :review_content, :review_name, :created_at")
                 .setParameter("review_id", review.getId())
-                .setParameter("book_detail_id", review.getBookDetail())
+                .setParameter("book_detail_id", review.getBookDetail().getId())
                 .setParameter("user_id", review.getUser().getUserId())
                 .setParameter("review_content", review.getReview_content())
                 .setParameter("review_name", review.getReview_name())
