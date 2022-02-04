@@ -8,8 +8,6 @@
 
     <conference-create></conference-create>
 
-
-
     <div id="main-container" class="container">
       <div id="join" v-if="!session">
         <div id="join-dialog" class="jumbotron vertical-center">
@@ -67,16 +65,15 @@
     </div>
 
     <conference-list></conference-list>
-
   </div>
 </template>
 
 <script>
-import ConferenceList from './ConferenceList.vue';
-import ConferenceFilter from './ConferenceFilter.vue';
-import ConferenceSearch from './ConferenceSearch.vue';
-import ConferenceSort from './ConferenceSort.vue';
-import ConferenceCreate from './ConferenceCreate.vue';
+import ConferenceList from "./ConferenceList.vue";
+import ConferenceFilter from "./ConferenceFilter.vue";
+import ConferenceSearch from "./ConferenceSearch.vue";
+import ConferenceSort from "./ConferenceSort.vue";
+import ConferenceCreate from "./ConferenceCreate.vue";
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
@@ -143,7 +140,6 @@ export default {
     ...mapState(userStore, ["userInfo"]),
   },
   methods: {
-
     //
     changeItem: async function () {
       //grab some remote data
