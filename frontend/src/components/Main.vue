@@ -25,16 +25,6 @@
           </figure>
         </slide>
       </carousel-3d>
-
-      리뷰
-      <carousel-3d :space="300" :width="200" :height="100">
-        <slide v-for="(slide, i) in slides" :key="i" :index="i" class="item">
-          <router-link to="/board/detail/1">
-          <span class="title">리뷰</span>
-          <p>내용</p>
-          </router-link>
-        </slide>
-      </carousel-3d>
     </div>
   </div>
 </template>

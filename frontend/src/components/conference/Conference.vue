@@ -68,23 +68,6 @@
 
     <conference-list></conference-list>
 
-    <div class="page-content">
-      <div class="main-panel">
-        <div class="video-navigation">
-          <span>View:</span>
-          <a
-            :class="{ active: activeView === 'tile' }"
-            @click="setActiveView('tile')"
-            >Tile</a
-          >
-          <a
-            :class="{ active: activeView === 'top-thumbs' }"
-            @click="setActiveView('top-thumbs')"
-            >Top</a
-          >
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
