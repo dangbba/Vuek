@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-
     <div class="header">
       <h1 class="fw-bold my-5">Conference List</h1>
     </div>
 
-
     <conference-search></conference-search>
 
-  
-    <b-button v-b-modal.modal3-prevent-closing variant="primary" class="col-4 mb-3"
+    <b-button
+      v-b-modal.modal3-prevent-closing
+      variant="primary"
+      class="col-4 mb-3"
       >컨퍼런스 생성하기</b-button
     >
-        <b-modal
+    <b-modal
       id="modal3-prevent-closing"
       ref="modal"
       title="컨퍼런스 생성하기"
@@ -32,13 +32,16 @@
             v-model="dd.ddSelectedOption"
             text="아이템 목록"
             variant="primary"
-            class="m-md-2" v-on:change="changeItem"
+            class="m-md-2"
+            v-on:change="changeItem"
           >
             <b-dropdown-item
-              v-for="option in dd.options" 
-              :key="option.value" 
+              v-for="option in dd.options"
+              :key="option.value"
               :value="option.value"
-              @click="dd.ddSelectedOption = option.value">{{ option.text }}</b-dropdown-item>
+              @click="dd.ddSelectedOption = option.value"
+              >{{ option.text }}</b-dropdown-item
+            >
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item disabled>Disabled action</b-dropdown-item>
           </b-dropdown>
@@ -86,15 +89,71 @@
             class="mt-3"
             plain
           ></b-form-file>
-          <div class="mt-3">Selected file: {{ roomCredentials.thumbnail ? roomCredentials.thumbnail.name : "" }}</div>
+          <div class="mt-3">
+            Selected file:
+            {{
+              roomCredentials.thumbnail ? roomCredentials.thumbnail.name : ""
+            }}
+          </div>
         </b-form-group>
       </form>
       <br />
-      <b-button variant="outline-primary" @click="roomIsValid(roomCredentials)"> 생성 </b-button>&nbsp;
+      <b-button variant="outline-primary" @click="roomIsValid(roomCredentials)">
+        생성 </b-button
+      >&nbsp;
       <b-button @click="resetValue"> 취소 </b-button>
     </b-modal>
+    <div id="main-container" class="container">
+      <div id="join" v-if="!session">
+        <div id="join-dialog" class="jumbotron vertical-center">
+          <h1>접속하실 화상회의를 적어주세요</h1>
+          <div class="form-group">
+            <p>
+              <label>Session</label>
+              <input
+                v-model="mySessionId"
+                class="form-control"
+                type="text"
+                required
+              />
+            </p>
+            <p class="text-center">
+              <button class="btn btn-lg btn-success" @click="joinSession()">
+                Join!
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
 
-
+      <div id="session" v-if="session">
+        <div id="session-header">
+          <h1 id="session-title">{{ mySessionId }}</h1>
+          <input
+            class="btn btn-large btn-danger"
+            type="button"
+            id="buttonLeaveSession"
+            @click="leaveSession"
+            value="Leave session"
+          />
+        </div>
+        <div id="main-video" class="col-md-6">
+          <user-video :stream-manager="mainStreamManager" />
+        </div>
+        <div id="video-container" class="col-md-6">
+          <user-video
+            :stream-manager="publisher"
+            @click.native="updateMainVideoStreamManager(publisher)"
+          />
+          <user-video
+            v-for="sub in subscribers"
+            :key="sub.stream.connection.connectionId"
+            :stream-manager="sub"
+            @click.native="updateMainVideoStreamManager(sub)"
+          />
+        </div>
+      </div>
+    </div>
     <div class="row">
       <conference-sort class="offset-5 col-4"></conference-sort>
       <conference-filter class="col-3"></conference-filter>
@@ -119,17 +178,26 @@
         </div>
       </div>
     </div>
-    <router-link to="/Conference/view">1번</router-link>
   </div>
 </template>
 
 <script>
 import Swal from "sweetalert2";
-import ConferenceList from './ConferenceList.vue';
-import ConferenceFilter from './ConferenceFilter.vue';
-import ConferenceSearch from './ConferenceSearch.vue';
-import ConferenceSort from './ConferenceSort.vue';
+import ConferenceList from "./ConferenceList.vue";
+import ConferenceFilter from "./ConferenceFilter.vue";
+import ConferenceSearch from "./ConferenceSearch.vue";
+import ConferenceSort from "./ConferenceSort.vue";
+import axios from "axios";
+import { OpenVidu } from "openvidu-browser";
+import UserVideo from "./UserVideo.vue";
+import { mapState } from "vuex";
 
+const userStore = "userStore";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
+
+const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 export default {
   name: "Conference",
   components: {
@@ -137,6 +205,7 @@ export default {
     ConferenceFilter,
     ConferenceSearch,
     ConferenceSort,
+    UserVideo,
   },
   data() {
     return {
@@ -157,21 +226,30 @@ export default {
         color: "",
         options: [
           {
-            "value": "업무",
-            "text": "업무"
+            value: "업무",
+            text: "업무",
           },
           {
-            "value": "교육",
-            "text": "교육"
+            value: "교육",
+            text: "교육",
           },
           {
-            "value": "기타",
-            "text": "기타"
-          }
-        ]
-      }
-      //
+            value: "기타",
+            text: "기타",
+          },
+        ],
+      },
+      OV: undefined,
+      session: undefined,
+      mainStreamManager: undefined,
+      publisher: undefined,
+      subscribers: [],
+
+      mySessionId: "SessionA",
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
   },
   methods: {
     roomIsValid: function (cred) {
@@ -194,7 +272,13 @@ export default {
           title: "RoomnameError",
           text: "제목은 최대 30자까지 입력 가능합니다.",
         });
-      } else if (cred.file !== cred.file.png || cred.file.jpg || cred.file.jpeg || cred.file.gif || "") {
+      } else if (
+        cred.file !== cred.file.png ||
+        cred.file.jpg ||
+        cred.file.jpeg ||
+        cred.file.gif ||
+        ""
+      ) {
         Swal.fire({
           icon: "error",
           title: "ImgError",
@@ -214,27 +298,186 @@ export default {
     changeItem: async function () {
       //grab some remote data
       try {
-        let response = await this.$http.get('https://www.example.com/api/' + this.dd.ddSelectedOption + '.json');
+        let response = await this.$http.get(
+          "https://www.example.com/api/" + this.dd.ddSelectedOption + ".json"
+        );
         console.log(response.data);
         this.someOtherProperty = response.data;
       } catch (error) {
-          console.log(error)
-        }
+        console.log(error);
+      }
     },
     resetValue() {
       this.$router.push("/");
     },
+    joinSession() {
+      // --- Get an OpenVidu object ---
+      this.OV = new OpenVidu();
+
+      // --- Init a session ---
+      this.session = this.OV.initSession();
+
+      // --- Specify the actions when events take place in the session ---
+
+      // On every new Stream received...
+      this.session.on("streamCreated", ({ stream }) => {
+        const subscriber = this.session.subscribe(stream);
+        this.subscribers.push(subscriber);
+      });
+
+      // On every Stream destroyed...
+      this.session.on("streamDestroyed", ({ stream }) => {
+        const index = this.subscribers.indexOf(stream.streamManager, 0);
+        if (index >= 0) {
+          this.subscribers.splice(index, 1);
+        }
+      });
+
+      // On every asynchronous exception...
+      this.session.on("exception", ({ exception }) => {
+        console.warn(exception);
+      });
+
+      // --- Connect to the session with a valid user token ---
+
+      // 'getToken' method is simulating what your server-side should do.
+      // 'token' parameter should be retrieved and returned by your own backend
+      this.getToken(this.mySessionId).then((token) => {
+        this.session
+          .connect(token, { clientData: this.userInfo.user_name })
+          .then(() => {
+            // --- Get your own camera stream with the desired properties ---
+
+            let publisher = this.OV.initPublisher(undefined, {
+              audioSource: undefined, // The source of audio. If undefined default microphone
+              videoSource: undefined, // The source of video. If undefined default webcam
+              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+              publishVideo: true, // Whether you want to start publishing with your video enabled or not
+              resolution: "480x360", // The resolution of your video
+              frameRate: 30, // The frame rate of your video
+              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+              mirror: false, // Whether to mirror your local video or not
+            });
+
+            this.mainStreamManager = publisher;
+            this.publisher = publisher;
+
+            // --- Publish your stream ---
+
+            this.session.publish(this.publisher);
+          })
+          .catch((error) => {
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
+          });
+      });
+
+      window.addEventListener("beforeunload", this.leaveSession);
+    },
+
+    leaveSession() {
+      // --- Leave the session by calling 'disconnect' method over the Session object ---
+      if (this.session) this.session.disconnect();
+
+      this.session = undefined;
+      this.mainStreamManager = undefined;
+      this.publisher = undefined;
+      this.subscribers = [];
+      this.OV = undefined;
+
+      window.removeEventListener("beforeunload", this.leaveSession);
+    },
+
+    updateMainVideoStreamManager(stream) {
+      if (this.mainStreamManager === stream) return;
+      this.mainStreamManager = stream;
+    },
+
+    /**
+     * --------------------------
+     * SERVER-SIDE RESPONSIBILITY
+     * --------------------------
+     * These methods retrieve the mandatory user token from OpenVidu Server.
+     * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
+     * the API REST, openvidu-java-client or openvidu-node-client):
+     *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
+     *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
+     *   3) The Connection.token must be consumed in Session.connect() method
+     */
+
+    getToken(mySessionId) {
+      return this.createSession(mySessionId).then((sessionId) =>
+        this.createToken(sessionId)
+      );
+    },
+
+    // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessions
+    createSession(sessionId) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
+            JSON.stringify({
+              customSessionId: sessionId,
+            }),
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET,
+              },
+            }
+          )
+          .then((response) => response.data)
+          .then((data) => resolve(data.id))
+          .catch((error) => {
+            if (error.response.status === 409) {
+              resolve(sessionId);
+            } else {
+              console.warn(
+                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+              );
+              if (
+                window.confirm(
+                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                )
+              ) {
+                location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+              }
+              reject(error.response);
+            }
+          });
+      });
+    },
+
+    // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
+    createToken(sessionId) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+            {},
+            {
+              auth: {
+                username: "OPENVIDUAPP",
+                password: OPENVIDU_SERVER_SECRET,
+              },
+            }
+          )
+          .then((response) => response.data)
+          .then((data) => resolve(data.token))
+          .catch((error) => reject(error.response));
+      });
+    },
     //
   },
-  watch: {
-
-  },
-  async created() {
-
-  },
+  watch: {},
+  async created() {},
   resetValue() {
-      this.$router.push("/");
-    },
+    this.$router.push("/");
+  },
 };
 </script>
 
@@ -378,6 +621,4 @@ body {
   margin: 2rem;
   font-size: 1.8rem;
 }
-
-
 </style>
