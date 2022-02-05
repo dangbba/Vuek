@@ -1,1 +1,0 @@
-create database IF NOT EXISTS ssafy_web collate utf8mb4_general_ci;

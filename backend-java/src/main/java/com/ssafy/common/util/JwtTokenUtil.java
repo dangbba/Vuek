@@ -43,19 +43,19 @@ public class JwtTokenUtil {
                 .build();
     }
     
-    public static String getToken(String user_Id) {
+    public static String getToken(String user_id) {
     		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
         return JWT.create()
-                .withSubject(user_Id)
+                .withSubject(user_id)
                 .withExpiresAt(expires)
                 .withIssuer(ISSUER)
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                 .sign(Algorithm.HMAC512(secretKey.getBytes()));
     }
 
-    public static String getToken(Instant expires, String user_Id) {
+    public static String getToken(Instant expires, String user_id) {
         return JWT.create()
-                .withSubject(user_Id)
+                .withSubject(user_id)
                 .withExpiresAt(Date.from(expires))
                 .withIssuer(ISSUER)
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
