@@ -62,4 +62,18 @@ public class UserController {
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
+
+	@ApiOperation(value = "유저를 삭제한다, SUCCESS/FAIL", response = String.class)
+	@DeleteMapping("/{user_id}")
+	public ResponseEntity<String> deleteUser(@PathVariable String user_id) throws Exception {
+		userService.deleteUser(user_id);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)
+	@PutMapping("/{user_id}")
+	public ResponseEntity<String> updateUser(@RequestBody User user) throws Exception {
+		userService.updateUser(user);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 }
