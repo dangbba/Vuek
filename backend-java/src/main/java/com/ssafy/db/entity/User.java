@@ -23,7 +23,7 @@ public class User implements Serializable {
     String user_id;
 
     @Column(name = "user_name")
-    String username;
+    String user_name;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

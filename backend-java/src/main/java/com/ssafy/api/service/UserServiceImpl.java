@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		user.setUser_id(userRegisterInfo.getUser_id());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
-		user.setUsername(userRegisterInfo.getUsername());
+		user.setUser_name(userRegisterInfo.getUser_name());
 		return userRepository.save(user);
 	}
 
