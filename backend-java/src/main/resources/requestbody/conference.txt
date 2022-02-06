@@ -1,8 +1,8 @@
 {
     "id": 1,
     "user": {
-      "user_id": "1",
-      "user_name": "1",
+      "userId": "1",
+      "userName": "1",
       "password": "1",
       "hibernateLazyInitializer": {}
     },
@@ -10,12 +10,12 @@
       "id": 1,
       "author": "1",
       "publisher": "1",
-      "title_url": "1",
+      "titleUrl": "1",
       "overview": "1",
       "price": 1,
       "title": "1",
       "publish_date": "1",
-      "sail_status": "1",
+      "sailstatus": "1",
       "hibernateLazyInitializer": {}
     },
     "conferenceType": {
@@ -25,9 +25,9 @@
     },
     "callStartTime": null,
     "callEndTime": null,
-    "thumbnail_url": "1",
+    "thumbnailUrl": "1",
     "title": "1",
-    "is_active": 1,
+    "isActive": 1,
     "participant": "1",
     "description": "1"
   }

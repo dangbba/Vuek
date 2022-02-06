@@ -16,22 +16,22 @@ public class Conference {
 
     @Id
     @GeneratedValue
-    @Column(name = "conference_id")
+    @Column(name = "conferenceId")
     private long id;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "book_detail_id")
+    @JoinColumn(name = "bookDetailId")
     private BookDetail bookDetail;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "conference_type_id")
+    @JoinColumn(name = "conferenceTypeId")
     private ConferenceType conferenceType;
     private LocalDateTime callStartTime;
     private LocalDateTime callEndTime;
-    private String thumbnail_url;
+    private String thumbnailUrl;
     private String title;
-    private int is_active;
+    private int isActive;
     private String participant;
     private String description;
 

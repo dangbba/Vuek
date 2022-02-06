@@ -14,12 +14,12 @@ public class UserConference {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_conference_id")
+    @Column(name = "userConferenceId")
     private int id;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "userId")
     private User user;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "conference_id")
+    @JoinColumn(name = "conferenceId")
     private Conference conference;
 }

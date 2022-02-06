@@ -11,10 +11,10 @@ import javax.persistence.*;
 public class Maraton {
     @Id
     @GeneratedValue
-    @Column(name = "maraton_id")
+    @Column(name = "maratonId")
     private int id;
-    @JoinColumn(name = "user_id")
-    private String user_user_id;
-    private int goal_pages;
-    private int now_pages;
+    @JoinColumn(name = "userId")
+    private String userId;
+    private int goalPages;
+    private int nowPages;
 }

@@ -14,19 +14,19 @@ import static javax.persistence.FetchType.LAZY;
 public class ConferenceHistory {
     @Id
     @GeneratedValue
-    @Column(name = "conference_history_id")
+    @Column(name = "conferenceHistoryId")
     private long id;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "conference_id")
+    @JoinColumn(name = "conferenceId")
     private Conference conference;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
     private int action;
-    private LocalDateTime inserted_time;
+    private LocalDateTime insertedTime;
 
     @PrePersist
-    public void inserted_time() {
-        this.inserted_time = LocalDateTime.now();
+    public void insertedTime() {
+        this.insertedTime = LocalDateTime.now();
     }
 }

@@ -1,18 +1,18 @@
-insert into user ( user_name, user_id, password)
+insert into user ( userName, userId, password)
 values (1, 1, 1);
-insert into user ( user_name, user_id, password)
+insert into user ( userName, userId, password)
 values (2, 2, 2);
 
-ALTER TABLE conference_type convert to charset utf8;
+ALTER TABLE conferencetype convert to charset utf8;
 
-insert into conference_type (conference_type_id, name)
+insert into conferencetype (conferenceTypeId, name)
 values (1, '업무');
-insert into conference_type (conference_type_id, name)
+insert into conferencetype (conferenceTypeId, name)
 values (2, '교육');
-insert into conference_type (conference_type_id, name)
+insert into conferencetype (conferenceTypeId, name)
 values (3, '기타');
-select * from book_detail;
-insert into book_detail
+select * from bookdetail;
+insert into bookdetail
 values (1, 1, 1, 1, 1, 1, 1, 1, 1);
-insert into book_detail
+insert into bookdetail
 values (2, 2, 2, 2, 2, 2, 2, 2, 2);

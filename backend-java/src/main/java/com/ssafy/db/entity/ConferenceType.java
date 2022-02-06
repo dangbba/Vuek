@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class ConferenceType {
     @Id
     @GeneratedValue
-    @Column(name = "conference_type_id")
+    @Column(name = "conferenceTypeId")
     private int id;
     private String name;
 }

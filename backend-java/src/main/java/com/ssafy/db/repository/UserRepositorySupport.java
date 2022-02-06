@@ -41,7 +41,7 @@ public class UserRepositorySupport {
         QUser qUser = QUser.user;
         JPAUpdateClause updateClause = new JPAUpdateClause(em, qUser);
         long count = updateClause
-                .set(qUser.user_name, user.getUser_name())
+                .set(qUser.userName, user.getUserName())
                 .set(qUser.password, user.getPassword())
                 .where(qUser.userId.eq(user.getUserId()))
                 .execute();

@@ -1,0 +1,13 @@
+{
+    "id": 2,
+    "conference": {
+      "id": 2
+    },
+    "user": {
+      "userId": "2",
+      "userName": "2",
+      "password": "2",
+      "hibernateLazyInitializer": {}
+    },
+    "action": 1
+  }

@@ -13,12 +13,12 @@ public class UserBook {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_book_id")
+    @Column(name = "userBook_Id")
     private int id;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "book_detail_id")
+    @JoinColumn(name = "bookDetailId")
     private BookDetail bookDetail;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 }

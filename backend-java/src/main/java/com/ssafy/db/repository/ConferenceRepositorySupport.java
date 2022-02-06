@@ -39,20 +39,20 @@ public class ConferenceRepositorySupport {
 		conference.setParticipant(conference.getUser().getUserId());
 		Query query = em.createQuery(
 						"insert into" +
-								"conference (conference_id, user_id, book_detail_id, conference_type_id," +
-								"thumbnail_url, title, is_active, participant, call_start_time, description)" +
-								"values (:conference_id, :user_id," +
-								":book_detail_id, :conference_type_id, :thumbnail_url," +
-								":title, :is_active, :participant, :call_start_time, :description)")
-				.setParameter("conference_id", conference.getId())
-				.setParameter("user_id", conference.getUser().getUserId())
-				.setParameter("book_detail_id", conference.getBookDetail().getId())
-				.setParameter("conference_type_id", conference.getConferenceType().getId())
-				.setParameter("thumbnail_url", conference.getThumbnail_url())
+								"conference (conferenceId, userId, bookDetailId, conferenceTypeId," +
+								"thumbnailUrl, title, isActive, participant, callStartTime, description)" +
+								"values (:conference_Id, :userId," +
+								":bookDetailId, :conferenceTypeId, :thumbnailUrl," +
+								":title, :isActive, :participant, :callStartTime, :description)")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("userId", conference.getUser().getUserId())
+				.setParameter("bookDetailId", conference.getBookDetail().getId())
+				.setParameter("conferenceTypeId", conference.getConferenceType().getId())
+				.setParameter("thumbnailUrl", conference.getThumbnailUrl())
 				.setParameter("title", conference.getTitle())
-				.setParameter("is_active", conference.getIs_active())
+				.setParameter("isActive", conference.getIsActive())
 				.setParameter("participant", conference.getParticipant())
-				.setParameter("call_start_time", conference.getCallStartTime())
+				.setParameter("callStartTime", conference.getCallStartTime())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
 		em.close();
@@ -63,11 +63,11 @@ public class ConferenceRepositorySupport {
 	@Modifying
 	public void closeConference(Conference conference) {
 		conference.callEndTime();
-		conference.setIs_active(0);
-		Query query = em.createQuery("update Conference c set c.callEndTime = :call_end_time, is_active = :is_active where c.id = :conference_id")
-				.setParameter("conference_id", conference.getId())
-				.setParameter("call_end_time", conference.getCallEndTime())
-				.setParameter("is_active", conference.getIs_active());
+		conference.setIsActive(0);
+		Query query = em.createQuery("update Conference c set c.callEndTime = :callEndTime, isActive = :isActive where c.id = :conferenceId")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("callEndTime", conference.getCallEndTime())
+				.setParameter("isActive", conference.getIsActive());
 		query.executeUpdate();
 		em.close();
 	}
@@ -85,46 +85,22 @@ public class ConferenceRepositorySupport {
 				.where(qConference.conference.id.eq((long) idconference))
 				.fetchOne();
 
-//		List<Conference> list = em.createNativeQuery("select conference_id, user_id, book_detail_id, conference_type_id, call_start_time, thumbnail.url, title, is_active, participant from Conference where conference_id = :conference_id", Conference.class)
-//				.setParameter("conference_id", idconference).getResultList();
-//		JpaResultMapper jpaResultMapper = new JpaResultMapper();
-//		Conference conference = jpaResultMapper.uniqueResult(nativeQuery, Conference.class);
-//		conferenceInfoDto.setConference_type(conference.getConferenceType().getId());
-//		conferenceInfoDto.setBook_detail_id(conference.getBookDetail().getId());
-//		conferenceInfoDto.setId(idconference);
-//		conferenceInfoDto.setParticipant(conference.getParticipant());
-//		conferenceInfoDto.setIs_active(conference.getIs_active());
-//		conferenceInfoDto.setTitle(conference.getTitle());
-//		conferenceInfoDto.setCall_start_time(conference.getCallStartTime().toString());
-//		conferenceInfoDto.setThumbnail_url(conference.getThumbnail_url());
-//		conferenceInfoDto.setUser_id(conference.getUser().getUserId());
 		return con;
 	}
 
 	@Modifying
 	@Transactional
 	public void updateConferenceInfo(Conference conference) {
-		Query query = em.createNativeQuery("update Conference set conference_type_id = :conference_type_id, book_detail_id = :book_detail_id, thumbnail_url = :thumbnail_url, title = :title, description = :description where conference_id = :conference_id", Conference.class)
-				.setParameter("conference_id", conference.getId())
-				.setParameter("conference_type_id", conference.getConferenceType().getId())
-				.setParameter("book_detail_id", conference.getBookDetail().getId())
-				.setParameter("thumbnail_url", conference.getThumbnail_url())
+		Query query = em.createNativeQuery("update Conference set conferenceTypeId = :conferenceTypeId, bookDetailId = :bookDetailId, thumbnailUrl = :thumbnailUrl, title = :title, description = :description where conferenceId = :conferenceId", Conference.class)
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("conferenceTypeId", conference.getConferenceType().getId())
+				.setParameter("bookDetailId", conference.getBookDetail().getId())
+				.setParameter("thumbnailUrl", conference.getThumbnailUrl())
 				.setParameter("title", conference.getTitle())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();
 		em.close();
 	}
-
-//	public List<Conference> getConference() {
-//		return em.createQuery("select c from conference c", Conference.class).getResultList();
-//	}
-
-
-//	public List<Conference> getConferenceBySort(@RequestParam String sort, @RequestParam String asc) {
-//
-//	}
-
-//	public List<Conference> searchByTitle(@RequestParam String word) throws SQLException;
 
 	public List<Conference> getConferenceByCategory(@RequestParam int conference_type_id) {
 		return (List<Conference>) queryFactory
@@ -132,8 +108,6 @@ public class ConferenceRepositorySupport {
 				.where(conference.conferenceType.id.eq(conference_type_id))
 				.fetch();
 
-//		return em.createNativeQuery("select conference_id, user_id, book_detail_id, conference_type_id, thumbnail_url, title, is_active from Conference where conference_type_id = :conference_type_id", Conference.class)
-//				.setParameter("conference_type_id", conference_type_id).getResultList();
 	}
 
 	@Modifying
@@ -151,40 +125,34 @@ public class ConferenceRepositorySupport {
 				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
 				.execute();
 		em.close();
-//		Query query = em.createNativeQuery(
-//				"update conference set participant = CONCAT(participant, ', ', :user_id) where conference_id = :id")
-//						.setParameter("user_id", enterWrapperDto.getUser().getUserId())
-//								.setParameter("id", enterWrapperDto.getConferenceInfoDto().getId());
-//		query.executeUpdate();
+
 	}
 
 	@Transactional
 	@Modifying
 	public void createConferenceHistory(ConferenceHistory conferenceHistory) {
-		conferenceHistory.inserted_time();
+		conferenceHistory.insertedTime();
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"conference_history (conference_history_id, conference_id, user_id, action, inserted_time) " +
-								"values (:conference_history_id, :conference_id, :user_id," +
-								":action, :inserted_time)")
-				.setParameter("conference_history_id", conferenceHistory.getId())
-				.setParameter("conference_id", conferenceHistory.getConference().getId())
-				.setParameter("user_id", conferenceHistory.getUser().getUserId())
+								"conferenceHistory (conferenceHistoryId, conferenceId, userId, action, insertedTime) " +
+								"values (:conferenceHistoryId, :conferenceId, :userId," +
+								":action, :insertedTime)")
+				.setParameter("conferenceHistoryId", conferenceHistory.getId())
+				.setParameter("conferenceId", conferenceHistory.getConference().getId())
+				.setParameter("userId", conferenceHistory.getUser().getUserId())
 				.setParameter("action", conferenceHistory.getAction())
-				.setParameter("inserted_time", conferenceHistory.getInserted_time());
+				.setParameter("insertedTime", conferenceHistory.getInsertedTime());
 		query.executeUpdate();
 		em.close();
 	}
 
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
-		List<ConferenceHistory> list = em.createNativeQuery("select conference_history_id, conference_id, user_id, action, inserted_time from conference_history  where user_id = :user_id", ConferenceHistory.class)
-				.setParameter("user_id", user_id).getResultList();
+		List<ConferenceHistory> list = em.createNativeQuery("select conferenceHistoryId, conferenceId, userId, action, insertedTime from conferenceHistory  where userId = :userId", ConferenceHistory.class)
+				.setParameter("userId", user_id).getResultList();
 		em.close();
 		return list;
 	}
 
-	///////////////////////////////////////////////////
-//	@Query(value = "select c from conference c where c.title like concat('%', :title, '%')", nativeQuery = true)
 	public List<Conference> getConferenceByTitle(@Param("word") String word) {
 		QConference qConference = conference;
 		List<Conference> con = (List<Conference>) queryFactory

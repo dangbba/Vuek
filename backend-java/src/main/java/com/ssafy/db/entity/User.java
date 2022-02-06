@@ -19,11 +19,11 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "userId")
     String userId;
 
-    @Column(name = "user_name")
-    String user_name;
+    @Column(name = "userName")
+    String userName;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

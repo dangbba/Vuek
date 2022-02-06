@@ -14,14 +14,14 @@ import javax.persistence.Id;
 public class BookDetail {
     @Id
     @GeneratedValue
-    @Column(name = "book_detail_id")
+    @Column(name = "bookDetailId")
     private int id;
     private String author;
     private String publisher;
-    private String title_url;
+    private String titleUrl;
     private String overview;
     private int price;
     private String title;
-    private String publish_date;
-    private String sail_status;
+    private String publishDate;
+    private String sailStatus;
 }
