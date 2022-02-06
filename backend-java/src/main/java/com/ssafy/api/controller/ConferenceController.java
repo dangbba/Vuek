@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpSession;
@@ -39,6 +38,7 @@ import io.openvidu.java.client.OpenViduRole;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.ConnectionType;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
@@ -48,7 +48,6 @@ public class ConferenceController {
 	public static final Logger logger = LoggerFactory.getLogger(ConferenceController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-
 
 	private OpenVidu openVidu;
 	private Map<String, Session> mapSessions = new ConcurrentHashMap<>();
@@ -62,10 +61,9 @@ public class ConferenceController {
 		this.OPENVIDU_URL = openviduUrl;
 		this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);
 	}
-
 	@Autowired
 	private ConferenceService conferenceService;
-	//////////
+
 	@ApiOperation(value = "방을 생성한다. 그리고 DB저장 여부에 따라 성공/실패를 반환한다.", response = String.class)
 	@PostMapping("/create")
 	public ResponseEntity<String> createConference(@RequestBody Conference conference) throws Exception {
@@ -188,6 +186,19 @@ public class ConferenceController {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
+	// 방 삭제
+	@ApiOperation(value = "방을 DB에서 삭제한다", response = String.class)
+	@PostMapping("/delete/{idconference}")
+	public ResponseEntity<String> deleteConference(@RequestBody Conference conference) throws Exception {
+		if (conferenceService.deleteConference(conference)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+
 	@ApiOperation(value = "방 카테고리를 조회한다.", response = ConferenceType.class)
 	@GetMapping("/conference-categories")
 	public ResponseEntity<List<ConferenceType>> getConferenceCategory() throws Exception {
@@ -198,7 +209,6 @@ public class ConferenceController {
 	@GetMapping("/conference-info/{idconference}")
 	public ResponseEntity<Conference> getConferenceInfo(@PathVariable int idconference) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceInfo(idconference), HttpStatus.OK);
-		
 	}
 	
 	@ApiOperation(value = "idconference에 해당하는 글의 내용을 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

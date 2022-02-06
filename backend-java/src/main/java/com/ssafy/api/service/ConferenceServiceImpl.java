@@ -119,4 +119,14 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<ConferenceHistory> getConferenceHistory(@RequestParam String user_id) throws Exception {
 		return conferenceRepositorySupport.findConferenceHistoryByUserId(user_id);
 	}
+
+	@Override
+	public boolean deleteConference(Conference conference) {
+		try {
+			conferenceRepository.delete(conference);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
