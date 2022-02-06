@@ -44,8 +44,13 @@ public class AuthController {
         @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
+<<<<<<< Updated upstream
 	public HttpEntity<? extends Object> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
 		String user_id = loginInfo.getUserId();
+=======
+	public ResponseEntity<Map<String, Object>> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
+		String user_id = loginInfo.getUser_id();
+>>>>>>> Stashed changes
 		String password = loginInfo.getPassword();
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
@@ -57,13 +62,14 @@ public class AuthController {
 			resultMap.put("accessToken", token);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
-
-			return new ResponseEntity<Map<String, Object>>(resultMap, status);
 			// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-
 //			return ResponseEntity.ok(UserLoginPostRes.of(200, "success", JwtTokenUtil.getToken(user_id)));
+		} else {
+			resultMap.put("login failed", "잘못된 비밀번호입니다.");
+			status = HttpStatus.UNAUTHORIZED;
 		}
 		// 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-		return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+//		return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
 	}
 }

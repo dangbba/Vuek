@@ -53,13 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(
-                "/",
-                "/v2/api-docs", "/configuration/**", "/swagger-resoureces/**",
-                "/configuration/security", "/swagger-ui.html/**", "/webjars/**", "/swagger/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers(
+//                "/",
+//                "/v2/api-docs", "/configuration/**", "/swagger-resoureces/**",
+//                "/configuration/security", "/swagger-ui.html/**", "/webjars/**", "/swagger/**");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,10 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                     .authorizeRequests()
-                    .antMatchers("/css/**", "/js/**", "/static/**").permitAll()
-                    .antMatchers("/search/**",  "/**").permitAll() // 개발을 위해 모든 링크을 풀어놈
-                    .antMatchers("/signup/**").authenticated()
-                    .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+//                    .antMatchers("/css/**", "/js/**", "/static/**").permitAll()
+                    .antMatchers("/search/**").permitAll() // 개발을 위해 모든 링크을 풀어놈
+//                    .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                     .anyRequest().permitAll();
                 /*.and() // 로그인 설정
                     .formLogin()

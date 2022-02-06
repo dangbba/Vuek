@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -22,6 +25,7 @@ import org.springframework.http.HttpStatus;
 public class UserController {
 
 	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 
 	@Autowired
 	UserService userService;
@@ -51,16 +55,35 @@ public class UserController {
         @ApiResponse(code = 404, message = "사용자 없음"),
         @ApiResponse(code = 500, message = "서버 오류")
     })
-	public ResponseEntity<UserRes> getUserInfo(@ApiIgnore Authentication authentication) {
+//	public ResponseEntity<Map<String, Object>> getUserInfo(@ApiIgnore Authentication authentication) {
+	public ResponseEntity<Map<String, Object>> getUserInfo(@ApiIgnore Authentication authentication) {
 		/**
 		 * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
 		 * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
 		 */
-		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-		String userId = userDetails.getUsername();
-		User user = userService.getUserByUserId(userId);
-		
-		return ResponseEntity.status(200).body(UserRes.of(user));
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		if (authentication != null) {
+			try {
+				SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+				String userId = userDetails.getUsername();
+				User user = userService.getUserByUserId(userId);
+
+				resultMap.put("userInfo", user);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			}	catch (Exception e) {
+					resultMap.put("message", e.getMessage());
+					status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+
+		} else {
+			resultMap.put("message", FAIL);
+			status = HttpStatus.ACCEPTED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+//		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 
 	@ApiOperation(value = "유저를 삭제한다, SUCCESS/FAIL", response = String.class)
