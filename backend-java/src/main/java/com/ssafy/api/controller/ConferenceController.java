@@ -188,16 +188,15 @@ public class ConferenceController {
 
 	// 방 삭제
 	@ApiOperation(value = "방을 DB에서 삭제한다", response = String.class)
-	@PostMapping("/delete/{idconference}")
-	public ResponseEntity<String> deleteConference(@RequestBody Conference conference) throws Exception {
+	@PostMapping("/delete")
+	public ResponseEntity<String> deleteConference(@RequestParam Integer conference_id) throws Exception {
+		Conference conference = conferenceService.getConferenceInfo(conference_id);
 		if (conferenceService.deleteConference(conference)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
-
 
 	@ApiOperation(value = "방 카테고리를 조회한다.", response = ConferenceType.class)
 	@GetMapping("/conference-categories")
@@ -261,7 +260,6 @@ public class ConferenceController {
 		conferenceService.createConferenceHistory(conferenceHistory);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-
 	private ResponseEntity<JSONObject> getErrorResponse(Exception e) {
 		JSONObject json = new JSONObject();
 		json.put("cause", e.getCause());

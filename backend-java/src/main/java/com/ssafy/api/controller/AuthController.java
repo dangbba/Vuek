@@ -44,13 +44,8 @@ public class AuthController {
         @ApiResponse(code = 404, message = "사용자 없음", response = BaseResponseBody.class),
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
-<<<<<<< Updated upstream
 	public HttpEntity<? extends Object> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
 		String user_id = loginInfo.getUserId();
-=======
-	public ResponseEntity<Map<String, Object>> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
-		String user_id = loginInfo.getUser_id();
->>>>>>> Stashed changes
 		String password = loginInfo.getPassword();
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
