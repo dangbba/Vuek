@@ -67,33 +67,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 			return conferenceRepositorySupport.findAllOrderByCallStartTime(asc);
 		}
 
-		//		if(sort.equals("title") || asc.equals("asc")){
-//			Sort sortTitle = SortByTitleAsc();
-//			return conferenceRepository.findAllOrderByTitle(sort, sortTitle);
-//		}else if(sort.equals("title") || asc.equals("desc")){
-//			Sort sortTitle = SortByTitleDesc();
-//			return conferenceRepository.findAllOrderByTitle(sort, sortTitle);
-//		}else if(sort.equals("callStartTime") || asc.equals("asc")){
-//			Sort sortCallStartTime = SortByCallStartTimeAsc();
-//			return conferenceRepository.findAllOrderByCallStartTime(sort, sortCallStartTime);
-//		}else {
-//			Sort sortCallStartTime = SortByCallStartTimeDesc();
-//			return conferenceRepository.findAllOrderByCallStartTime(sort, sortCallStartTime);
-//		}
 	}
-
-//	private Sort SortByTitleAsc() {
-//		return Sort.by(Sort.Direction.ASC, "title");
-//	}
-//	private Sort SortByTitleDesc() {
-//		return Sort.by(Sort.Direction.DESC, "title");
-//	}
-//	private Sort SortByCallStartTimeAsc() {
-//		return Sort.by(Sort.Direction.ASC, "call_start_time");
-//	}
-//	private Sort SortByCallStartTimeDesc() {
-//		return Sort.by(Sort.Direction.DESC, "call_start_time");
-//	}
 
 	@Override
 	public List<Conference> searchByTitle(@RequestParam String word) throws Exception {
