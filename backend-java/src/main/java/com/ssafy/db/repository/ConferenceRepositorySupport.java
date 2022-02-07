@@ -123,12 +123,6 @@ public class ConferenceRepositorySupport {
 				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
 				.fetchOne();
 
-//		long count = updateClause.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
-////				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
-//				.set(Collections.singletonList(qConference.participant), Collections.singletonList(con.getParticipant().add(enterWrapperDto.getUser())))
-//				.execute();
-//		em.close();
-
 		Query query = em.createNativeQuery(
 						"insert into " +
 								"conference_participant (Conference_conferenceId, participant_userId) " +
