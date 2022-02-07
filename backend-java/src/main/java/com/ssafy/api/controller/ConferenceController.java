@@ -4,14 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.ssafy.api.service.ConferenceService;
-import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
-import io.openvidu.java.client.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +35,6 @@ import io.openvidu.java.client.OpenViduRole;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.ConnectionType;
-import retrofit2.http.HTTP;
-import retrofit2.http.POST;
 
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
@@ -177,20 +172,28 @@ public class ConferenceController {
 		}
 	}
 
-
-	/////// is_active 수정
 	@ApiOperation(value = "방을 종료한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/close/{idconference}")
-	public ResponseEntity<String> closeConference(@RequestBody Conference conference) throws Exception {
-		conferenceService.closeConference(conference);
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	public ResponseEntity<String> closeConference(@RequestParam Integer conferenceId) throws Exception {
+		Conference conference = conferenceService.getConferenceInfo(conferenceId);
+		if (conference != null) {
+			try {
+				conferenceService.closeConference(conference);
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<String>(FAIL, HttpStatus.UNPROCESSABLE_ENTITY);
+			}
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
 	}
 
 	// 방 삭제
 	@ApiOperation(value = "방을 DB에서 삭제한다", response = String.class)
 	@PostMapping("/delete")
-	public ResponseEntity<String> deleteConference(@RequestParam Integer conference_id) throws Exception {
-		Conference conference = conferenceService.getConferenceInfo(conference_id);
+	public ResponseEntity<String> deleteConference(@RequestParam Integer conferenceId) throws Exception {
+		Conference conference = conferenceService.getConferenceInfo(conferenceId);
 		if (conferenceService.deleteConference(conference)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} else {
@@ -206,8 +209,8 @@ public class ConferenceController {
 	}
 	@ApiOperation(value = "방 상세정보를 조회한다.", response = Conference.class)
 	@GetMapping("/conference-info/{idconference}")
-	public ResponseEntity<Conference> getConferenceInfo(@PathVariable int idconference) throws Exception {
-		return new ResponseEntity<>(conferenceService.getConferenceInfo(idconference), HttpStatus.OK);
+	public ResponseEntity<Conference> getConferenceInfo(@PathVariable int conferenceId) throws Exception {
+		return new ResponseEntity<>(conferenceService.getConferenceInfo(conferenceId), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "idconference에 해당하는 글의 내용을 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

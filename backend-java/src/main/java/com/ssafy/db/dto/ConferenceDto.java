@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 @Data
 public class ConferenceDto {
     private Long id;
-    private String user_id;
-    private int book_detail_id;
-    private int conference_type;
+    private String userId;
+    private int bookDetailId;
+    private int conferenceType;
     private LocalDateTime callStartTime;
     private LocalDateTime callEndTime;
-    private String thumbnail_url;
+    private String thumbnailUrl;
     private String title;
-    private int is_active;
+    private int isActive;
 
     private int empty;
     private int first;
