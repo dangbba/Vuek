@@ -190,7 +190,9 @@ dependencies {
     implementation("org.qlrm:qlrm:3.0.1")
 
 // jwt
-    implementation (group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.1')
+    implementation 'io.jsonwebtoken:jjwt-api:0.10.1'
+    runtime 'io.jsonwebtoken:jjwt-impl:0.10.1'
+    runtime 'io.jsonwebtoken:jjwt-jackson:0.10.1'
 
 // openVidu
     implementation 'io.openvidu:openvidu-java-client:2.20.0'

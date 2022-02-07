@@ -1,16 +1,15 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.api.response.UserRes;
+import com.ssafy.api.service.JwtService;
 import com.ssafy.api.service.UserService;
-import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +24,15 @@ import java.util.Map;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
+	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	private JwtService jwtService;
 	
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
@@ -49,38 +52,29 @@ public class UserController {
 	}
 
 	@GetMapping("/me/{userId}")
-	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "성공"),
-			@ApiResponse(code = 401, message = "인증 실패"),
-			@ApiResponse(code = 404, message = "사용자 없음"),
-			@ApiResponse(code = 500, message = "서버 오류")
-	})
-//	public ResponseEntity<Map<String, Object>> getUserInfo(@ApiIgnore Authentication authentication) {
+	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환한다.", response = Map.class)
 	public ResponseEntity<Map<String, Object>> getUserInfo(
 			@PathVariable("userId") @ApiParam(value = "인증할 회원의 아이디.", required = true) String userId,
 			HttpServletRequest request) {
-		/**
-		 * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-		 * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-		 */
+//		System.out.println(request.getHeader("access-token"));
+
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		if (request.getHeader("accessToken") != null) {
+		if (jwtService.isUsable(request.getHeader("access-token"))) {
+			logger.info("사용 가능한 토큰!!!");
 			try {
-//				SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-//				String userId = userDetails.getUsername();
 				User user = userService.getUserByUserId(userId);
-
 				resultMap.put("userInfo", user);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
 			}	catch (Exception e) {
+				logger.error("정보조회 실패 : {}", e);
 				resultMap.put("message", e.getMessage());
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 
 		} else {
+			logger.error("사용 불가능 토큰!!!");
 			resultMap.put("message", FAIL);
 			status = HttpStatus.ACCEPTED;
 		}
