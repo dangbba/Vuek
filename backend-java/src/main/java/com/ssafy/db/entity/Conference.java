@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -32,7 +33,8 @@ public class Conference {
     private String thumbnailUrl;
     private String title;
     private int isActive;
-    private String participant;
+    @ElementCollection(targetClass=User.class)
+    private Collection<User> participant;
     private String description;
 
     @PrePersist

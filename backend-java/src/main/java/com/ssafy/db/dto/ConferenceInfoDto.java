@@ -1,9 +1,12 @@
 package com.ssafy.db.dto;
 
+import com.ssafy.db.entity.User;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -11,25 +14,25 @@ import lombok.ToString;
 @Data
 public class ConferenceInfoDto {
     private int id;
-    private String user_id;
-    private int book_detail_id;
-    private int conference_type_id;
-    private String call_start_time;
-    private String thumbnail_url;
+    private String userId;
+    private int bookDetailId;
+    private int conferenceTypeId;
+    private String callStartTime;
+    private String thumbnailUrl;
     private String title;
-    private int is_active;
-    private String participant;
+    private int isActive;
+    private Collection<User> participant;
     private String description;
 
-    public ConferenceInfoDto(int id, String user_id, int book_detail_id, int conference_type_id, String call_start_time, String thumbnail_url, String title, int is_active, String participant, String description) {
+    public ConferenceInfoDto(int id, String userId, int bookDetailId, int conferenceTypeId, String callStartTime, String thumbnailUrl, String title, int isActive, Collection<User> participant, String description) {
         this.id = id;
-        this.user_id = user_id;
-        this.book_detail_id = book_detail_id;
-        this.conference_type_id = conference_type_id;
-        this.call_start_time = call_start_time;
-        this.thumbnail_url = thumbnail_url;
+        this.userId = userId;
+        this.bookDetailId = bookDetailId;
+        this.conferenceTypeId = conferenceTypeId;
+        this.callStartTime = callStartTime;
+        this.thumbnailUrl = thumbnailUrl;
         this.title = title;
-        this.is_active = is_active;
+        this.isActive = isActive;
         this.participant = participant;
         this.description = description;
     }

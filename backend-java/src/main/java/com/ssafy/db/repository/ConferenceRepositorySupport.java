@@ -1,5 +1,7 @@
 package com.ssafy.db.repository;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +38,7 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	@Modifying
 	public long createConference(Conference conference) {
-		conference.setParticipant(conference.getUser().getUserId());
+//		conference.setParticipant(conference.getUser().getUserId());
 		Query query = em.createQuery(
 						"insert into" +
 								"conference (conferenceId, userId, bookDetailId, conferenceTypeId," +
@@ -121,9 +123,19 @@ public class ConferenceRepositorySupport {
 				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
 				.fetchOne();
 
-		long count = updateClause.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
-				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
-				.execute();
+//		long count = updateClause.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
+////				.set(qConference.participant, con.getParticipant().concat(", ").concat(enterWrapperDto.getUser().getUserId()))
+//				.set(Collections.singletonList(qConference.participant), Collections.singletonList(con.getParticipant().add(enterWrapperDto.getUser())))
+//				.execute();
+//		em.close();
+
+		Query query = em.createNativeQuery(
+						"insert into " +
+								"conference_participant (Conference_conferenceId, participant_userId) " +
+								"values (:Conference_conferenceId, :participant_userId)")
+				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
+				.setParameter("participant_userId", Collections.singletonList(enterWrapperDto.getUser()));
+		query.executeUpdate();
 		em.close();
 
 	}

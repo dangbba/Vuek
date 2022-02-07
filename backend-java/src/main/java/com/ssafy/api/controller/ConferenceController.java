@@ -267,4 +267,12 @@ public class ConferenceController {
 		json.put("exception", e.getClass());
 		return new ResponseEntity<>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+//	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+//	@PostMapping("/createParticipant")
+//	public ResponseEntity<String> enterConference( @RequestBody EnterWrapperDto enterWrapperDto ) throws Exception {
+//		conferenceService.enterConference(enterWrapperDto);
+//		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//
+//	}
 }
