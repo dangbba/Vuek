@@ -97,7 +97,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public boolean deleteConference(Conference conference) {
 		try {
-			conferenceRepository.delete(conference);
+			conferenceRepository.deleteById(conference.getId());
 			return true;
 		} catch (Exception e) {
 			return false;
