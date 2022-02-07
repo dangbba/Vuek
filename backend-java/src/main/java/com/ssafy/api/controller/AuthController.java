@@ -52,11 +52,9 @@ public class AuthController {
 			if (user_id.equals(userService.getUserByUserId(user_id).getUserId())) {
 				User user = userService.getUserByUserId(user_id);
 				if (passwordEncoder.matches(password, user.getPassword())) {
-					System.out.println("55!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					String token = jwtService.create("userId", user.getUserId(), "accessToken");// key, data, subject
-					System.out.println("57!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					String token = jwtService.create("userId", user.getUserId(), "access-token");// key, data, subject
 					logger.debug("로그인 토큰정보 : {}", token);
-					resultMap.put("accessToken", token);
+					resultMap.put("access-token", token);
 					resultMap.put("message", SUCCESS);
 					status = HttpStatus.ACCEPTED;
 				} else {
