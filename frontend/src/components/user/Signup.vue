@@ -101,14 +101,14 @@ export default {
 
     registMember() {
       http
-        .post(`/user`, {
-          user_name: this.name,
-          user_id: this.id,
+        .post(`/api/v1/users`, {
+          userName: this.name,
+          userId: this.id,
           password: this.pass,
         })
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.
-          let msg = "등록 처리시 문제가 발생했습니다.";
+          let msg = "등록에 문제가 생겼습니다.";
           if (data === "success") {
             msg = "회원가입을 축하합니다.";
           }

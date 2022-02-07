@@ -84,7 +84,7 @@
 
         <b-navbar-nav class="ml-auto" v-if="userInfo">
           <b-nav-item class="align-self-center">
-            <h5 class="Hello">{{ userInfo.user_name }} 님 안녕하세요</h5>
+            <h5 class="Hello">{{ userInfo.userName }} 님 안녕하세요</h5>
           </b-nav-item>
           <b-button
             class="link align-self-center"
@@ -169,7 +169,7 @@ export default {
         passwordConfirmation: "",
       },
       user: {
-        user_Id: null,
+        user_id: null,
         user_pw: null,
       },
     };
