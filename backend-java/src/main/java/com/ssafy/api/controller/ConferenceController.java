@@ -177,8 +177,6 @@ public class ConferenceController {
 		}
 	}
 
-
-	/////// is_active 수정
 	@ApiOperation(value = "방을 종료한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/close/{idconference}")
 	public ResponseEntity<String> closeConference(@RequestBody Conference conference) throws Exception {
