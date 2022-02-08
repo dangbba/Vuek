@@ -1,5 +1,7 @@
 package com.ssafy.api.service;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.db.entity.QUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ import com.ssafy.db.repository.UserRepositorySupport;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	private JPAQueryFactory jpaQueryFactory;
 	
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
@@ -38,6 +43,14 @@ public class UserServiceImpl implements UserService {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
 		User user = userRepositorySupport.findUserByUserId(user_id).get();
 		return user;
+	}
+	@Override
+	public boolean idCheck(String user_id) {
+		QUser qUser = QUser.user;
+		User usercheck = jpaQueryFactory.select(qUser).from(qUser)
+				.where(qUser.userId.eq(user_id)).fetchOne();
+		if (usercheck == null) {return false;}
+		return true;
 	}
 
 	@Override

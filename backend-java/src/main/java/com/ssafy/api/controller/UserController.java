@@ -1,8 +1,10 @@
 package com.ssafy.api.controller;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.service.JwtService;
 import com.ssafy.api.service.UserService;
+import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String ALREADYEXISTS = "이미 존재하는 사용자 ID입니다.";
 
 	@Autowired
 	UserService userService;
@@ -44,11 +47,17 @@ public class UserController {
     })
 	public ResponseEntity<String> register(
 			@RequestBody @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
-		
-		//임의로 리턴된 User 인스턴스. 현재 코드는 회원 가입 성공 여부만 판단하기 때문에 굳이 Insert 된 유저 정보를 응답하지 않음.
-		User user = userService.createUser(registerInfo);
-
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		String user_id = registerInfo.getUserId();
+		try{
+			if (!userService.idCheck(user_id)) {
+				User user = userService.createUser(registerInfo);
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>(ALREADYEXISTS, HttpStatus.CONFLICT);
+			}
+		}catch (Exception error) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
 	}
 
 	@GetMapping("/me/{userId}")
