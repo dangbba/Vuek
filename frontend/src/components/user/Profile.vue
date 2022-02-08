@@ -117,7 +117,7 @@ export default {
       if (confirm('탈퇴하시겠습니까?')) {
         http({
         method: 'delete',
-        url: `/user/${this.userInfo.user_id}`,
+        url: `/users/${this.userInfo.userId}`,
         })
         .then((response) => {
           console.log(response);
@@ -138,31 +138,38 @@ export default {
     },
     getUserData() { // 기존 정보 가져오기
       this.modalCheck = true
-      this.user.user_name = this.userInfo.user_name
+      this.user.user_name = this.userInfo.userName
     },
     checkInfo() { // 입력값 유효성 체크
       if(this.user.user_pw != this.user.user_pw_check) {
         alert('비밀번호를 동일하게 입력해주세요')
         return false
-      } else if(this.user.user_pw == '' || this.user.user_pw_check == '') {
-        alert('비밀번호를 입력해주세요')
+      } else if(this.user.user_pw === '' && this.user.user_pw_check == '') {
+        alert('변경할 password를 입력해주세요')
         return false
-      } else if(this.username == '') { // 변경할 유저네임 미입력시
-        this.user.user_name = this.userInfo.user_name
-        return true
+      } else if(this.user.user_name === '') { // 변경할 유저네임 미입력시
+        alert('변경할 username을 입력해주세요')
+        return false
+      } else if(this.user.user_name === this.userInfo.userName ) {
+        if (confirm('username을 그대로 유지하시겠습니까?')) {
+          return true
+        } else {
+          return false
+        }
       } else {
         return true
       }
+
     },
     userInfoUpdate() { // 회원정보 수정
       if(this.checkInfo()) {
         http({
         method: 'put',
-        url: `/user/${this.userInfo.user_id}`,
+        url: `/users/${this.userInfo.userId}`,
         data: {
           'password': this.user.user_pw,
-          'user_id': this.userInfo.user_id,
-          'user_name': this.user.user_name
+          'userId': this.userInfo.userId,
+          'userName': this.user.user_name
           }
         })
           .then((response) => {

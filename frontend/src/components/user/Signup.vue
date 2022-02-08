@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-4 px-lg-5">
+  <div class="container my-5 px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <h1>회원가입</h1>
@@ -101,7 +101,7 @@ export default {
 
     registMember() {
       http
-        .post(`/api/v1/users`, {
+        .post(`/users`, {
           userName: this.name,
           userId: this.id,
           password: this.pass,

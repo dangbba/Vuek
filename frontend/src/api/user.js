@@ -8,13 +8,13 @@ async function login(user, success, fail) {
     password: user["user_pw"],
   };
   await api
-    .post(`/api/v1/auth/login`, JSON.stringify(userDto))
+    .post(`/auth/login`, JSON.stringify(userDto))
     .then(success)
     .catch(fail);
 }
 
 async function findById(userId, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-  await api.get(`/api/v1/users/me/${userId}`).then(success).catch(fail);
+  await api.get(`/users/me/${userId}`).then(success).catch(fail);
 }
 export { login, findById };

@@ -113,11 +113,11 @@ export default {
     ...mapActions(conferenceStore, ["conferenceUpdate", "getConferenceInfo"]),
     beforeRoomInfo() {
       // this.getConferenceInfo(this.$route.params.contentId); 
-      this.getConferenceInfo(this.conferenceId); 
+      // this.getConferenceInfo(this.conferenceId); 
       this.roomName = this.conferenceDetail.title,
-      this.roomContent = "", // 임시 - 아직 DB에 내용 저장하는 항목이 없음 : 추가 요청함
+      this.roomContent = this.conferenceDetail.description, // 임시 - 아직 DB에 내용 저장하는 항목이 없음 : 추가 요청함
       this.thumbnailFile = "", // 임시 - thumbnail file 데이터 관련 확인 필요
-      this.selectedOption = this.conferenceDetail.conference_type
+      this.selectedOption = this.conferenceDetail.conferenceType.id
     },
     roomIsValid: function () {
       if (
@@ -152,12 +152,20 @@ export default {
     roomData() {
       return {
         id: this.conferenceId,
-        conference_type: this.selectedOption,
-        book_detail_id: 1, // 임시 - book DB와 연동 필요
-        user_user_id: this.userInfo.user_id,
-        thumbnail_url: this.thummbnailFile, // 미디어파일 업로드 - 백엔드에 확인 필요
+        user: { 
+          userId: this.userInfo.userId
+        },
+        bookDetail: {
+          id: 1, 
+        }, // 임시 - book DB와 연동 필요
+        conferenceType: { 
+          id: this.selectedOption,
+        },
+        thumbnailUrl: this.thummbnailFile, // 미디어파일 업로드 - 백엔드에 확인 필요
         title: this.roomName,
+        description: this.roomContent,
         // 방 설명?? 어디에 입력함??? 백엔드에 확인 필요
+        // isActive: 1
       }
     },
     roomUpdate() {

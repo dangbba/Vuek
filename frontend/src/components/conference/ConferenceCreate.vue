@@ -147,22 +147,26 @@ export default {
     },
     roomData() {
       return {
-        conference_type: this.selectedOption,
-        book_detail_id: 1, // 임시 - book DB와 연동 필요
-        // call_start_time: this.date_time(), // 자동으로 지정됨
-        user_user_id: this.userInfo.user_id,
-        thumbnail_url: this.thummbnailFile, // 미디어파일 업로드 - 백엔드에 확인 필요
+        user: {
+          userId: this.userInfo.userId, 
+        },
+        bookDetail: {
+          id: 1, 
+        }, // 임시 - book DB와 연동 필요
+        conferenceType: { 
+          id: this.selectedOption,
+        },
+        thumbnailUrl: this.thummbnailFile, // 미디어파일 업로드 - 백엔드에 확인 필요
         title: this.roomName,
-        // 방 설명?? 어디에 입력함??? 백엔드에 확인 필요
-        is_active: 1, // 기본값이 0(종료)이라 1(진행중)로 생성해야함
-        participant: null,
+        description: this.roomContent,
+        isActive: 1
       };
     },
     formReset() {
       this.selectedOption = null;
       this.thumbnailFile = "";
       this.roomName = "";
-      this.roomContent = ""; // 확인 필요 // 임시 - 아직 DB에 내용 저장하는 항목이 없음 : 추가 요청함
+      this.roomContent = "";
     }, // 입력된 form 지우기
     roomCreate() {
       if (this.roomIsValid()) {

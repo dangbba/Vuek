@@ -41,16 +41,17 @@
       <!-- 컨퍼런스 정보 관련 정보 표시(임시) -->
       <p>데이터 표시 확인</p>
       <p>
-        conference name: {{ conferenceDetail.title }} / conference type:
-        {{ categoryName }}
+        conference name: {{ conferenceDetail.title }} / conference type: {{ categoryName }}
       </p>
     </div>
     <hr />
     <div>
       <!-- 방 종료 / 수정 관련 -->
       <!-- 방 개설자(주최자)만 표시되도록 추후 수정-->
-      <!-- <conference-detail-update></conference-detail-update>
-      <conference-detail-close></conference-detail-close> -->
+      <conference-detail-update></conference-detail-update>
+      <conference-detail-close></conference-detail-close>
+      <conference-detail-delete></conference-detail-delete> 
+            <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
     </div>
   </div>
 </template>
@@ -58,6 +59,10 @@
 <script>
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
+import ConferenceDetailUpdate from './ConferenceDetailUpdate';
+import ConferenceDetailClose from './ConferenceDetailClose';
+import ConferenceDetailDelete from './ConferenceDetailDelete';
+
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
 
@@ -67,8 +72,7 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
-// import ConferenceDetailUpdate from './ConferenceDetailUpdate';
-// import ConferenceDetailClose from './ConferenceDetailClose';
+
 
 const conferenceStore = "conferenceStore";
 
@@ -76,8 +80,9 @@ export default {
   name: "Conference_detail",
   components: {
     UserVideo,
-    // ConferenceDetailUpdate,
-    // ConferenceDetailClose
+    ConferenceDetailUpdate,
+    ConferenceDetailClose,
+    ConferenceDetailDelete,
   },
   data() {
     return {
@@ -101,26 +106,27 @@ export default {
     this.mySessionId = this.conferenceDetail.title;
   },
   created() {
-    // App.vue가 생성되면 소켓 연결을 시도합니다.
-    // this.connect();
-    ///////////////////////////////////////////////
-
-    // 회의실 상세 데이터 가져오기
+    // 회의실 상세 데이터 가져오기    
     this.getConferenceInfo(this.conferenceId);
+    // 카테고리 아이디와 일치하는 카테고리명 찾기
+    this.matchCategory();
+    // 방 참여 이력 생성
+    this.createHistory(this.historyData());
+
+
+
     console.log("방 번호" + this.conferenceId);
     console.log("사람 수 : " + this.count);
     this.mySessionId = this.conferenceId;
     // 회의실 카테고리 가져오기
-    this.getConferenceCategories();
-    // 카테고리 아이디와 일치하는 카테고리명 찾기
-    this.matchCategory();
+
     this.joinSession();
     this.count += 1;
   },
   watch: {
     conferenceDetail() {
       this.matchCategory();
-    }, // conferenceDetail 항목이 변하면(수정되면) 카테고리명 다시 찾아서 렌더링하도록...
+    },
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
@@ -129,17 +135,25 @@ export default {
   methods: {
     ...mapActions(conferenceStore, [
       "getConferenceInfo",
-      "getConferenceCategories",
+      "createHistory",
     ]),
     // 카테고리 아이디와 일치하는 카테고리명 찾기
     matchCategory() {
-      // this.category = this.conferenceCategory.filter((conferenceCategory) => {
-      //     return conferenceCategory.id === this.conferenceDetail.conference_type
-      //   })
       for (const cc of this.conferenceCategory)
-        if (cc.id === this.conferenceDetail.conference_type) {
+        if (cc.id === this.conferenceDetail.conferenceType.id) {
           this.categoryName = cc.name;
         }
+    },
+    historyData() {
+      return {
+        conference: {
+          id: this.conferenceId
+        },
+        user: { 
+          userId: this.userInfo.userId,
+        },
+        // action: 1, // 뭔지 모르겠음 / null값 가능함 / 액션 기본값은 0
+      }
     },
     joinSession() {
       // --- Get an OpenVidu object ---
