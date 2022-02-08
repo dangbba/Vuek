@@ -108,4 +108,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 			return false;
 		}
 	}
+
+	@Override
+	public int countNumOfPeople(int idconference){
+		return conferenceRepositorySupport.countNumOfPeople(idconference);
+	}
 }
