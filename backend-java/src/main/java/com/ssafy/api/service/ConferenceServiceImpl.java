@@ -9,6 +9,7 @@ import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
+import com.ssafy.db.repository.ConferenceHistoryRepository;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 
 	@Autowired
 	private ConferenceRepository conferenceRepository;
+
+	@Autowired
+	private ConferenceHistoryRepository conferenceHistoryRepository;
 
 	@Autowired
 	private ConferenceRepositorySupport conferenceRepositorySupport;
@@ -86,7 +90,8 @@ public class ConferenceServiceImpl implements ConferenceService {
 	
 	@Override
 	public void createConferenceHistory(@RequestBody ConferenceHistory conferenceHistory) throws Exception {
-		conferenceRepositorySupport.createConferenceHistory(conferenceHistory);
+//		conferenceRepositorySupport.createConferenceHistory(conferenceHistory);
+		conferenceHistoryRepository.save(conferenceHistory);
 	}
 	
 	@Override
