@@ -128,9 +128,10 @@ public class ConferenceRepositorySupport {
 	}
 
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
-		List<ConferenceHistory> list = em.createNativeQuery("select conferenceHistoryId, conferenceId, userId, action, insertedTime from conferenceHistory  where userId = :userId", ConferenceHistory.class)
-				.setParameter("userId", user_id).getResultList();
-		em.close();
+		QConferenceHistory qConferenceHistory = QConferenceHistory.conferenceHistory;
+		List<ConferenceHistory> list = queryFactory.select(qConferenceHistory).from(qConferenceHistory)
+				.where(qConferenceHistory.user.userId.eq(user_id)).fetch();
+
 		return list;
 	}
 
