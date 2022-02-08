@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Column(name = "userName")
     String userName;
 
-    @JsonIgnore
+//    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 

@@ -37,32 +37,6 @@ public class ConferenceRepositorySupport {
 
 	@Transactional
 	@Modifying
-	public long createConference(Conference conference) {
-//		conference.setParticipant(conference.getUser().getUserId());
-		Query query = em.createQuery(
-						"insert into" +
-								"conference (conferenceId, userId, bookDetailId, conferenceTypeId," +
-								"thumbnailUrl, title, isActive, participant, callStartTime, description)" +
-								"values (:conference_Id, :userId," +
-								":bookDetailId, :conferenceTypeId, :thumbnailUrl," +
-								":title, :isActive, :participant, :callStartTime, :description)")
-				.setParameter("conferenceId", conference.getId())
-				.setParameter("userId", conference.getUser().getUserId())
-				.setParameter("bookDetailId", conference.getBookDetail().getId())
-				.setParameter("conferenceTypeId", conference.getConferenceType().getId())
-				.setParameter("thumbnailUrl", conference.getThumbnailUrl())
-				.setParameter("title", conference.getTitle())
-				.setParameter("isActive", conference.getIsActive())
-				.setParameter("participant", conference.getParticipant())
-				.setParameter("callStartTime", conference.getCallStartTime())
-				.setParameter("description", conference.getDescription());
-		query.executeUpdate();
-		em.close();
-		return conference.getId();
-	}
-
-	@Transactional
-	@Modifying
 	public void closeConference(Conference conference) {
 		conference.callEndTime();
 		conference.setIsActive(0);

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="fw-bold mt-5 mb-3 title-deco">{{ userInfo.user_name }}'s 프로필</h1>
+    <h1 class="fw-bold mt-5 mb-3 title-deco">{{ userInfo.userName }}'s 프로필</h1>
     <b-row class="bCon justify-content-center">
 
       <b-card bg-variant="light" class="col-4">
@@ -9,9 +9,9 @@
           src="https://dcimg4.dcinside.co.kr/viewimage.php?id=26b4ca33ebd339af&no=24b0d769e1d32ca73ceb84fa11d02831abf8dd37dbca42c9c56298cca8560265a7d8652086bfe4b9343f67919400852e8de3921a268bec3508394fa2d71e05d88e6ff22c1eb5a3174ddf19d920114166da3bce0caad0a7b3d2c982290a031781"
           size="10rem"
         ></b-avatar>
-        <h5 class="my-3">{{ userInfo.user_name }}</h5>
+        <h5 class="my-3">{{ userInfo.userName }}</h5>
         <!-- <h5>이름 : {{ userInfo.user_name }}</h5> -->
-        <h5>아이디 : {{ userInfo.user_id }}</h5>
+        <h5>아이디 : {{ userInfo.userId }}</h5>
         <h5>이번 달 목표 :</h5>
         <h5>이메일 :</h5>
         <h5>관심장르:</h5>

@@ -2,6 +2,7 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
+import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ import javax.persistence.EntityManager;
 public class UserRepositorySupport {
 
     private final EntityManager em;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
@@ -42,19 +47,9 @@ public class UserRepositorySupport {
         JPAUpdateClause updateClause = new JPAUpdateClause(em, qUser);
         long count = updateClause
                 .set(qUser.userName, user.getUserName())
-                .set(qUser.password, user.getPassword())
+                .set(qUser.password, passwordEncoder.encode(user.getPassword()))
                 .where(qUser.userId.eq(user.getUserId()))
                 .execute();
-        em.close();
-    }
-
-    @Modifying
-    @Transactional
-    public void deleteUserByUserId(User user){
-        QUser qUser = QUser.user;
-        JPAUpdateClause deleteClause = new JPAUpdateClause(em, qUser);
-        long count = deleteClause.where(qUser.userId.eq(user.getUserId()))
-                        .execute();
         em.close();
     }
 
