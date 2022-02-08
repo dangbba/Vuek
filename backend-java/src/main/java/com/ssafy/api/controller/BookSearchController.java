@@ -61,7 +61,7 @@ public class BookSearchController {
 				.exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
 				});
-		System.out.println(mono);
+		System.out.println("mono.block(): " + mono.block() + "/" + mono.block().getClass());
 		return mono.block();
 	}
 	@ApiOperation(value = "베스트셀러", response = String.class)
