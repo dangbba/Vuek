@@ -14,6 +14,7 @@ public class BookSearchServiceImpl implements BookSearchService{
 
     @Override
     public long createBookDetail(BookDetail bookDetail) throws Exception {
+
         bookSearchRepository.save(bookDetail);
         return bookDetail.getId();
     }

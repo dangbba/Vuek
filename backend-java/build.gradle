@@ -198,7 +198,6 @@ dependencies {
     implementation 'io.openvidu:openvidu-java-client:2.20.0'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 }
-
 test {
     useJUnitPlatform()
 }

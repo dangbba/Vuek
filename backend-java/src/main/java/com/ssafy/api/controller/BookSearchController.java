@@ -53,6 +53,7 @@ public class BookSearchController {
 						.queryParam("QueryType", "ItemNewSpecial")
 						.queryParam("SearchTarget", "Book")
 						.queryParam("Version", "20131101")
+						.queryParam("isbn", "isbn13")
 						.queryParam("output", "js")
 						.build()
 				)
@@ -72,6 +73,7 @@ public class BookSearchController {
 						.queryParam("SearchTarget", "Book")
 						.queryParam("Version", "20131101")
 						.queryParam("output", "js")
+						.queryParam("isbn", "isbn13")
 						.build()
 				)
 				.exchangeToMono(response -> {
@@ -80,7 +82,7 @@ public class BookSearchController {
 		return mono.block();
 	}
 
-	@ApiOperation(value = "bookdetail저장", response = String.class)
+	@ApiOperation(value = "bookDetail 저장", response = String.class)
 	@PostMapping("/create")
 	public ResponseEntity<String> createBookDetail(@RequestBody BookDetail bookdetail) throws Exception {
 		logger.debug("bookDetailCreate 호출");
