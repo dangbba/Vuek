@@ -1,13 +1,41 @@
 {
     "id": 2,
     "conference": {
-      "id": 2
+      "id": 5,
+      "user": {
+        "userId": "1",
+        "userName": "1",
+        "hibernateLazyInitializer": {}
+      },
+      "bookDetail": {
+        "id": 1,
+        "author": "1",
+        "publisher": "1",
+        "titleUrl": "1",
+        "overview": "1",
+        "price": 1,
+        "title": "1",
+        "publishDate": "1",
+        "sailStatus": "1",
+        "isbn": null,
+        "hibernateLazyInitializer": {}
+      },
+      "conferenceType": {
+        "id": 1,
+        "name": "업무",
+        "hibernateLazyInitializer": {}
+      },
+      "thumbnailUrl": "1",
+      "title": "1",
+      "isActive": 0,
+      "participant": [],
+      "description": "1",
+      "hibernateLazyInitializer": {}
     },
     "user": {
       "userId": "1",
       "userName": "1",
-      "password": "1",
       "hibernateLazyInitializer": {}
     },
-    "action": 1
+    "action": 2
   }

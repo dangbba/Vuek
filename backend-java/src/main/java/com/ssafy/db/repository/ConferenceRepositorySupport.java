@@ -115,7 +115,7 @@ public class ConferenceRepositorySupport {
 		conferenceHistory.insertedTime();
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"conferenceHistory (conferenceHistoryId, conferenceId, userId, action, insertedTime) " +
+								"ConferenceHistory (conferenceHistoryId, conferenceId, userId, action, insertedTime) " +
 								"values (:conferenceHistoryId, :conferenceId, :userId," +
 								":action, :insertedTime)")
 				.setParameter("conferenceHistoryId", conferenceHistory.getId())
