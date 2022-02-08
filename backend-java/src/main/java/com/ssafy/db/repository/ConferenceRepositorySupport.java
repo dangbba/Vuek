@@ -91,7 +91,6 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	public void enterConference(@RequestBody EnterWrapperDto enterWrapperDto) {
 		QConference qConference = QConference.conference;
-		JPAUpdateClause updateClause = new JPAUpdateClause(em, qConference);
 
 		Conference con = (Conference) queryFactory
 				.from(qConference)
@@ -103,28 +102,10 @@ public class ConferenceRepositorySupport {
 								"conference_participant (Conference_conferenceId, participant_userId) " +
 								"values (:Conference_conferenceId, :participant_userId)")
 				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
-				.setParameter("participant_userId", Collections.singletonList(enterWrapperDto.getUser()));
+				.setParameter("participant_userId", enterWrapperDto.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 
-	}
-
-	@Transactional
-	@Modifying
-	public void createConferenceHistory(ConferenceHistory conferenceHistory) {
-		conferenceHistory.insertedTime();
-		Query query = em.createNativeQuery(
-						"insert into " +
-								"ConferenceHistory (conferenceHistoryId, conferenceId, userId, action, insertedTime) " +
-								"values (:conferenceHistoryId, :conferenceId, :userId," +
-								":action, :insertedTime)")
-				.setParameter("conferenceHistoryId", conferenceHistory.getId())
-				.setParameter("conferenceId", conferenceHistory.getConference().getId())
-				.setParameter("userId", conferenceHistory.getUser().getUserId())
-				.setParameter("action", conferenceHistory.getAction())
-				.setParameter("insertedTime", conferenceHistory.getInsertedTime());
-		query.executeUpdate();
-		em.close();
 	}
 
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
@@ -189,6 +170,18 @@ public class ConferenceRepositorySupport {
 					.fetch();
 			return con;
 		}
+	}
+
+	public int countNumOfPeople(int idconference){
+		Query query = em.createNativeQuery(
+						"select count(participant_userId)" +
+								"from Conference_participant "+
+								"where Conference_conferenceId = :Conference_conferenceId")
+				.setParameter("Conference_conferenceId", idconference);
+		int num = (int) query.getSingleResult() + 1;
+		em.close();
+
+		return num;
 	}
 
 }

@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.ssafy.api.service.ConferenceService;
+import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
+import io.swagger.models.auth.In;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -263,6 +265,7 @@ public class ConferenceController {
 		conferenceService.createConferenceHistory(conferenceHistory);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
+
 	private ResponseEntity<JSONObject> getErrorResponse(Exception e) {
 		JSONObject json = new JSONObject();
 		json.put("cause", e.getCause());
@@ -278,4 +281,12 @@ public class ConferenceController {
 //		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 //
 //	}
+
+//	@ApiOperation(value = "방 인원수를 센다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+//	@PostMapping("/count")
+//	public ResponseEntity<Integer> countNumOfPeople(@PathVariable int idconference ) throws Exception {
+//		int num = conferenceService.countNumOfPeople(idconference);
+//		return new ResponseEntity<Integer>(num, HttpStatus.OK);
+//	}
+
 }
