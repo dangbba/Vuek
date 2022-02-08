@@ -49,7 +49,7 @@ public class AuthController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			if (user_id.equals(userService.getUserByUserId(user_id).getUserId())) {
+			if (userService.idCheck(user_id)) {
 				User user = userService.getUserByUserId(user_id);
 				if (passwordEncoder.matches(password, user.getPassword())) {
 					String token = jwtService.create("userId", user.getUserId(), "access-token");// key, data, subject
