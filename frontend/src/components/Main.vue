@@ -8,6 +8,7 @@
       :interval="4000"
       no-animation
       indicators
+      background="#FFFFFF"
       class="carousel slide"
       controls
       label-next
