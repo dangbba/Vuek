@@ -22,6 +22,7 @@ public class BookSearchController {
 	public static final Logger logger = LoggerFactory.getLogger(BookSearchController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
+	private static final String ALREADY_EXISTS = "already_exists";
 
 	@Autowired
 	private BookSearchService bookSearchService;
@@ -44,8 +45,8 @@ public class BookSearchController {
 	}
 
 	@ApiOperation(value = "주목 할만한 신간 리스트", response = String.class)
-	@GetMapping("/newspecial")
-	public String newspecial() {
+	@GetMapping("/newSpecial")
+	public String newSpecial() {
 		Mono<String> mono = WebClient.builder().baseUrl("http://www.aladin.co.kr")
 				.build().get()
 				.uri(builder -> builder.path("/ttb/api/ItemList.aspx")
@@ -60,6 +61,7 @@ public class BookSearchController {
 				.exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
 				});
+		System.out.println(mono);
 		return mono.block();
 	}
 	@ApiOperation(value = "베스트셀러", response = String.class)
@@ -85,14 +87,22 @@ public class BookSearchController {
 	@ApiOperation(value = "bookDetail 저장", response = String.class)
 	@PostMapping("/create")
 	public ResponseEntity<String> createBookDetail(@RequestBody BookDetail bookdetail) throws Exception {
-		logger.debug("bookDetailCreate 호출");
-		try {
-			bookSearchService.createBookDetail(bookdetail);
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>(FAIL, HttpStatus.UNPROCESSABLE_ENTITY);
+		if (isExistBookDetail(bookdetail.getIsbn()) == false) {
+			try {
+				bookSearchService.createBookDetail(bookdetail);
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<String>(FAIL, HttpStatus.UNPROCESSABLE_ENTITY);
+			}
+		} else {
+			return new ResponseEntity<String>(ALREADY_EXISTS, HttpStatus.ALREADY_REPORTED);
 		}
+	}
+	@ApiOperation(value = "ISBN 값을 이용하여 데이터베이스에 책이 저장되어있는지 검사", response = boolean.class)
+	@GetMapping("/{isbn}")
+	public Boolean isExistBookDetail(@PathVariable String isbn) throws Exception {
+		return bookSearchService.isExistBookDetail(isbn);
 	}
 }
 
