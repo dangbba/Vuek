@@ -172,7 +172,7 @@ public class ConferenceController {
 	}
 
 	@ApiOperation(value = "방을 종료한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/close/{idconference}")
+	@PostMapping("/close")
 	public ResponseEntity<String> closeConference(@RequestParam Integer conferenceId) throws Exception {
 		Conference conference = conferenceService.getConferenceInfo(conferenceId);
 		if (conference != null) {
@@ -207,13 +207,13 @@ public class ConferenceController {
 		
 	}
 	@ApiOperation(value = "방 상세정보를 조회한다.", response = Conference.class)
-	@GetMapping("/conference-info/{idconference}")
+	@GetMapping("/conference-info/{conferenceId}")
 	public ResponseEntity<Conference> getConferenceInfo(@PathVariable int conferenceId) throws Exception {
 		return new ResponseEntity<>(conferenceService.getConferenceInfo(conferenceId), HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "idconference에 해당하는 글의 내용을 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("/conference-info/{idconference}")
+	@ApiOperation(value = "conferenceId에 해당하는 글의 내용을 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("/conference-info")
 	public ResponseEntity<String> updateConferenceInfo(@RequestBody Conference conference) throws Exception {
 		logger.debug("updateConferenceInfo - 호출");
 		conferenceService.updateConferenceInfo(conference);

@@ -72,6 +72,7 @@ public class ConferenceRepositorySupport {
 				.setParameter("conferenceTypeId", conference.getConferenceType().getId())
 				.setParameter("bookDetailId", conference.getBookDetail().getId())
 				.setParameter("thumbnailUrl", conference.getThumbnailUrl())
+				.setParameter("isActive", conference.getIsActive())
 				.setParameter("title", conference.getTitle())
 				.setParameter("description", conference.getDescription());
 		query.executeUpdate();

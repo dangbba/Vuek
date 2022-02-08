@@ -24,4 +24,5 @@ public class BookDetail {
     private String title;
     private String publishDate;
     private String sailStatus;
+    private String isbn;
 }
