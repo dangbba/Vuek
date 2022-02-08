@@ -61,9 +61,10 @@ public class ConferenceController {
 
 	@ApiOperation(value = "방을 생성한다. 그리고 DB저장 여부에 따라 성공/실패를 반환한다.", response = String.class)
 	@PostMapping("/create")
-	public ResponseEntity<String> createConference(@RequestBody Conference conference) throws Exception {
+	public ResponseEntity<Long> createConference(@RequestBody Conference conference) throws Exception {
 		conferenceService.createConference(conference);
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		Long conferenceId = conference.getId();
+		return new ResponseEntity<Long>(conferenceId, HttpStatus.OK);
 	}
 
 	@PostMapping("/join")
