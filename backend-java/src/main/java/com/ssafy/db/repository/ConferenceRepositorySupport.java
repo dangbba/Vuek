@@ -184,5 +184,17 @@ public class ConferenceRepositorySupport {
 		return num;
 	}
 
+	@Modifying
+	@Transactional
+	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
+		Query query = em.createNativeQuery(
+				"delete from Conference_participant where Conference_conferenceId = :Conference_conferenceId " +
+						"and participant_userId = :participant_userId")
+				.setParameter("Conference_conferenceId", idconference)
+				.setParameter("participant_userId", user_id);
+		query.executeUpdate();
+		em.close();
+	}
+
 }
 

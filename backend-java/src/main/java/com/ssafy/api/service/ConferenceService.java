@@ -42,4 +42,6 @@ public interface ConferenceService {
 	boolean deleteConference(Conference conference) throws Exception;
 
 	int countNumOfPeople(@PathVariable int idconference) throws Exception;
+
+	void participantClose(@PathVariable int idconference, @PathVariable String user_id) throws Exception;
 }

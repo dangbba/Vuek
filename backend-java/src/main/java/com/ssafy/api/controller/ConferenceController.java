@@ -281,7 +281,7 @@ public class ConferenceController {
 //		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 //
 //	}
-//
+
 	@ApiOperation(value = "방 인원수를 센다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/count/{idconference}")
 	public ResponseEntity<Integer> countNumOfPeople(@PathVariable int idconference ) throws Exception {
@@ -289,4 +289,10 @@ public class ConferenceController {
 		return new ResponseEntity<Integer>((int) num, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "참여자가 방을 나간다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/participantClonse/{idconference}/{user_id}")
+	public ResponseEntity<String> participantClose(@PathVariable int idconference, @PathVariable String user_id ) throws Exception {
+		conferenceService.participantClose(idconference, user_id);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 }

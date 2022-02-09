@@ -111,4 +111,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public int countNumOfPeople(@PathVariable int idconference){
 		return conferenceRepositorySupport.countNumOfPeople(idconference);
 	}
+
+	@Override
+	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
+		conferenceRepositorySupport.participantClose(idconference, user_id);
+	}
 }
