@@ -48,6 +48,7 @@ public class BookSearchController {
 				.build().get()
 				.uri(builder -> builder.path("/v1/search/book.json")
 						.queryParam("query", query)
+						.queryParam("display", "100")
 						.build()
 				)
 				.header("X-Naver-Client-Id", "kLkLrpYWuKyFYlpuk5EJ")
@@ -58,7 +59,24 @@ public class BookSearchController {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(mono.block());
-			System.out.println(obj);
+
+			JSONArray targetArray = (JSONArray) obj.get("items");
+			int list_cnt = targetArray.size();
+			for (int i = 0; i < list_cnt; i++) {
+				JSONObject singleBookData = (JSONObject) targetArray.get(i);
+				BookDetail singleBook = new BookDetail();
+				int price = Integer.parseInt(String.valueOf(singleBookData.get("price")));
+				singleBook.setTitle(singleBookData.get("title").toString());
+				singleBook.setTitleUrl(singleBookData.get("image").toString());
+				singleBook.setAuthor(singleBookData.get("author").toString());
+				singleBook.setOverview(singleBookData.get("description").toString().substring(0, 200));
+				singleBook.setPrice(price);
+				singleBook.setPublisher(singleBookData.get("publisher").toString());
+				singleBook.setPublishDate(singleBookData.get("pubdate").toString());
+				singleBook.setSailStatus(null);
+				singleBook.setIsbn(singleBookData.get("isbn").toString().substring(11));
+				createBookDetail(singleBook);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,6 +95,8 @@ public class BookSearchController {
 						.queryParam("Version", "20131101")
 						.queryParam("isbn", "isbn13")
 						.queryParam("output", "js")
+						.queryParam("Cover", "Big")
+						.queryParam("MaxResults", "100")
 						.build()
 				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
@@ -121,6 +141,8 @@ public class BookSearchController {
 						.queryParam("Version", "20131101")
 						.queryParam("output", "js")
 						.queryParam("isbn", "isbn13")
+						.queryParam("Cover", "Big")
+						.queryParam("MaxResults", "100")
 						.build()
 				)
 				.exchangeToMono(response -> {
