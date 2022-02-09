@@ -41,5 +41,5 @@ public interface ConferenceService {
 
 	boolean deleteConference(Conference conference) throws Exception;
 
-	int countNumOfPeople(int idconference) throws Exception;
+	int countNumOfPeople(@PathVariable int idconference) throws Exception;
 }

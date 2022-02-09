@@ -2,9 +2,7 @@ package com.ssafy.api.service;
 
 
 import java.util.List;
-import java.util.Optional;
 
-import com.ssafy.db.dto.ConferenceInfoDto;
 import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
@@ -13,8 +11,8 @@ import com.ssafy.db.repository.ConferenceHistoryRepository;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -110,7 +108,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	}
 
 	@Override
-	public int countNumOfPeople(int idconference){
+	public int countNumOfPeople(@PathVariable int idconference){
 		return conferenceRepositorySupport.countNumOfPeople(idconference);
 	}
 }

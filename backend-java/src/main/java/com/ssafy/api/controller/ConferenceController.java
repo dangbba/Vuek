@@ -281,12 +281,12 @@ public class ConferenceController {
 //		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 //
 //	}
-
-//	@ApiOperation(value = "방 인원수를 센다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@PostMapping("/count")
-//	public ResponseEntity<Integer> countNumOfPeople(@PathVariable int idconference ) throws Exception {
-//		int num = conferenceService.countNumOfPeople(idconference);
-//		return new ResponseEntity<Integer>(num, HttpStatus.OK);
-//	}
+//
+	@ApiOperation(value = "방 인원수를 센다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/count/{idconference}")
+	public ResponseEntity<Integer> countNumOfPeople(@PathVariable int idconference ) throws Exception {
+		long num = conferenceService.countNumOfPeople(idconference);
+		return new ResponseEntity<Integer>((int) num, HttpStatus.OK);
+	}
 
 }

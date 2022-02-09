@@ -21,6 +21,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -99,7 +100,7 @@ public class ConferenceRepositorySupport {
 
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"conference_participant (Conference_conferenceId, participant_userId) " +
+								"Conference_participant (Conference_conferenceId, participant_userId) " +
 								"values (:Conference_conferenceId, :participant_userId)")
 				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
 				.setParameter("participant_userId", enterWrapperDto.getUser().getUserId());
@@ -172,13 +173,13 @@ public class ConferenceRepositorySupport {
 		}
 	}
 
-	public int countNumOfPeople(int idconference){
+	public int countNumOfPeople(@PathVariable int idconference){
 		Query query = em.createNativeQuery(
-						"select count(participant_userId)" +
+						"select count(participant_userId) " +
 								"from Conference_participant "+
 								"where Conference_conferenceId = :Conference_conferenceId")
 				.setParameter("Conference_conferenceId", idconference);
-		int num = (int) query.getSingleResult() + 1;
+		int num = Integer.parseInt(String.valueOf(query.getSingleResult()))+1 ;
 		em.close();
 
 		return num;
