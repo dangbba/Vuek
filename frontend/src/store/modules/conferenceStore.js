@@ -1,4 +1,5 @@
 import http from "@/config/http-common.js";
+import router from "@/router/index.js"
 
 const conferenceStore = {
   namespaced: true,
@@ -8,10 +9,9 @@ const conferenceStore = {
     conferenceHistory: [], // 회의 이력 저장
     conferenceCategory: [], // 회의 카테고리 저장
   },
-
   mutations: {
     LOAD_CONFERENCE_ITEMS: function (state, results) {
-      if (results.length == 0){
+      if (results.length == 0) {
         state.conferenceItems = false;
       } else {
         state.conferenceItems = results.sort((a, b) => {
@@ -19,20 +19,27 @@ const conferenceStore = {
         }); // 내림차순으로 보여줌
       }
     },
+    LOAD_CONFERENCE_SORTED_ITEMS: function (state, results) {
+      if (results.length == 0) {
+        state.conferenceItems = false;
+      } else {
+        state.conferenceItems = results;
+      } // sort한 데이터를 보여주는 경우 그대로 보여줌
+    },
     LOAD_CONFERENCE_DETAIL: function (state, results) {
-      state.conferenceDetail = results;
-      // console.log(state.conferenceDetail)
+      state.conferenceDetail = results
     },
     LOAD_CONFERENCE_HISTORY: function (state, results) {
-      state.conferenceHistory = results;
+      //state.conferenceHistory = results; // 중복 제거해서 넣기
       // console.log(state.conferenceHistory)
+      state.conferenceHistory = results.filter(
+        (arr, index, callback) => index === callback.findIndex(t => t.conference.id === arr.conference.id)
+      ); // 컨퍼런스 아이디가 중복인 것은 제거
     },
     LOAD_CONFERENCE_CATEGORY: function (state, results) {
       state.conferenceCategory = results;
       // console.log(state.conferenceCategory)
     },
-
-
   },
   actions: {
     // 방목록 조회
@@ -53,7 +60,7 @@ const conferenceStore = {
     getConferenceByCategory : function ({commit}, conference_type) {
       http({
         method: 'get',
-        url: `/conferences/getConferenceByCategory?categoryType=${conference_type}`,
+        url: `/conferences/getConferenceByCategory?conference_type_id=${conference_type}`,
         })
         .then((response) => {
           // console.log(response);
@@ -72,7 +79,7 @@ const conferenceStore = {
       })
         .then((response) => {
           console.log(response);
-          commit('LOAD_CONFERENCE_ITEMS', response.data);
+          commit('LOAD_CONFERENCE_SORTED_ITEMS', response.data);
         })
         .catch((err) => {
           console.dir(err);
@@ -93,20 +100,24 @@ const conferenceStore = {
         });
     },
     // 방 생성
-    createRoom: function ({dispatch}, room_data) {
+    createRoom: function ({commit}, room_data) {
       http({
         method: "post",
-        url: `/conferences`,
+        url: `/conferences/create`,
         data: room_data
       })
         .then((response) => {
-          console.log(response);
-          dispatch('LoadConferenceItems'); //임시... 생성된 방으로 이동해야하나 pk값 얻어올 수 없어 일단 방목록으로 이동
+          commit('LoadConferenceItems'); // 임시
+          router.push({
+            path: `/conference/view/${response.data}`,
+          }); // router를 import 안해서 에러가 있었음
         })
         .catch((error) => {
-          console.dir(error);
+          console.log('zzzzzzzz')
           alert('컨퍼런스 룸 생성에 실패했습니다.')
+          console.dir(error)
         });
+
     },
     // 방 카테고리 조회
     getConferenceCategories: function ({commit}) {
@@ -138,19 +149,20 @@ const conferenceStore = {
           console.dir(error);
         });
     },
-    // 방 종료 // 파라미터 있음..?
+    // 방 종료
     conferenceClose: function ({dispatch}, conference_id) {
+      console.log(conference_id)
       http({
         method: "post",
-        url: `/conferences/close/${conference_id}`,
-        data: {
-          id: conference_id // ???? 파라미터 왜 필요한지? 왜 is_active = 0으로 안바뀌는지 => 백엔드에 수정 요청함
-        }
+        url: `/conferences/close?conferenceId=${conference_id}`, 
       })
         .then((response) => {
           console.log(response);
           dispatch('LoadConferenceItems');
           alert("회의가 종료되었습니다.")
+          router.push({
+            path: `/conference`,
+          });
         })
         .catch((error) => {
           console.dir(error);
@@ -160,7 +172,7 @@ const conferenceStore = {
     conferenceUpdate: function ({dispatch}, conference_data) {
       http({
         method: "put",
-        url: `/conferences/conference-info/${conference_data.id}`,
+        url: `/conferences/conference-info`,
         data: conference_data
       })
         .then((response) => {
@@ -169,46 +181,46 @@ const conferenceStore = {
         })
         .catch((error) => {
           console.dir(error);
-        }); //왜 is_active = 0으로 바뀌는지..? -> 종료할 때 바뀌고 수정할 때는 안바뀌어야 함 => 백엔드에 수정 요청함
+        }); 
+    },
+    // 방 삭제
+    conferenceDelete: function ({dispatch}, conference_id) {
+      console.log(conference_id)
+      http({
+        method: "post",
+        url: `/conferences/delete?conferenceId=${conference_id}`,
+      })
+        .then((response) => {
+          console.log(response);
+          dispatch('LoadConferenceItems');
+          alert("회의가 완전히 종료(삭제)되었습니다.")
+          router.push({
+            path: `/conference`,
+          });
+        })
+        .catch((error) => {
+          console.dir(error);
+        });
     },
     // 방 참여 및 참여 이력 생성
+    // eslint-disable-next-line
     createHistory: function ({dispatch}, conference_data) {
       http({
         method: "post",
-        url: `/enter/createHistory`,
+        url: `/conferences/createHistory`,
         data: conference_data
       })
         .then((response) => {
           console.log(response)
-          dispatch('conferenceInfo');
         })
         .catch((error) => {
-          console.log(conference_data)
           console.dir(error);
         });
     },
-    ///////////////////////////////////////////////////////////////////
-    // 방 참여 (?)
-    createParticipant: function ({dispatch}, conference_data) {
-      http({
-        method: "post",
-        url: `/enter/createParticipant`,
-        data: conference_data
-      })
-        .then((response) => {
-          console.log(response);
-          dispatch('conferenceInfo');
-        })
-        .catch((error) => {
-          console.log(conference_data)
-          console.dir(error);
-        });
-    },
-    // 지난 회의 이력 조회
-    getConferenceHistory: function ({commit}) {
+    getConferenceHistory: function ({commit}, user_id) {
       http({
         method: "get",
-        url: `/conferences/getConferenceHistory`,
+        url: `/conferences/getConferenceHistory?user_id=${user_id}`,
       })
         .then((response) => {
           console.log(response);
@@ -217,7 +229,29 @@ const conferenceStore = {
         .catch((error) => {
           console.dir(error);
         });
-    }
+    },
+    /////////////////////////
+    // 방 참여 -- 백엔드 기능 보완중
+    // 
+    //
+    // createParticipant: function ({dispatch}, conference_data) {
+    //   console.log('&&&')
+    //   http({
+    //     method: "post",
+    //     url: `/enter/createParticipant`,
+    //     data: conference_data
+    //   })
+    //     .then((response) => {
+    //       console.log(response);
+    //       console.log(conference_data)
+    //       dispatch('getConferenceInfo', conference_data.conferenceInfoDto.id);
+    //     })
+    //     .catch((error) => {
+    //       console.log(conference_data)
+    //       console.dir(error);
+    //     });
+    // },
+    // 지난 회의 이력 조회
   },
 };
 

@@ -190,6 +190,8 @@ export default {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
       if (this.isLogin) {
+        this.user.user_id = ""
+        this.user.user_pw = ""
         await this.getUserInfo(token);
         this.$router.push({ name: "Book" });
       }
