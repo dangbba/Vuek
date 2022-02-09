@@ -10,6 +10,7 @@ import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
+import com.ssafy.db.entity.UserConference;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,8 @@ public interface ConferenceService {
 	long createConference(Conference conference) throws Exception;
 
 	void closeConference(Conference conference) throws Exception;
+
+	void uploadUserConferenceId(Conference conference) throws Exception;
 
 	List<ConferenceType> getConferenceCategory() throws Exception;
 

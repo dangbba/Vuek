@@ -108,7 +108,26 @@ public class ConferenceRepositorySupport {
 		em.close();
 
 	}
+	@Modifying
+	@Transactional
+	public void uploadUserConferenceId(Conference conference) {
+		QConference qConference = QConference.conference;
 
+		Conference con = (Conference) queryFactory
+				.from(qConference)
+				.where(qConference.id.eq((long) conference.getId()))
+				.fetchOne();
+
+		Query query = em.createNativeQuery(
+						"insert into " +
+								"Conference_participant (Conference_conferenceId, participant_userId) " +
+								"values (:Conference_conferenceId, :participant_userId)")
+				.setParameter("Conference_conferenceId", conference.getId())
+				.setParameter("participant_userId", conference.getUser().getUserId());
+		query.executeUpdate();
+		em.close();
+
+	}
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
 		QConferenceHistory qConferenceHistory = QConferenceHistory.conferenceHistory;
 		List<ConferenceHistory> list = queryFactory.select(qConferenceHistory).from(qConferenceHistory)
