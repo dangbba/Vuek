@@ -36,9 +36,12 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
 		user.setUserName(userRegisterInfo.getUserName());
 		user.setEmail(userRegisterInfo.getEmail());
+		user.setGenre(userRegisterInfo.getGenre());
+		user.setGoal(userRegisterInfo.getGoal());
+		user.setSocialLink(userRegisterInfo.getSocialLink());
+		user.setProfileImage(userRegisterInfo.getProfileImage());
 		return userRepository.save(user);
 	}
-
 	@Override
 	public User getUserByUserId(String user_id) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).

@@ -20,4 +20,16 @@ public class UserRegisterPostReq {
 	String userName;
 	@ApiModelProperty(name="유저 email", example="email")
 	String email;
+	@ApiModelProperty(name="유저 genre", example="genre")
+	String genre;
+	@ApiModelProperty(name="유저 goal", example="goal")
+	String goal;
+	@ApiModelProperty(name="socialLink", example="socialLink")
+	String socialLink;
+	@ApiModelProperty(name="유저 email", example="email")
+	String profileImage;
+
+
+
+
 }
