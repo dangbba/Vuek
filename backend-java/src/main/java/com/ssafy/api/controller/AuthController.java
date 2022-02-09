@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +27,7 @@ import java.util.Map;
 public class AuthController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 
 	@Autowired
 	UserService userService;
@@ -70,5 +68,15 @@ public class AuthController {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
+	@ApiOperation(value = "회원가입시 아이디 중복 확인한다. 사용 가능 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@GetMapping("/idcheck")
+	public ResponseEntity<String> idCheck(@RequestParam("id") String checkId) throws Exception{
+		logger.debug("idCheck - 호출");
+		if(userService.idCheck(checkId)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 }
