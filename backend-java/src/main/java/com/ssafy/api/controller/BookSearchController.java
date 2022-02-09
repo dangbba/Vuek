@@ -2,6 +2,8 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.service.BookSearchService;
 import com.ssafy.db.entity.BookDetail;
+import lombok.var;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -16,8 +18,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
+import java.awt.print.Book;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,7 +85,24 @@ public class BookSearchController {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(mono.block());
-			System.out.println(obj);
+			JSONArray targetArray = (JSONArray) obj.get("item");
+			int list_cnt = targetArray.size();
+
+			for (int i = 0; i < list_cnt; i++) {
+				JSONObject singleBookData = (JSONObject) targetArray.get(i);
+				BookDetail singleBook = new BookDetail();
+				int price = Integer.parseInt(String.valueOf(singleBookData.get("priceStandard")));
+				singleBook.setTitle(singleBookData.get("title").toString());
+				singleBook.setTitleUrl(singleBookData.get("cover").toString());
+				singleBook.setAuthor(singleBookData.get("author").toString());
+				singleBook.setOverview(singleBookData.get("description").toString());
+				singleBook.setPrice(price);
+				singleBook.setPublisher(singleBookData.get("publisher").toString());
+				singleBook.setPublishDate(singleBookData.get("pubDate").toString());
+				singleBook.setSailStatus(singleBookData.get("stockStatus").toString());
+				singleBook.setIsbn(singleBookData.get("isbn13").toString());
+				createBookDetail(singleBook);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,7 +129,24 @@ public class BookSearchController {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(mono.block());
-			System.out.println(obj);
+			JSONArray targetArray = (JSONArray) obj.get("item");
+			int list_cnt = targetArray.size();
+
+			for (int i = 0; i < list_cnt; i++) {
+				JSONObject singleBookData = (JSONObject) targetArray.get(i);
+				BookDetail singleBook = new BookDetail();
+				int price = Integer.parseInt(String.valueOf(singleBookData.get("priceStandard")));
+				singleBook.setTitle(singleBookData.get("title").toString());
+				singleBook.setTitleUrl(singleBookData.get("cover").toString());
+				singleBook.setAuthor(singleBookData.get("author").toString());
+				singleBook.setOverview(singleBookData.get("description").toString());
+				singleBook.setPrice(price);
+				singleBook.setPublisher(singleBookData.get("publisher").toString());
+				singleBook.setPublishDate(singleBookData.get("pubDate").toString());
+				singleBook.setSailStatus(singleBookData.get("stockStatus").toString());
+				singleBook.setIsbn(singleBookData.get("isbn13").toString());
+				createBookDetail(singleBook);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

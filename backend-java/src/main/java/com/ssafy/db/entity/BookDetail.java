@@ -3,19 +3,18 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 public class BookDetail {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookDetailId")
     private int id;
+
+    private String isbn;
     private String author;
     private String publisher;
     private String titleUrl;
@@ -24,5 +23,4 @@ public class BookDetail {
     private String title;
     private String publishDate;
     private String sailStatus;
-    private String isbn;
 }
