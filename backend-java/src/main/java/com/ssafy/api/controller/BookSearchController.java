@@ -2,6 +2,8 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.service.BookSearchService;
 import com.ssafy.db.entity.BookDetail;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.sun.el.util.MessageFactory.get;
 
 
 @RequestMapping("/api/v1/search/")
@@ -41,6 +50,13 @@ public class BookSearchController {
 				.exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
 				});
+		try {
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject)parser.parse(mono.block());
+			System.out.println(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mono.block();
 	}
 
@@ -57,13 +73,20 @@ public class BookSearchController {
 						.queryParam("isbn", "isbn13")
 						.queryParam("output", "js")
 						.build()
-				)
-				.exchangeToMono(response -> {
+				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
 				});
 		System.out.println("mono.block(): " + mono.block() + "/" + mono.block().getClass());
+		try {
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject)parser.parse(mono.block());
+			System.out.println(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mono.block();
 	}
+
 	@ApiOperation(value = "베스트셀러", response = String.class)
 	@GetMapping("/bestseller")
 	public String bestseller() {
@@ -81,6 +104,13 @@ public class BookSearchController {
 				.exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
 				});
+		try {
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject)parser.parse(mono.block());
+			System.out.println(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mono.block();
 	}
 
