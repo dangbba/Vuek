@@ -106,7 +106,7 @@ export default {
     getNewSpecial() {
       http({
         method: "get",
-        url: `/search/newspecial`,
+        url: `/search/newSpecial`,
       })
       .then((response) => {
         console.log(response.data.item)
