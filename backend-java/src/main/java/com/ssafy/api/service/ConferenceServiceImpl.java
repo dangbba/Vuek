@@ -32,6 +32,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public long createConference(Conference conference) throws Exception {
 		conferenceRepository.save(conference);
+//		conferenceRepositorySupport.createConference(conference);
 		return conference.getId();
 	}
 	

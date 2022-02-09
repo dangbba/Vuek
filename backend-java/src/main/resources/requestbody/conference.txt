@@ -1,27 +1,12 @@
 {
-  "id": 1,
   "user": {
-    "userId": "1",
-    "userName": "1",
-    "password": "1",
-    "hibernateLazyInitializer": {}
+    "userId": "1"
   },
   "bookDetail": {
-    "id": 1,
-    "author": "1",
-    "publisher": "1",
-    "titleUrl": "1",
-    "overview": "1",
-    "price": 1,
-    "title": "1",
-    "publishDate": "1",
-    "sailStatus": "1",
-    "hibernateLazyInitializer": {}
+    "id": 1
   },
   "conferenceType": {
-    "id": 1,
-    "name": "업무",
-    "hibernateLazyInitializer": {}
+    "id": 1
   },
   "callStartTime": "2022-02-07 11:19:51.575000",
   "callEndTime": null,
