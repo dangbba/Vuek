@@ -256,7 +256,7 @@ export default {
       console.log(id);
     },
     onClickLogout() {
-      sesssionStorage.removeItem("access-token");
+      sessionStorage.removeItem("access-token");
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
       if (this.$route.path != "/") this.$router.push({ name: "Home" });
