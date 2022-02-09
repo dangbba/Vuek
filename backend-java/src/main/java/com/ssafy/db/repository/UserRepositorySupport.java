@@ -48,6 +48,11 @@ public class UserRepositorySupport {
         long count = updateClause
                 .set(qUser.userName, user.getUserName())
                 .set(qUser.password, passwordEncoder.encode(user.getPassword()))
+                .set(qUser.email, user.getEmail())
+                .set(qUser.genre, user.getGenre())
+                .set(qUser.goal, user.getGoal())
+                .set(qUser.socialLink, user.getSocialLink())
+                .set(qUser.profileImage, user.getProfileImage())
                 .where(qUser.userId.eq(user.getUserId()))
                 .execute();
         em.close();

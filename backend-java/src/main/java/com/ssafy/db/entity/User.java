@@ -24,6 +24,11 @@ public class User implements Serializable {
 
     @Column(name = "userName")
     String userName;
+    String email;
+    String genre;
+    String goal;
+    String socialLink;
+    String profileImage;
 
 //    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

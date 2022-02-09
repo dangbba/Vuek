@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
 		user.setUserName(userRegisterInfo.getUserName());
+		user.setEmail(userRegisterInfo.getEmail());
 		return userRepository.save(user);
 	}
 
