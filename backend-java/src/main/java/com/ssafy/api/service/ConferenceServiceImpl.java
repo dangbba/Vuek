@@ -7,11 +7,14 @@ import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
+import com.ssafy.db.entity.Marathon;
 import com.ssafy.db.repository.ConferenceHistoryRepository;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
+import com.ssafy.db.repository.MarathonRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +32,15 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Autowired
 	private ConferenceRepositorySupport conferenceRepositorySupport;
 
+	@Autowired
+	private MarathonRepositorySupport marathonRepositorySupport;
+
+	@Transactional
 	@Override
 	public long createConference(Conference conference) throws Exception {
 		conferenceRepository.save(conference);
 //		conferenceRepositorySupport.createConference(conference);
+		marathonRepositorySupport.plusNowPages(conference.getUser().getUserId());
 		return conference.getId();
 	}
 	
@@ -81,10 +89,12 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<Conference> getConferenceByCategory(@RequestParam int conference_type_id) throws Exception {
 		return conferenceRepositorySupport.getConferenceByCategory(conference_type_id);
 	}
-	
+
+	@Transactional
 	@Override
 	public void enterConference(@RequestBody EnterWrapperDto enterWrapperDto) throws Exception {
 		conferenceRepositorySupport.enterConference(enterWrapperDto);
+		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUser().getUserId());
 	}
 	
 	@Override
