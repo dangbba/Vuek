@@ -65,7 +65,9 @@ public class ConferenceController {
 	@PostMapping("/create")
 	public ResponseEntity<Long> createConference(@RequestBody Conference conference) throws Exception {
 		conferenceService.createConference(conference);
+		conferenceService.uploadUserConferenceId(conference);
 		Long conferenceId = conference.getId();
+		
 		return new ResponseEntity<Long>(conferenceId, HttpStatus.OK);
 	}
 
@@ -92,6 +94,7 @@ public class ConferenceController {
 
 		if (this.mapSessions.get(sessionName) != null) {
 			// Session already exists
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111");
 			System.out.println("Existing session " + sessionName);
 			try {
 

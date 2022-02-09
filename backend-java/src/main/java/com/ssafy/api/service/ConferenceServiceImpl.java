@@ -4,10 +4,7 @@ package com.ssafy.api.service;
 import java.util.List;
 
 import com.ssafy.db.dto.EnterWrapperDto;
-import com.ssafy.db.entity.Conference;
-import com.ssafy.db.entity.ConferenceHistory;
-import com.ssafy.db.entity.ConferenceType;
-import com.ssafy.db.entity.Marathon;
+import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.ConferenceHistoryRepository;
 import com.ssafy.db.repository.ConferenceRepository;
 import com.ssafy.db.repository.ConferenceRepositorySupport;
@@ -48,7 +45,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public void closeConference(Conference conference) throws Exception {
 		conferenceRepositorySupport.closeConference(conference);
 	}
-	
+
 	@Override
 	public List<ConferenceType> getConferenceCategory() throws Exception {
 		return conferenceRepositorySupport.getConferenceCategory();
@@ -96,7 +93,13 @@ public class ConferenceServiceImpl implements ConferenceService {
 		conferenceRepositorySupport.enterConference(enterWrapperDto);
 		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUser().getUserId());
 	}
-	
+
+
+	@Override
+	public void uploadUserConferenceId(Conference conference) throws Exception {
+		conferenceRepositorySupport.uploadUserConferenceId(conference);
+	}
+
 	@Override
 	public void createConferenceHistory(@RequestBody ConferenceHistory conferenceHistory) throws Exception {
 //		conferenceRepositorySupport.createConferenceHistory(conferenceHistory);
