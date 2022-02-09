@@ -16,10 +16,7 @@ public class Marathon {
     private int id;
     @JoinColumn(name = "userId")
     private String userId;
-    private int goalPages = 50;
+    private int goalPages;
     private int nowPages;
 
-    public void nowPages() {
-        this.nowPages++;
-    }
 }
