@@ -99,7 +99,7 @@ public class ConferenceRepositorySupport {
 
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"conference_participant (Conference_conferenceId, participant_userId) " +
+								"Conference_participant (Conference_conferenceId, participant_userId) " +
 								"values (:Conference_conferenceId, :participant_userId)")
 				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
 				.setParameter("participant_userId", enterWrapperDto.getUser().getUserId());
