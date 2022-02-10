@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import java.io.Serializable;
 
 /**
@@ -29,11 +32,14 @@ public class User implements Serializable {
     String goal;
     String socialLink;
     String profileImage;
-
 //    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 
-
+    @PrePersist
+    public void prePersist(){
+        this.genre = this.genre == null ? "없음" : this.genre;
+        this.goal = this.goal == null ? "없음" : this.goal;
+    }
 
 }
