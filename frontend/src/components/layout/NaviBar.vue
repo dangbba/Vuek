@@ -23,8 +23,10 @@
           bg-variant="dark"
           text-variant="light"
           shadow
+          width="90px"
+          no-header
         >
-          <div class="px-3 py-2">
+          <div class="px-0 py-3">
             <div class="icon-bar">
               <router-link to="/conference" id="tooltip-1"
                 ><b-iconstack font-scale="1" animation="spin">
@@ -69,8 +71,10 @@
           bg-variant="dark"
           text-variant="light"
           shadow
+          width="90px"
+          no-header
         >
-          <div class="px-3 py-2">
+          <div class="px-0 py-3">
             <div class="icon-bar">
               <router-link to="/book" id="tooltip-5"
                 ><b-icon-book></b-icon-book
