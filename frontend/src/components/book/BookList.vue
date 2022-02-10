@@ -6,7 +6,7 @@
       <div class="carousel">
         <carousel v-bind="options" @initialized="init" @changed="changed">
 
-      <b-row class="justify-content-center" backgoundcolor="ligth">
+      <b-row class="justify-content-center">
         <b-col 
         col
         cols="12"
