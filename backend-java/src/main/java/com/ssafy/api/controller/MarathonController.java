@@ -35,5 +35,11 @@ public class MarathonController {
         return new ResponseEntity<Marathon>(marathon, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "goalpages를 수정한다", response = String.class)
+    @PostMapping("/updateGoalpages")
+    public ResponseEntity<String> getMarathon(Marathon marathon, @RequestParam int goalpages) throws Exception {
+        marathonService.updateGoalPages(marathon, goalpages);
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    }
 
 }
