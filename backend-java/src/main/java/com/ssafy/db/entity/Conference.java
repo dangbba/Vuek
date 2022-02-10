@@ -2,11 +2,16 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Date;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -28,7 +33,7 @@ public class Conference {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "conferenceTypeId")
     private ConferenceType conferenceType;
-    private LocalDateTime callStartTime;
+    private String callStartTime;
     private LocalDateTime callEndTime;
     private String thumbnailUrl;
     private String title;
@@ -39,7 +44,8 @@ public class Conference {
 
     @PrePersist
     public void callStartTime() {
-        this.callStartTime = LocalDateTime.now();
+        String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        this.callStartTime = formatDate;
     }
 
     public void callEndTime() {
