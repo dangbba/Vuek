@@ -6,12 +6,12 @@
       <div class="carousel">
         <carousel v-bind="options" @initialized="init" @changed="changed">
 
-      <b-row class="justify-content-center">
+      <b-row class="justify-content-center" backgoundcolor="ligth">
         <b-col 
         col
         cols="12"
         sm="6"
-        md="4"
+        md="3"
         lg="3"
         v-for="(item, index) in bestSellerItems"
         :key="index"
@@ -22,8 +22,8 @@
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 15rem;"
-          class="mb-3"
+          style="max-width: 1000px;"
+          no-body class="overflow-hidden"
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
@@ -40,7 +40,7 @@
         col
         cols="12"
         sm="6"
-        md="4"
+        md="3"
         lg="3"
         v-for="(item, index) in bestSellerItems2"
         :key="index"
@@ -51,8 +51,8 @@
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 15rem;"
-          class="mb-3"
+          style="max-width: 1000px;"
+          no-body class="overflow-hidden"
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
@@ -80,7 +80,7 @@
         col
         cols="12"
         sm="6"
-        md="4"
+        md="3"
         lg="3"
         v-for="(item, index) in newSpecialItems"
         :key="index"
@@ -91,7 +91,8 @@
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 15rem;"
+          style="max-width: 1000px;"
+          no-body class="overflow-hidden"
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
@@ -108,7 +109,7 @@
         col
         cols="12"
         sm="6"
-        md="4"
+        md="3"
         lg="3"
         v-for="(item, index) in newSpecialItems2"
         :key="index"
@@ -119,7 +120,8 @@
           img-alt="Image"
           img-top
           tag="article"
-          style="max-width: 15rem;"
+          style="max-width: 1000px;"
+          no-body class="overflow-hidden"
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
@@ -246,5 +248,14 @@ export default {
 </script>
 
 <style scoped>
-
+.row {
+    padding: 15px;
+    background-color: white;
+    border-radius: 15px;
+}
+.row-height {
+    height: 70px;
+    text-align: center;
+    padding-top: 25px;
+}
 </style>
