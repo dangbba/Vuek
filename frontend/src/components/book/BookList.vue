@@ -253,11 +253,10 @@ export default {
     background-color: white;
     border-radius: 15px;
 }
-.row-height {
-    height: 70px;
-    text-align: center;
-    padding-top: 25px;
+.card {
+  height: 100%;
 }
-.card {height: 100%;}
-.card-text {height: 100%;}
+.card-text {
+  height: 100%;
+}
 </style>
