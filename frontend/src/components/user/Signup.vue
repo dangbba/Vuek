@@ -24,6 +24,14 @@
                 placeholder="ID를 입력해주세요."
               />
               <label for="id">ID</label>
+
+              <!-- <b-button
+                class="mt-1"
+                @click="idExist(id)"
+              >
+                ID 중복확인
+              </b-button> -->
+                
               <div id="idresult" class="mt-1"></div>
             </div>
             <div class="form-floating">
@@ -45,6 +53,46 @@
                 placeholder="비밀번호를 다시 입력해주세요."
               />
               <label for="pass">Password Check</label>
+            </div>
+            <div class="form-floating">
+              <input
+                class="form-control"
+                id="email"
+                type="email"
+                v-model="email"
+                placeholder="이메일."
+              />
+              <label for="pass">Email</label>
+            </div>
+            <div class="form-floating">
+              <input
+                class="form-control"
+                id="genre"
+                type="genre"
+                v-model="genre"
+                placeholder="장르."
+              />
+              <label for="pass">Genre</label>
+            </div>
+            <div class="form-floating">
+              <input
+                class="form-control"
+                id="goal"
+                type="goal"
+                v-model="goal"
+                placeholder="목표."
+              />
+              <label for="pass">Goal</label>
+            </div>
+            <div class="form-floating">
+              <input
+                class="form-control"
+                id="sociallink"
+                type="sociallink"
+                v-model="socialLink"
+                placeholder="SNS."
+              />
+              <label for="pass">SocialLink</label>
             </div>
             <br />
             <!-- Submit Button-->
@@ -72,6 +120,9 @@ export default {
       id: "",
       pass: "",
       passcheck: "",
+      genre: "",
+      goal: "",
+      socialLink: ""
     };
   },
 
@@ -99,12 +150,20 @@ export default {
       else this.registMember();
     },
 
+    //     idExist: function (id) {
+    //   console.log(id);
+    // },
+
     registMember() {
       http
         .post(`/users`, {
           userName: this.name,
           userId: this.id,
           password: this.pass,
+          email: this.email,
+          genre: this.genre,
+          goal: this.goal,
+          socialLink: this.socialLink
         })
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.
@@ -114,7 +173,12 @@ export default {
           }
           alert(msg);
           this.$router.push({ name: "Home" });
-        });
+        })
+        .catch((err) => {
+          if (err.response.data === "이미 존재하는 사용자 ID입니다.") {
+            alert(err.response.data)
+          }
+        })
     },
     resetValue() {
       this.$router.push("/");
