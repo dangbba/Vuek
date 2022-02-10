@@ -258,4 +258,6 @@ export default {
     text-align: center;
     padding-top: 25px;
 }
+.card {height: 100%;}
+.card-text {height: 100%;}
 </style>
