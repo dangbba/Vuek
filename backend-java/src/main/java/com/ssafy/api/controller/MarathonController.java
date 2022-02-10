@@ -29,7 +29,7 @@ public class MarathonController {
     }
 
     @ApiOperation(value = "nowPages를 조회한다", response = String.class)
-    @PostMapping("/nowPages/{user_id}")
+    @GetMapping("/nowPages/{user_id}")
     public ResponseEntity<Integer> getNowPages(@PathVariable String user_id) throws Exception {
         int nowpages = marathonService.getNowPages(user_id);
         return new ResponseEntity<Integer>(nowpages, HttpStatus.OK);
