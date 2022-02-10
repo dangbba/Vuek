@@ -26,7 +26,7 @@ public class UserRegisterPostReq {
 	String goal;
 	@ApiModelProperty(name="socialLink", example="socialLink")
 	String socialLink;
-	@ApiModelProperty(name="유저 email", example="email")
+	@ApiModelProperty(name="유저 progileImage", example="email")
 	String profileImage;
 
 
