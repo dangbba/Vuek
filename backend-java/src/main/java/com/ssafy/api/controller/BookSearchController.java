@@ -69,7 +69,14 @@ public class BookSearchController {
 				singleBook.setTitle(singleBookData.get("title").toString());
 				singleBook.setTitleUrl(singleBookData.get("image").toString());
 				singleBook.setAuthor(singleBookData.get("author").toString());
-				singleBook.setOverview(singleBookData.get("description").toString().substring(0, 200));
+
+				int descriptionNum = singleBookData.get("description").toString().length();
+				if (descriptionNum > 200) {
+					singleBook.setOverview(singleBookData.get("description").toString().substring(0, 200));
+				} else {
+					singleBook.setOverview(singleBookData.get("description").toString());
+				}
+
 				singleBook.setPrice(price);
 				singleBook.setPublisher(singleBookData.get("publisher").toString());
 				singleBook.setPublishDate(singleBookData.get("pubdate").toString());
