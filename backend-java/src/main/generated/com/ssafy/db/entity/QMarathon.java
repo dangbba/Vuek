@@ -13,11 +13,11 @@ import com.querydsl.core.types.Path;
  * QMaraton is a Querydsl query type for Maraton
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QMaraton extends EntityPathBase<Maraton> {
+public class QMarathon extends EntityPathBase<Marathon> {
 
     private static final long serialVersionUID = 285164974L;
 
-    public static final QMaraton maraton = new QMaraton("maraton");
+    public static final QMarathon marathon = new QMarathon("marathon");
 
     public final NumberPath<Integer> goalPages = createNumber("goalPages", Integer.class);
 
@@ -27,16 +27,16 @@ public class QMaraton extends EntityPathBase<Maraton> {
 
     public final StringPath userId = createString("userId");
 
-    public QMaraton(String variable) {
-        super(Maraton.class, forVariable(variable));
+    public QMarathon(String variable) {
+        super(Marathon.class, forVariable(variable));
     }
 
-    public QMaraton(Path<? extends Maraton> path) {
+    public QMarathon(Path<? extends Marathon> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QMaraton(PathMetadata metadata) {
-        super(Maraton.class, metadata);
+    public QMarathon(PathMetadata metadata) {
+        super(Marathon.class, metadata);
     }
 
 }

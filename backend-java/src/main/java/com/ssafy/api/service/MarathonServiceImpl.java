@@ -6,6 +6,7 @@ import com.ssafy.db.repository.MarathonRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class MarathonServiceImpl implements MarathonService {
@@ -22,7 +23,12 @@ public class MarathonServiceImpl implements MarathonService {
     }
 
     @Override
-    public int getNowPages(@PathVariable String user_id) throws Exception {
-        return marathonRepositorySupport.getNowPages(user_id);
+    public Marathon getMarathon(@PathVariable String user_id) throws Exception {
+        return marathonRepositorySupport.getMarathon(user_id);
+    }
+
+    @Override
+    public void updateGoalPages(Marathon marathon, @RequestParam int goalPages){
+        marathonRepositorySupport.updateGoalPages(marathon, goalPages);
     }
 }
