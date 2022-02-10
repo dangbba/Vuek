@@ -2,6 +2,9 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.BookDetail;
+import com.ssafy.db.entity.Conference;
+import com.ssafy.db.entity.QBookDetail;
+import com.ssafy.db.entity.QConference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -10,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import static com.ssafy.db.entity.QBookDetail.bookDetail;
+import static com.ssafy.db.entity.QConference.conference;
 
 
 @Repository
@@ -40,12 +44,15 @@ public class BookSearchRepositorySupport {
         em.close();
     }
 
-    public boolean isExistBookDetail(String isbn) {
-        Integer fetchOne = queryFactory
-                .selectOne()
-                .from(bookDetail)
-                .where(bookDetail.isbn.eq(isbn))
-                .fetchFirst();
-        return fetchOne != null;
+    public Integer isExistBookDetail(String isbn) {
+        QBookDetail qBookDetail = bookDetail;
+        BookDetail book = (BookDetail) queryFactory
+                .from(qBookDetail)
+                .where(qBookDetail.isbn.eq(isbn))
+                .fetchOne();
+        if (book.getId() > 0) {
+            return book.getId();
+        }
+        return 0;
     }
 }
