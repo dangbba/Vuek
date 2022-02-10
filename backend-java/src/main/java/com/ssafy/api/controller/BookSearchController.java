@@ -184,22 +184,22 @@ public class BookSearchController {
 
 	@ApiOperation(value = "bookDetail 저장", response = String.class)
 	@PostMapping("/create")
-	public ResponseEntity<String> createBookDetail(@RequestBody BookDetail bookdetail) throws Exception {
-		if (isExistBookDetail(bookdetail.getIsbn()) == false) {
+	public Integer createBookDetail(@RequestBody BookDetail bookdetail) throws Exception {
+		if (isExistBookDetail(bookdetail.getIsbn()) == null) {
 			try {
 				bookSearchService.createBookDetail(bookdetail);
-				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+				return bookdetail.getId();
 			} catch (Exception e) {
 				e.printStackTrace();
-				return new ResponseEntity<String>(FAIL, HttpStatus.UNPROCESSABLE_ENTITY);
+				return 0;
 			}
 		} else {
-			return new ResponseEntity<String>(ALREADY_EXISTS, HttpStatus.ALREADY_REPORTED);
+			return 0;
 		}
 	}
 	@ApiOperation(value = "ISBN 값을 이용하여 데이터베이스에 책이 저장되어있는지 검사", response = boolean.class)
 	@GetMapping("/{isbn}")
-	public Boolean isExistBookDetail(@PathVariable String isbn) throws Exception {
+	public Integer isExistBookDetail(@PathVariable String isbn) throws Exception {
 		return bookSearchService.isExistBookDetail(isbn);
 	}
 }
