@@ -28,11 +28,11 @@ public class MarathonController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "nowPages를 조회한다", response = String.class)
-    @GetMapping("/nowPages/{user_id}")
-    public ResponseEntity<Integer> getNowPages(@PathVariable String user_id) throws Exception {
-        int nowpages = marathonService.getNowPages(user_id);
-        return new ResponseEntity<Integer>(nowpages, HttpStatus.OK);
+    @ApiOperation(value = "마라톤을 조회한다", response = String.class)
+    @GetMapping("/marathon-info/{user_id}")
+    public ResponseEntity<Marathon> getMarathon(@PathVariable String user_id) throws Exception {
+        Marathon marathon = marathonService.getMarathon(user_id);
+        return new ResponseEntity<Marathon>(marathon, HttpStatus.OK);
     }
 
 

@@ -22,7 +22,7 @@ public class MarathonServiceImpl implements MarathonService {
     }
 
     @Override
-    public int getNowPages(@PathVariable String user_id) throws Exception {
-        return marathonRepositorySupport.getNowPages(user_id);
+    public Marathon getMarathon(@PathVariable String user_id) throws Exception {
+        return marathonRepositorySupport.getMarathon(user_id);
     }
 }

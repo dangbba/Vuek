@@ -16,10 +16,10 @@ public class MarathonRepositorySupport {
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
-    public int getNowPages(@PathVariable String user_id){
+    public Marathon getMarathon(@PathVariable String user_id){
         QMarathon qMarathon = QMarathon.marathon;
-        int nowPages = queryFactory.select(qMarathon.nowPages).from(qMarathon).where(qMarathon.userId.eq(user_id)).fetchOne();
-        return nowPages;
+        Marathon marathon = queryFactory.select(qMarathon).from(qMarathon).where(qMarathon.userId.eq(user_id)).fetchOne();
+        return marathon;
     }
 
     public void plusNowPages(@PathVariable String user_id){
