@@ -10,7 +10,7 @@
       </conference-list-item>
     </div>
     <div v-else>
-      <h3 class="text-danger my-3">- 현재 진행중인 회의가 없습니다 -</h3> <!--명세서에서는 아이콘 표시하라함..-->
+      <h3 class="text-danger my-3">- 현재 진행중인 회의가 없습니다 -</h3>
     </div>
   </div>
 </template>

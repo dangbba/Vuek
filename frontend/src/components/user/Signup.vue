@@ -5,7 +5,8 @@
         <h1>회원가입</h1>
         <div class="my-5">
           <form id="userform" method="post" action="">
-            <div class="form-floating">
+            <div class="text-start">
+              <label for="name">이름</label>
               <input
                 class="form-control"
                 id="name"
@@ -13,9 +14,9 @@
                 v-model="name"
                 placeholder="이름을 입력해주세요."
               />
-              <label for="name">Name</label>
             </div>
-            <div class="form-floating">
+            <div class="text-start">
+              <label for="id">ID</label>
               <input
                 class="form-control"
                 id="id"
@@ -23,10 +24,10 @@
                 v-model="id"
                 placeholder="ID를 입력해주세요."
               />
-              <label for="id">ID</label>
               <div id="idresult" class="mt-1"></div>
             </div>
-            <div class="form-floating">
+            <div class="text-start">
+              <label for="pass">Password</label>
               <input
                 class="form-control"
                 id="pass"
@@ -34,9 +35,9 @@
                 v-model="pass"
                 placeholder="비밀번호를 입력해주세요."
               />
-              <label for="pass">Password</label>
             </div>
-            <div class="form-floating">
+            <div class="text-start">
+              <label for="pass">Password Check</label>
               <input
                 class="form-control"
                 id="passcheck"
@@ -44,14 +45,58 @@
                 v-model="passcheck"
                 placeholder="비밀번호를 다시 입력해주세요."
               />
-              <label for="pass">Password Check</label>
             </div>
+            <!-- email 주소 -->
+            <div class="text-start">
+              <p class="mt-3 mb-0">(선택정보)</p>
+              <label for="email">E-mail</label>
+              <input
+                class="form-control"
+                id="email"
+                type="e-mail"
+                v-model="email"
+                placeholder="e-mail을 입력해주세요.(example: -----@-----.--- 형식으로 입력)"
+              />
+            </div>
+            <!-- 관심장르 -->
+            <div class="text-start">
+              <label for="genre">관심 장르</label>
+              <input
+                class="form-control"
+                id="genre"
+                type="text"
+                v-model="genre"
+                placeholder="관심 장르를 입력해주세요."
+              />
+            </div>
+            <!-- 목표 -->
+             <div class="text-start">
+              <label for="goal">목표</label>
+              <input
+                class="form-control"
+                id="goal"
+                type="text"
+                v-model="goal"
+                placeholder="목표를 입력해주세요."
+              />
+            </div>           
+            <!-- 소셜 링크 -->
+             <div class="text-start">
+              <label for="socialLink">SNS 링크</label>
+              <input
+                class="form-control"
+                id="socialLink"
+                type="url"
+                v-model="socialLink"
+                placeholder="소셜링크를 입력해주세요.(example: https://----.--- 형식으로 입력)"
+              />
+            </div>    
             <br />
             <!-- Submit Button-->
-            <b-button variant="outline-primary" @click="checkValue"
+            <b-button variant="primary" @click="checkValue"
               >Sign Up</b-button
             >&nbsp;
-            <b-button variant="outline-danger" @click="resetValue"
+            <b-button variant="danger" @click="resetValue"
               >Cancel</b-button
             >
           </form>
@@ -72,6 +117,10 @@ export default {
       id: "",
       pass: "",
       passcheck: "",
+      email: "",
+      genre: null,
+      goal: null,
+      socialLink: ""
     };
   },
 
@@ -94,27 +143,53 @@ export default {
       err &&
         this.pass != this.passcheck &&
         ((msg = "비밀번호를 다시 확인해주세요"), (err = false));
-
       if (!err) alert(msg);
       else this.registMember();
-    },
+    },  
 
+    // 일단 회원가입할 때 독서 마라톤을 생성한다
+    createMarathon(id) {
+      http
+        .post(`/marathon/create`, {
+          userId: id,
+          goalPages: 1 // 기본적으로 1으로 생성
+        })
+        .then(({ data }) => {
+          // 서버에서 정상적인 값이 넘어 왔을경우 실행.
+          console.log(data)
+        })
+        .catch((err) => {
+          console.log(err.response)
+          alert("독서마라톤 생성에 실패했습니다. 관리자에게 문의하세요.")
+        })
+    },
     registMember() {
       http
         .post(`/users`, {
           userName: this.name,
           userId: this.id,
           password: this.pass,
+          email: this.email,
+          genre: this.genre,
+          goal: this.goal,
+          socialLink: this.socialLink
         })
         .then(({ data }) => {
-          // 서버에서 정상적인 값이 넘어 왔을경우 실행.
           let msg = "등록에 문제가 생겼습니다.";
+          // 서버에서 정상적인 값이 넘어 왔을경우 실행.
           if (data === "success") {
             msg = "회원가입을 축하합니다.";
+            // 독서마라톤 생성
+            this.createMarathon(this.id)
+            alert(msg);
+            this.$router.push({ name: "Home" });
           }
-          alert(msg);
-          this.$router.push({ name: "Home" });
-        });
+        })
+        .catch((err) => {
+          if (err.response.data === "이미 존재하는 사용자 ID입니다.") {
+            alert(err.response.data)
+          }
+        })
     },
     resetValue() {
       this.$router.push("/");
@@ -123,4 +198,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

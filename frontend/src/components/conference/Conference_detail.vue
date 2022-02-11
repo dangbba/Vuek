@@ -41,13 +41,15 @@
       <!-- 컨퍼런스 정보 관련 정보 표시(임시) -->
       <p>데이터 표시 확인</p>
       <p>
-        conference name: {{ conferenceDetail.title }} / conference type: {{ categoryName }}
+        conference name: {{ conferenceDetail.title }} /  conference type: {{ conferenceDetail.conferenceType.name }} 
+      </p>
+      <p>
+        도서 제목: {{ transStr(conferenceDetail.bookDetail.title) }} / 줄거리: {{ transStr(conferenceDetail.bookDetail.overview) }} 
       </p>
     </div>
     <hr />
-    <div>
+    <div v-if="conferenceDetail.user.userId === userInfo.userId">
       <!-- 방 종료 / 수정 관련 -->
-      <!-- 방 개설자(주최자)만 표시되도록 추후 수정-->
       <conference-detail-update></conference-detail-update>
       <conference-detail-close></conference-detail-close>
       <conference-detail-delete></conference-detail-delete> 
@@ -89,8 +91,6 @@ export default {
       userName: "",
       message: "",
       recvList: [],
-      // 카테고리 관련
-      categoryName: "",
       // 회의 정보 관련
       conferenceId: this.$route.params.contentId,
       OV: undefined,
@@ -106,27 +106,18 @@ export default {
     this.mySessionId = this.conferenceDetail.title;
   },
   created() {
-    // 회의실 상세 데이터 가져오기    
-    this.getConferenceInfo(this.conferenceId);
-    // 카테고리 아이디와 일치하는 카테고리명 찾기
-    this.matchCategory();
+
+    this.getConferenceInfo(this.conferenceId)
     // 방 참여 이력 생성
     this.createHistory(this.historyData());
 
-
-
-    console.log("방 번호" + this.conferenceId);
+    console.log("방 번호" + this.conferenceId);``
     console.log("사람 수 : " + this.count);
     this.mySessionId = this.conferenceId;
-    // 회의실 카테고리 가져오기
+
 
     this.joinSession();
     this.count += 1;
-  },
-  watch: {
-    conferenceDetail() {
-      this.matchCategory();
-    },
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
@@ -137,13 +128,6 @@ export default {
       "getConferenceInfo",
       "createHistory",
     ]),
-    // 카테고리 아이디와 일치하는 카테고리명 찾기
-    matchCategory() {
-      for (const cc of this.conferenceCategory)
-        if (cc.id === this.conferenceDetail.conferenceType.id) {
-          this.categoryName = cc.name;
-        }
-    },
     historyData() {
       return {
         conference: {
@@ -154,6 +138,12 @@ export default {
         },
         // action: 1, // 뭔지 모르겠음 / null값 가능함 / 액션 기본값은 0
       }
+    },
+    transStr(str) {
+      // return str
+      let transedStr = str.replaceAll('<b>', '')
+      transedStr = transedStr.replaceAll('</b>', '')
+      return transedStr
     },
     joinSession() {
       // --- Get an OpenVidu object ---

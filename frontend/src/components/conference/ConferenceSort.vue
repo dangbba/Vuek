@@ -2,8 +2,6 @@
   <div>
     <b-form-select v-model="selected_sort_value" :options="sort_value_options"></b-form-select>
     <b-form-select v-model="selected_sort_option" :options="sort_options" class="mx-2"></b-form-select>
-    <!-- <div class="mt-3">Selected: <strong>{{ selected_sort_option }}</strong></div>
-    <div class="mt-3">Selected: <strong>{{ selected_sort_value }}</strong></div> -->
     <b-button @click="conferenceSort">정렬</b-button>
   </div>
 
@@ -22,7 +20,7 @@ export default {
       if (this.selected_sort_option == null || this.selected_sort_value == null) {
         alert('옵션을 모두 선택해주세요')
       } else {
-        this.getConferenceBySort((`${this.selected_sort_option}&sort=${this.selected_sort_value}`)) // payload 한개밖에 안돼서 문자열로 붙여서 보냄
+        this.getConferenceBySort((`${this.selected_sort_option}&sort=${this.selected_sort_value}`))
       }
     }
   },

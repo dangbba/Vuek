@@ -6,14 +6,11 @@
 
 <script>
 import { mapActions } from "vuex";
-// const userStore = "userStore";
 const conferenceStore = "conferenceStore";
 
 export default {
   name: "ConferenceDetailClose",
   computed: {
-    // ...mapState(userStore, ["userInfo"]),
-    // ...mapState(conferenceStore, ["conferenceDetail"]),
   },
   data() {
     return {
@@ -24,7 +21,6 @@ export default {
     ...mapActions(conferenceStore, ["conferenceClose"]),
     closeConference() {
       if(confirm("회의를 중단하시겠습니까?")){
-        // console.log(this.conferenceId)
         this.conferenceClose(this.conferenceId)
       } else {
         alert("취소되었습니다.")

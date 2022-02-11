@@ -8,7 +8,7 @@
       :interval="4000"
       no-animation
       indicators
-      background="#FFFFFF"
+      background="#000000"
       class="carousel slide"
       controls
       label-next
@@ -81,6 +81,8 @@
 * {
   font-family: 'Raleway', sans-serif;
 }
+
+
 
 .ko {
   font-family: 'Gothic A1', sans-serif;

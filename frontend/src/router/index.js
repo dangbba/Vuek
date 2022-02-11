@@ -42,10 +42,10 @@ const routes = [
     component: Conference,
   },
   {
-    path: "/conference/view/:contentId?",
+    path: "/conference/view/:contentId",
     name: "Conference_detail",
     component: Conference_detail,
-  }, // 임시?
+  },
 ];
 
 const router = new VueRouter({

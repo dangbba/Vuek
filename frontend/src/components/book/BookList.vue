@@ -14,6 +14,7 @@
         :key="index"
         >
           <b-card
+          bg-variant="dark"
           :title="item.title"
           :img-src="imgPath(item.itemId, item.isbn)"
           img-alt="Image"
@@ -21,10 +22,11 @@
           tag="article"
           style="max-width: 15rem;"
           class="mb-3"
+          variant="dark"
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
-              <p>줄거리 : {{ truncDiscription(item.description) }}</p>
+              <p>줄거리 : {{ truncDiscription(unescapeHtml(item.description)) }}</p>
             </b-card-text>
 
             <b-button :href="item.link" variant="secondary">상세페이지로</b-button>
@@ -49,11 +51,13 @@
         :key="index"
         >
           <b-card
+          bg-variant="dark"
           :title="item.title"
           :img-src="imgPath(item.itemId, item.isbn)"
           img-alt="Image"
           img-top
           tag="article"
+          class="mb-3"
           style="max-width: 15rem;"
           >
             <b-card-text>
@@ -95,7 +99,7 @@ export default {
         url: `/search/bestseller`,
       })
       .then((response) => {
-        console.log(response.data.item)
+        // console.log(response.data.item)
         this.bestSellerItems = response.data.item.slice(0, 8) // 10개중 8개까지 보여줌(화면상)
         // this.bestSellerItems.replace('sum', '500')
       })
@@ -109,7 +113,7 @@ export default {
         url: `/search/newSpecial`,
       })
       .then((response) => {
-        console.log(response.data.item)
+        // console.log(response.data.item)
         this.newSpecialItems = response.data.item.slice(0, 8) // 10개중 8개까지 보여줌(화면상)
       })
       .catch((err) => {
@@ -130,8 +134,19 @@ export default {
       } else {
         return `${dis.substr(0, 100)}... (중략)`
       }
-      
     },
+    unescapeHtml(str) {
+      if (str == null) {
+        return "";
+      }
+      return str
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'")
+        .replace(/&#39;/g, "'");
+    }
   },
 };
 

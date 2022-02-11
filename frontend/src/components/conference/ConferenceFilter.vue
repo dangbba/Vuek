@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-form-select v-model="selected" :options="options" class="mb-3">
-      <!-- This slot appears above the options from 'options' prop -->
       <template #first>
         <b-form-select-option :value="null" disabled>--카테고리를 선택해주세요--</b-form-select-option>
       </template>
