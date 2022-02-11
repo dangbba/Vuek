@@ -197,7 +197,7 @@ export default {
         this.user.user_id = ""
         this.user.user_pw = ""
         await this.getUserInfo(token);
-        this.$router.push({ name: "Book" });
+        this.$router.push({ name: "Home" });
       }
     },
     signupIsValid: function (cred) {
