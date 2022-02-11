@@ -24,7 +24,6 @@ public class BookSearchServiceImpl implements BookSearchService{
 
     @Override
     public Integer isExistBookDetail(String isbn) throws Exception {
-
         return bookSearchRepositorySupport.isExistBookDetail(isbn);
     }
 }

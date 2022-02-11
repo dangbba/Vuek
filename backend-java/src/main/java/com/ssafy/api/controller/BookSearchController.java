@@ -197,7 +197,7 @@ public class BookSearchController {
 			return 0;
 		}
 	}
-	@ApiOperation(value = "ISBN 값을 이용하여 데이터베이스에 책이 저장되어있는지 검사", response = boolean.class)
+	@ApiOperation(value = "ISBN 값을 이용하여 데이터베이스에 책이 저장되어있는지 검사 및 pk값 반환", response = boolean.class)
 	@GetMapping("/{isbn}")
 	public Integer isExistBookDetail(@PathVariable String isbn) throws Exception {
 		return bookSearchService.isExistBookDetail(isbn);
