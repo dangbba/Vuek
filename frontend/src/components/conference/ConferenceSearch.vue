@@ -1,7 +1,6 @@
 <template>
-  <div class="container"> <!-- 명세서에서는 팝업 적용하라고 되어있음-->
+  <div class="container">
     <b-form inline class="searchBox mt-3 row offset-7 col-5" autocomplete="off" onsubmit="return false"> 
-            <!-- autocomplet / onsubmit 설정 안하면 엔터치면 페이지 새로고침됨(form 태그 안에 버튼태그가 있어서 엔터를 누르면 button의 submit이 동작해서 그렇다고 함) -->
       <b-form-input
         class="form-control d-inline"
         v-model.trim="text"

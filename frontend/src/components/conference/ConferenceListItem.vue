@@ -1,28 +1,27 @@
 <template>
-  <div class="col">
-    <b-card no-body bg-variant="light" class="overflow-hidden mx-2 my-2" style="max-width: 540px;">
+  <div class="col" v-if="item.isActive"> <!-- 진행중인 회의만 표기됨 -->
+    <b-card no-body bg-variant="dark" class="overflow-hidden mx-2 my-2" style="max-width: 540px;">
       <b-row no-gutters>
         <b-col md="6">
-          <b-card-img :src="thumbnail_url" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
+          <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
+          <b-card-img v-else :src="thumbnail_url" alt="book_image" class="rounded-3 mt-3 ms-3"></b-card-img>
         </b-col>
         <b-col md="6" class="mb-3">
           <b-card-body :title="item.title"> <!--방 제목-->
             <b-card-text>
-              <p class="card-text">방번호: {{ item.id }}</p> <!--회의 번호-->
-              <p class="card-text">책제목: {{ item.bookDetail.id }}</p> <!--bookStore와 연결해서 책 제목 가져와야함..?-->
-              <p class="card-text" v-if="item.conferenceType.id==1">방카테고리: 업무</p> <!--카테고리번호-->
-              <p class="card-text" v-if="item.conferenceType.id==2">방카테고리: 교육</p> <!--카테고리번호-->
-              <p class="card-text" v-if="item.conferenceType.id==3">방카테고리: 기타</p> <!--카테고리번호-->
-              <p class="card-text">회의시작시간: {{ item.callStartTime }}</p>
-              <p class="card-text">회의종료시간: {{ item.callEndTime }}</p>
+              <p class="card-text">회의번호: {{ item.id }}</p> <!--회의 번호-->
+              <p class="card-text">주제도서: {{ transStr(item.bookDetail.title) }}</p>
+              <p class="card-text">카테고리: {{ item.conferenceType.name }}</p> 
+              <p class="card-text">시작시간: {{ item.callStartTime }}</p>
+              <!-- <p class="card-text">회의종료시간: {{ item.callEndTime }}</p> -->
               <p v-if="item.isActive" class="card-text">진행중 유무: <span class="text-success">진행중</span> </p> 
               <p v-else class="card-text">진행중 유무: <span class="text-danger">종료</span></p> 
-              <p class="card-text">방 참여 인원: {{ item.participant }}</p>
+              <p class="card-text">방 참여 인원: {{ item.participant.length }}</p> <!--participant는 array이므로 참여인원수를 출력-->
               
             </b-card-text>
           </b-card-body>
-          <b-button variant="primary" @click="enterConference" v-if="item.isActive">입장</b-button> <!--클릭시 회의실id에 맞는 detail 링크와 연결-->
-          <p class="badge bg-dark text-wrap fs-6 mb-1" v-else style="padding: 12px;">입장불가</p> <!--클릭시 회의실id에 맞는 detail 링크와 연결-->
+          <b-button variant="primary" @click="enterConference" v-if="item.isActive">입장</b-button> 
+          <b-button variant="secondary" class="disabled" v-else>입장불가</b-button>
         </b-col>
       </b-row>
     </b-card>
@@ -52,22 +51,30 @@ export default {
   methods: {
     ...mapActions("conferenceStore", ["createRoom", "getConferenceCategories"]),
     enterConference() {
-      // 회의실 카테고리 가져오기
-      this.getConferenceCategories()
       this.$router.push({
         path: `conference/view/${this.item.id}`,
       });
+    },
+    transStr(str) {
+      let transedStr = str.replaceAll('<b>', '')
+      transedStr = transedStr.replaceAll('</b>', '')
+      return transedStr
+    },
+    transUrl(url) {
+      let transedUrl = url.replace('=m1&', '=m200&') 
+      return transedUrl
     }
   },
   data: function () {
     return {
       thumbnail_url: require('@/assets/thumbnail/thumbnail_default_img.png') // 원래는 thumbnail 없을때만....
-      // thumbnail_url: `https://iamge/${this.item.thumbnail_url}`,
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+.card {
+  height: 520px;
+}
 </style>

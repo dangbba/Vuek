@@ -17,6 +17,7 @@
         :key="index"
         >
           <b-card
+          bg-variant
           :title="item.title"
           :img-src="imgPath(item.itemId, item.isbn)"
           img-alt="Image"
@@ -27,7 +28,7 @@
           >
             <b-card-text>
               <p>저자 : {{ item.author }}</p>
-              <p>줄거리 : {{ truncDiscription(item.description) }}</p>
+              <p>줄거리 : {{ truncDiscription(unescapeHtml(item.description)) }}</p>
             </b-card-text>
 
             <b-button :href="item.link" variant="secondary">상세페이지로</b-button>
@@ -86,6 +87,7 @@
         :key="index"
         >
           <b-card
+          bg-variant
           :title="item.title"
           :img-src="imgPath(item.itemId, item.isbn)"
           img-alt="Image"
@@ -240,8 +242,19 @@ export default {
       } else {
         return `${dis.substr(0, 100)}... (중략)`
       }
-      
     },
+    unescapeHtml(str) {
+      if (str == null) {
+        return "";
+      }
+      return str
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'")
+        .replace(/&#39;/g, "'");
+    }
   },
 };
 
@@ -250,7 +263,7 @@ export default {
 <style scoped>
 .row {
     padding: 15px;
-    background-color: white;
+    background-color: #343a40;
     border-radius: 15px;
 }
 .card {
@@ -258,5 +271,6 @@ export default {
 }
 .card-text {
   height: 100%;
+  color: black;
 }
 </style>

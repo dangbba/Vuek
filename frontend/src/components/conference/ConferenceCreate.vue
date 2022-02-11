@@ -7,7 +7,7 @@
       @click="$bvModal.show('modal-scoped')"
       >컨퍼런스 생성하기</b-button
     >
-    <b-modal id="modal3-prevent-closing" ref="modal" title="컨퍼런스 생성하기">
+    <b-modal scrollable id="modal3-prevent-closing" ref="modal" title="컨퍼런스 생성하기">
       <form ref="form">
         <b-form-group
           class="roommodal"
@@ -28,10 +28,10 @@
         <b-form-group
           class="roommodal"
           label="방 제목"
-          label-for="name-roominput"
+          label-for="title"
         >
           <b-form-input
-            id="name-input"
+            id="title"
             v-model="roomName"
             placeholder="방 제목을 입력해주세요"
           ></b-form-input>
@@ -42,10 +42,10 @@
           type="textarea"
           class="roommodal"
           label="설명"
-          label-for="content-roominput"
+          label-for="description"
         >
           <b-form-textarea
-            id="textarea"
+            id="description"
             v-model="roomContent"
             placeholder="설명을 입력해주세요"
             row="3"
@@ -53,22 +53,45 @@
           ></b-form-textarea>
         </b-form-group>
       </form>
-      <form ref="form">
+      <form ref="form" class="">
         <b-form-group
-          type="file"
-          class="roommodal"
-          label="썸네일"
-          label-for="thumbnail-roominput"
+          type="search"
+          class="searchmodal"
+          label="도서 검색"
+          label-for="bookSearch"
         >
-          <b-form-file
-            accept=".png, .jpg, .jpeg, .gif"
-            v-model="thumbnailFile"
-            class="mt-3"
+          <b-form-input
+            id="bookSearch"
+            placeholder="키워드 입력"
+            v-model="bookSearchValue"
             plain
-          ></b-form-file>
-          <!-- <div class="mt-3">Selected file: {{ thumbnailFile ? thumbnailFile.name : "" }}</div> -->
+            @keydown.enter.prevent="bookSearch()"
+          >
+          </b-form-input>
+          <b-button class="offset-10" @click="bookSearch()">search</b-button>
         </b-form-group>
       </form>
+      <div v-if="bookData===1">
+        <p>도서를 검색해서 선택해주세요.</p>
+      </div>
+      <div v-else-if="bookData===2">
+        <p>선택된 도서: {{ selectedBook }}    <span class="text-decoration-underline" @click="bookData=1">[선택 취소]</span></p>
+      </div>
+      <div v-else-if="bookData.length===0">
+        <p>검색결과가 없습니다.</p>
+      </div>
+      <div v-else>
+        <!-- {{ bookData }} -->
+        <b-list-group>
+          <b-list-group-item v-for="book in bookData" :key=book.isbn>
+            {{ transStr(book.title) }}    
+            <a :href="book.link" class="text-reset" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">[상세보기]</a>
+            <span class="text-decoration-underline" @click="selectBook(book)">[도서선택]</span>
+          </b-list-group-item>
+        </b-list-group>
+      </div>
+
+
       <br />
       <template #modal-footer="{ ok, cancel }">
         <b-button
@@ -94,6 +117,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import Swal from "sweetalert2";
+import http from "@/config/http-common.js";
 
 export default {
   name: "ConferenceCreate",
@@ -101,13 +125,16 @@ export default {
     return {
       roomName: "",
       roomContent: "",
-      thumbnailFile: "",
-      selectedOption: "1", // (명세서 상) 업무를 기본값으로 하라고 함
-      options: [
+      bookSearchValue: "",
+      selectedOption: null, // (명세서 상) 업무를 기본값으로 하라고 하지만 선택사항 없는 상황에서 선택하는 것이 나은 것 같아서 수정
+      options: [ // 카테고리를 조회해서 DB에서 데이터를 연동했으면 좋았겠지만 구현 편의상 직접 작성함 // 카테고리 명칭 바뀌면 이 부분을 수정해야함
         { value: "1", text: "업무" },
         { value: "2", text: "교육" },
         { value: "3", text: "기타" },
       ],
+      bookData: 1,
+      selectedBook: '',
+      bookDetailId: null
     };
   },
   created() {},
@@ -117,12 +144,11 @@ export default {
   methods: {
     ...mapActions("conferenceStore", ["createRoom"]),
     roomIsValid: function () {
-      console.log(this.thumbnailFile); // thumbnail 업로드 관련 확인 필요
-      if (this.selectedOption === null || this.roomName === "") {
+      if (this.selectedOption === null || this.roomName === "" || this.bookDetailId === null) {
         Swal.fire({
           icon: "error",
           title: "Stop!",
-          text: "용도, 제목은 필수 입력사항입니다.",
+          text: "용도, 제목, 도서는 필수 입력사항입니다.",
         });
         return false;
       } else if (this.roomName.length > 31) {
@@ -132,16 +158,7 @@ export default {
           text: "제목은 최대 30자까지 입력 가능합니다.",
         });
         return false;
-      } else if (this.thumbnailFile.size > 2097152) {
-        //size가 byte 단위임
-        Swal.fire({
-          icon: "error",
-          title: "ImgsizeError",
-          text: "업로드 가능한 파일의 최대 사이즈는 2MB입니다.",
-        });
-        return false;
       } else {
-        console.log(this.selectedOption);
         return true;
       }
     },
@@ -151,12 +168,11 @@ export default {
           userId: this.userInfo.userId, 
         },
         bookDetail: {
-          id: 1, 
+          id: this.bookDetailId, 
         }, // 임시 - book DB와 연동 필요
         conferenceType: { 
           id: this.selectedOption,
         },
-        thumbnailUrl: this.thummbnailFile, // 미디어파일 업로드 - 백엔드에 확인 필요
         title: this.roomName,
         description: this.roomContent,
         isActive: 1
@@ -167,6 +183,8 @@ export default {
       this.thumbnailFile = "";
       this.roomName = "";
       this.roomContent = "";
+      this.roomSearchValue = "";
+      this.bookData = 1 ;
     }, // 입력된 form 지우기
     roomCreate() {
       if (this.roomIsValid()) {
@@ -177,8 +195,51 @@ export default {
         return false;
       }
     },
+    bookSearch() {
+       http({
+        method: "get",
+        url: `/search/naver?query=${this.bookSearchValue}`,
+      })
+        .then((response) => {
+          console.log(response);
+          this.bookData = response.data.items
+        })
+        .catch((error) => {
+          console.dir(error);
+        });
+    },
+    transStr(str) {
+      // return str
+      var transedStr = str.replaceAll('<b>', '')
+      transedStr = transedStr.replaceAll('</b>', '')
+      return transedStr
+    },
+    // isbn으로 책 pk 검색
+    checkBookInDB(book) {
+       console.log(book)
+       const isbn = book.isbn.split(" ")[1]
+       console.log(isbn)
+       http({
+        method: "get",
+        url: `/search/${isbn}`,
+      })
+        .then((response) => {
+          console.log(response);
+          this.bookDetailId = response.data
+        })
+        .catch((error) => {
+          console.dir(error);
+        });
+    },
+    selectBook(book) {
+      this.selectedBook = this.transStr(book.title)
+      this.bookData = 2
+      this.bookDetail.id = this.checkBookInDB(book)
+    }
   },
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

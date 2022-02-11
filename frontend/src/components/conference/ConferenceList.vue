@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container overflow-auto">
 
     <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4" v-if="conferenceItems">
       <conference-list-item
@@ -10,8 +10,9 @@
       </conference-list-item>
     </div>
     <div v-else>
-      <h3 class="text-danger my-3">- 현재 진행중인 회의가 없습니다 -</h3> <!--명세서에서는 아이콘 표시하라함..-->
+      <h3 class="text-danger my-3">- 현재 진행중인 회의가 없습니다 -</h3>
     </div>
+    <b-pagination-nav size="lg" :link-gen="linkGen" :number-of-pages="10" use-router align="center"></b-pagination-nav>
   </div>
 </template>
 
@@ -33,6 +34,12 @@ export default {
   computed: {
     ...mapActions(conferenceStore, ['LoadConferenceItems']),
     ...mapState(conferenceStore, ['conferenceItems'])    
+  },
+
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
+    }
   }
 }
 </script>
