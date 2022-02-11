@@ -82,8 +82,6 @@
   font-family: 'Raleway', sans-serif;
 }
 
-
-
 .ko {
   font-family: 'Gothic A1', sans-serif;
 }

@@ -6,6 +6,7 @@
       <div class="carousel">
         <carousel v-bind="options" @initialized="init" @changed="changed">
 
+      <!-- slide(0,4)로 bestSeller 4권묶음 -->
       <b-row class="justify-content-center">
         <b-col 
         col
@@ -36,6 +37,7 @@
         </b-col>
       </b-row>
 
+      <!-- slide(4,8)로 bestSeller2 4권묶음 -->
       <b-row class="justify-content-center">
         <b-col 
         col
@@ -76,6 +78,7 @@
       <div class="carousel-wrap">
         <carousel v-bind="options" @initialized="init" @changed="changed">
 
+      <!-- slide(0,4)로 newSpecial 4권묶음 -->
       <b-row class="justify-content-center">
         <b-col 
         col
@@ -106,6 +109,7 @@
         </b-col>
       </b-row>
 
+      <!-- slide(4,8)로 newSpecial2 4권묶음 -->
       <b-row class="justify-content-center">
         <b-col 
         col
@@ -195,7 +199,7 @@ export default {
       })
       .then((response) => {
         console.log(response.data.item)
-        this.bestSellerItems2 = response.data.item.slice(4, 8) // 10개중 8개까지 보여줌(화면상)
+        this.bestSellerItems2 = response.data.item.slice(4, 8)
         // this.bestSellerItems.replace('sum', '500')
       })
       .catch((err) => {
@@ -209,7 +213,7 @@ export default {
       })
       .then((response) => {
         console.log(response.data.item)
-        this.newSpecialItems = response.data.item.slice(0, 4) // 10개중 8개까지 보여줌(화면상)
+        this.newSpecialItems = response.data.item.slice(0, 4)
       })
       .catch((err) => {
         console.log(err)
@@ -222,7 +226,7 @@ export default {
       })
       .then((response) => {
         console.log(response.data.item)
-        this.newSpecialItems2 = response.data.item.slice(4, 8) // 10개중 8개까지 보여줌(화면상)
+        this.newSpecialItems2 = response.data.item.slice(4, 8)
       })
       .catch((err) => {
         console.log(err)
@@ -262,9 +266,9 @@ export default {
 
 <style scoped>
 .row {
-    padding: 15px;
-    background-color: #343a40;
-    border-radius: 15px;
+  padding: 15px;
+  background-color: #343a40;
+  border-radius: 15px;
 }
 .card {
   height: 100%;
