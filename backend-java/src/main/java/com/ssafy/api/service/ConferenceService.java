@@ -20,8 +20,6 @@ public interface ConferenceService {
 
 	void closeConference(Conference conference) throws Exception;
 
-	void uploadUserConferenceId(Conference conference) throws Exception;
-
 	List<ConferenceType> getConferenceCategory() throws Exception;
 
 	Conference getConferenceInfo(int idconference) throws Exception;

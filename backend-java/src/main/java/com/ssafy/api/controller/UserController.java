@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.request.UserUpdateReq;
 import com.ssafy.api.service.JwtService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.db.entity.QUser;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -101,8 +103,10 @@ public class UserController {
 
 	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)
 	@PutMapping("/{user_id}")
-	public ResponseEntity<String> updateUser(@RequestBody User user) throws Exception {
-		userService.updateUser(user);
+	public ResponseEntity<String> updateUser(@ModelAttribute UserUpdateReq userUpdateReq) throws Exception {
+		System.out.println("수정 시작 !!!!!!!!!!!!! : " + userUpdateReq.getProfileImage());
+		System.out.println("수정 시작 !!!!!!!!!!!!! : " + userUpdateReq.getProfileImage());
+		userService.updateUser(userUpdateReq);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 }

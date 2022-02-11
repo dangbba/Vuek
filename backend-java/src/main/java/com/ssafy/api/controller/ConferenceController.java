@@ -65,7 +65,6 @@ public class ConferenceController {
 	@PostMapping("/create")
 	public ResponseEntity<Long> createConference(@RequestBody Conference conference) throws Exception {
 		conferenceService.createConference(conference);
-//		conferenceService.uploadUserConferenceId(conference);
 		Long conferenceId = conference.getId();
 		return new ResponseEntity<Long>(conferenceId, HttpStatus.OK);
 	}
