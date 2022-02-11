@@ -37,10 +37,11 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public long createConference(Conference conference) throws Exception {
 		conferenceRepository.save(conference);
 //		conferenceRepositorySupport.createConference(conference);
+		conferenceRepositorySupport.uploadUserConferenceId(conference);
 		marathonRepositorySupport.plusNowPages(conference.getUser().getUserId());
 		return conference.getId();
 	}
-	
+
 	@Override
 	public void closeConference(Conference conference) throws Exception {
 		conferenceRepositorySupport.closeConference(conference);
@@ -92,12 +93,6 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public void enterConference(@RequestBody EnterWrapperDto enterWrapperDto) throws Exception {
 		conferenceRepositorySupport.enterConference(enterWrapperDto);
 		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUser().getUserId());
-	}
-
-
-	@Override
-	public void uploadUserConferenceId(Conference conference) throws Exception {
-		conferenceRepositorySupport.uploadUserConferenceId(conference);
 	}
 
 	@Override

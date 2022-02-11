@@ -185,7 +185,7 @@ public class BookSearchController {
 	@ApiOperation(value = "bookDetail 저장", response = String.class)
 	@PostMapping("/create")
 	public Integer createBookDetail(@RequestBody BookDetail bookdetail) throws Exception {
-		if (isExistBookDetail(bookdetail.getIsbn()) == null) {
+		if (isExistBookDetail(bookdetail.getIsbn()) == 0) {
 			try {
 				bookSearchService.createBookDetail(bookdetail);
 				return bookdetail.getId();
