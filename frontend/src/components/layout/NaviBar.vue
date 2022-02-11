@@ -23,10 +23,10 @@
           bg-variant="dark"
           text-variant="light"
           shadow
-          width="90px"
+          width="110px"
           no-header
         >
-          <div class="px-0 py-3">
+          <div class="px-0 py-2">
             <div class="icon-bar">
               <router-link to="/conference" id="tooltip-1"
                 ><b-iconstack font-scale="1" animation="spin">
@@ -71,7 +71,7 @@
           bg-variant="dark"
           text-variant="light"
           shadow
-          width="90px"
+          width="110px"
           no-header
         >
           <div class="px-0 py-3">
@@ -276,8 +276,8 @@ export default {
 }
 .icon-bar {
   height: 100%;
-  width: 90px;
-  background-color: #555;
+  width: 110px;
+  background-color: "";
   position: sticky; /* Fixed Sidebar (stay in place on scroll) */
   /*z-index: 1;*/ /* Stay on top */
   bottom: 0; /* Stay at the top */
@@ -289,7 +289,7 @@ export default {
 .icon-bar a {
   display: block;
   text-align: center;
-  padding: 16px;
+  padding: 20px;
   transition: all 0.3s ease;
   color: white;
   font-size: 36px;
