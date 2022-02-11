@@ -50,9 +50,10 @@ public class BookSearchRepositorySupport {
                 .from(qBookDetail)
                 .where(qBookDetail.isbn.eq(isbn))
                 .fetchOne();
-        if (book.getId() > 0) {
-            return book.getId();
+        System.out.println(book);
+        if (book == null) {
+            return 0;
         }
-        return 0;
+        return book.getId();
     }
 }
