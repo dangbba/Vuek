@@ -66,13 +66,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(UserUpdateReq userUpdateReq) {
-		try {
-			userRepositorySupport.updateUser(userUpdateReq);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void updateUser(User user){
+		userRepositorySupport.updateUser(user);
 	}
+
+//	@Override
+//	public void updateUser(UserUpdateReq userUpdateReq) {
+//		try {
+//			userRepositorySupport.updateUser(userUpdateReq);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }

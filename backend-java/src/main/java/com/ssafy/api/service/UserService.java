@@ -13,5 +13,7 @@ public interface UserService {
 	User getUserByUserId(String user_id);
 	boolean idCheck(String user_id);
 	void deleteUser(String user_id);
-	void updateUser(UserUpdateReq userUpdateReq);
+	void updateUser(User user);
+//	void updateUser(UserUpdateReq userUpdateReq);
+
 }
