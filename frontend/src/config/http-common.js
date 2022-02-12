@@ -3,6 +3,7 @@ import store from "../store/index";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api/v1",
+  //baseURL: "http://i6c205.p.ssafy.io:8080/api/v1",
   headers: {
     "Content-type": "application/json",
   },
