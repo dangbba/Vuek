@@ -40,7 +40,8 @@ public class Conference {
     private String title;
     private int isActive;
 //    @ElementCollection(targetClass=User.class)
-    @OneToMany(targetEntity=UserConference.class, mappedBy="user", fetch=FetchType.EAGER)
+//    @OneToMany(targetEntity=UserConference.class, mappedBy="user", fetch=FetchType.EAGER)
+    @Embedded
     private List<User> participant;
     private String description;
 

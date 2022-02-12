@@ -36,7 +36,7 @@ public class QConference extends EntityPathBase<Conference> {
 
     public final NumberPath<Integer> isActive = createNumber("isActive", Integer.class);
 
-    public final ListPath<UserConference, QUserConference> participant = this.<UserConference, QUserConference>createList("participant", UserConference.class, QUserConference.class, PathInits.DIRECT2);
+    public final ListPath<User, QUser> participant = this.<User, QUser>createList("participant", User.class, QUser.class, PathInits.DIRECT2);
 
     public final StringPath thumbnailUrl = createString("thumbnailUrl");
 
