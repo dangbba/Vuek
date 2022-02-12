@@ -204,6 +204,39 @@ export default {
           title: "Stop!",
           text: "아이디, 비밀번호는 필수 입력사항입니다.",
         });
+      // } else if (cred.password !== cred.passwordConfirmation) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "PasswordNotMatch",
+      //     text: "비밀번호가 일치하지 않습니다",
+      //   });
+      // } else if (cred.userId.length > 16) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "IdError",
+      //     text: "아이디는 16자를 넘을 수 없습니다 ",
+      //   });
+      // } else if (
+      //   16 < cred.password.length ||
+      //   9 > cred.password.length ||
+      //   16 < cred.passwordConfirmation.length ||
+      //   9 > cred.passwordConfirmation.length
+      // ) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "비밀번호 길이 오류",
+      //     text: "비밀번호는 9자 이상 16자 이하여야 합니다.",
+      //   });
+      // } else if (
+      //   cred.password.search(/[0-9]/g) < 0 ||
+      //   cred.password.search(/[a-z]/gi) < 0 ||
+      //   cred.password.search(/[`~!@#$%^&*/?;:]/gi) < 0
+      // ) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "비밀번호 유형 오류",
+      //     text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+      //   });
       } else {
         this.confirm()
       }
@@ -253,11 +286,6 @@ export default {
 }
 
 .loginmodal {
-  margin: 2rem;
-  font-size: 1.8rem;
-}
-
-.signupmodal {
   margin: 2rem;
   font-size: 1.8rem;
 }
