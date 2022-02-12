@@ -14,7 +14,7 @@ buildscript{
         jcenter()
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVer}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.4.0"
         classpath "io.spring.gradle:dependency-management-plugin:${springDependencyMgmtVer}.RELEASE"
         classpath "org.springframework:springloaded:${springLoadedVer}.RELEASE"
         //이클립스인 경우를 위한 QueryDSL 플러그인. IntelliJ는 불필요. [시작]
@@ -27,7 +27,7 @@ buildscript{
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version "${springBootVer}"
+    id "org.springframework.boot" version "2.4.0"
 }
 
 apply plugin: 'io.spring.dependency-management'
