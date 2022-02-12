@@ -108,10 +108,10 @@ public class ConferenceRepositorySupport {
 
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"Conference_participant (Conference_conferenceId, participant_userId) " +
-								"values (:Conference_conferenceId, :participant_userId)")
-				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
-				.setParameter("participant_userId", enterWrapperDto.getUser().getUserId());
+								"UserConference (conferenceId, userId) " +
+								"values (:conferenceId, :userId)")
+				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
+				.setParameter("userId", enterWrapperDto.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 
@@ -121,19 +121,6 @@ public class ConferenceRepositorySupport {
 	public void uploadUserConferenceId(Conference conference) {
 		QConference qConference = QConference.conference;
 
-		Conference con = (Conference) queryFactory
-				.from(qConference)
-				.where(qConference.id.eq((long) conference.getId()))
-				.fetchOne();
-
-//		Query query = em.createNativeQuery(
-//						"insert into " +
-//								"Conference_participant (Conference_conferenceId, participant_userId) " +
-//								"values (:Conference_conferenceId, :participant_userId)")
-//				.setParameter("Conference_conferenceId", conference.getId())
-//				.setParameter("participant_userId", conference.getUser().getUserId());
-//		query.executeUpdate();
-//		em.close();
 		Query query = em.createNativeQuery(
 						"insert into " +
 								"UserConference (conferenceId, userId) " +
