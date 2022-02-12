@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -38,8 +39,9 @@ public class Conference {
     private String thumbnailUrl;
     private String title;
     private int isActive;
-    @ElementCollection(targetClass=User.class)
-    private Collection<User> participant;
+//    @ElementCollection(targetClass=User.class)
+    @OneToMany(targetEntity=UserConference.class, mappedBy="user", fetch=FetchType.EAGER)
+    private List<User> participant;
     private String description;
 
     @PrePersist
