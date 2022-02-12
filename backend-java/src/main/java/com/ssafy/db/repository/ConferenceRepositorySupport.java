@@ -201,7 +201,7 @@ public class ConferenceRepositorySupport {
 								"from UserConference "+
 								"where conferenceId = :conferenceId")
 				.setParameter("conferenceId", idconference);
-		int num = Integer.parseInt(String.valueOf(query.getSingleResult()))+1 ;
+		int num = Integer.parseInt(String.valueOf(query.getSingleResult())) ;
 		em.close();
 
 		return num;
