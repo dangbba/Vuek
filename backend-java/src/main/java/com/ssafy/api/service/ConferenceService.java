@@ -7,10 +7,7 @@ import java.util.Optional;
 
 import com.ssafy.db.dto.ConferenceInfoDto;
 import com.ssafy.db.dto.EnterWrapperDto;
-import com.ssafy.db.entity.Conference;
-import com.ssafy.db.entity.ConferenceHistory;
-import com.ssafy.db.entity.ConferenceType;
-import com.ssafy.db.entity.UserConference;
+import com.ssafy.db.entity.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,4 +42,6 @@ public interface ConferenceService {
 	int countNumOfPeople(@PathVariable int idconference) throws Exception;
 
 	void participantClose(@PathVariable int idconference, @PathVariable String user_id) throws Exception;
+
+	List<User> getParticipants(@PathVariable int idconference) throws Exception;
 }

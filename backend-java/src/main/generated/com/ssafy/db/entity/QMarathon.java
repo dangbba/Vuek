@@ -10,12 +10,12 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QMaraton is a Querydsl query type for Maraton
+ * QMarathon is a Querydsl query type for Marathon
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QMarathon extends EntityPathBase<Marathon> {
 
-    private static final long serialVersionUID = 285164974L;
+    private static final long serialVersionUID = 250173016L;
 
     public static final QMarathon marathon = new QMarathon("marathon");
 
