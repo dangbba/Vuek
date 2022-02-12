@@ -105,8 +105,6 @@ public class UserController {
 	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)
 	@PutMapping("/{user_id}")
 	public ResponseEntity<String> updateUser(@ModelAttribute UserUpdateReq userUpdateReq) throws Exception {
-		System.out.println("수정 시작 !!!!!!!!!!!!! : " + userUpdateReq.getProfileImage());
-		System.out.println("수정 시작 !!!!!!!!!!!!! : " + userUpdateReq.getProfileImage());
 		userService.updateUser(userUpdateReq);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}

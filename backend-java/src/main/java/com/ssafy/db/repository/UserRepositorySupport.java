@@ -47,18 +47,18 @@ public class UserRepositorySupport {
     @Modifying
     @Transactional
     public void updateUser(UserUpdateReq userUpdateReq) throws Exception {
-        String fileName = null;
-        if (userUpdateReq.getProfileImage() != null) {
-            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resource\\static\\files";
-            System.out.println("projectPath!!!!!!!!!!!!!1 : " + projectPath);
-            System.out.println("requesst.getProfileImg : " + userUpdateReq.getProfileImage());
-            System.out.println("request.getUser().getUserId() : " + userUpdateReq.getUser().getUserId());
+        String imgPath = null;
+        if (userUpdateReq.getProfileImage().isEmpty() == false) {
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
             UUID uuid = UUID.randomUUID();
-            fileName = uuid + "_" + userUpdateReq.getProfileImage().getOriginalFilename();
-            File saveFile = new File(projectPath, "fileName");
+            String fileName = uuid + "_" + userUpdateReq.getProfileImage().getOriginalFilename();
+            File saveFile = new File(projectPath + "/" + fileName);
+            if(saveFile.exists() == false) {
+                saveFile.mkdirs();
+            }
+            imgPath = "\\backend-java\\src\\main\\resources\\static\\files\\" + fileName;
             userUpdateReq.getProfileImage().transferTo(saveFile);
         }
-
         QUser qUser = QUser.user;
         JPAUpdateClause updateClause = new JPAUpdateClause(em, qUser);
         long count = updateClause
@@ -68,7 +68,7 @@ public class UserRepositorySupport {
                 .set(qUser.genre, userUpdateReq.getUser().getGenre())
                 .set(qUser.goal, userUpdateReq.getUser().getGoal())
                 .set(qUser.socialLink,userUpdateReq.getUser().getSocialLink())
-                .set(qUser.profileImage, fileName)
+                .set(qUser.profileImage, imgPath)
                 .where(qUser.userId.eq(userUpdateReq.getUser().getUserId()))
                 .execute();
         em.close();
