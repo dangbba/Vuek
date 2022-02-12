@@ -1,22 +1,16 @@
 package com.ssafy.db.repository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import com.querydsl.core.Tuple;
-import com.querydsl.core.support.QueryBase;
+import com.querydsl.core.types.dsl.CollectionPath;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
+import com.ssafy.db.dto.ConferenceInfoDto;
 import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.*;
 
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -27,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-
 import static com.ssafy.db.entity.QConference.conference;
 
 @Repository
@@ -54,9 +47,24 @@ public class ConferenceRepositorySupport {
 		em.close();
 		return list;
 	}
-
+	@Modifying
+	@Transactional
 	public Conference getConferenceInfo(int idconference) {
+
 		QConference qConference = conference;
+
+//		QUserConference qUserConference = QUserConference.userConference;
+//		List uc = queryFactory
+//				.select(qUserConference.user)
+//				.from(qUserConference)
+//				.where(qUserConference.conference.id.eq((long) idconference))
+//				.fetch();
+//
+//		Collections.singletonList(qConference.participant).addAll(uc);
+//		JPAUpdateClause updateClause = new JPAUpdateClause(em, qConference);
+//		long count = updateClause.where(qConference.id.eq((long) idconference))
+//				.set(Collections.singletonList(qConference.participant).addAll(uc)).execute();
+
 		Conference con = (Conference) queryFactory
 				.from(qConference)
 				.where(qConference.conference.id.eq((long) idconference))
@@ -100,10 +108,10 @@ public class ConferenceRepositorySupport {
 
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"Conference_participant (Conference_conferenceId, participant_userId) " +
-								"values (:Conference_conferenceId, :participant_userId)")
-				.setParameter("Conference_conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
-				.setParameter("participant_userId", enterWrapperDto.getUser().getUserId());
+								"UserConference (conferenceId, userId) " +
+								"values (:conferenceId, :userId)")
+				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
+				.setParameter("userId", enterWrapperDto.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 
@@ -113,17 +121,12 @@ public class ConferenceRepositorySupport {
 	public void uploadUserConferenceId(Conference conference) {
 		QConference qConference = QConference.conference;
 
-		Conference con = (Conference) queryFactory
-				.from(qConference)
-				.where(qConference.id.eq((long) conference.getId()))
-				.fetchOne();
-
 		Query query = em.createNativeQuery(
 						"insert into " +
-								"Conference_participant (Conference_conferenceId, participant_userId) " +
-								"values (:Conference_conferenceId, :participant_userId)")
-				.setParameter("Conference_conferenceId", conference.getId())
-				.setParameter("participant_userId", conference.getUser().getUserId());
+								"UserConference (conferenceId, userId) " +
+								"values (:conferenceId, :userId)")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("userId", conference.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 
