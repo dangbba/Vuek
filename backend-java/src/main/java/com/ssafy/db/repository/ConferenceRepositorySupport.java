@@ -221,7 +221,7 @@ public class ConferenceRepositorySupport {
 
 	public List<User> getParticipants(@PathVariable int idconference){
 		Query query = em.createNativeQuery(
-						"select User " +
+						"select User.userName " +
 								"from UserConference join User " +
 								"on UserConference.userId = User.userId " +
 								"where conferenceId = :conferenceId")
