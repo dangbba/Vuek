@@ -8,6 +8,7 @@ import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.ConferenceHistory;
 import com.ssafy.db.entity.ConferenceType;
+import com.ssafy.db.entity.User;
 import io.swagger.models.auth.In;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -295,5 +296,13 @@ public class ConferenceController {
 	public ResponseEntity<String> participantClose(@PathVariable int idconference, @PathVariable String user_id ) throws Exception {
 		conferenceService.participantClose(idconference, user_id);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "방 참여자들을 조회한다.", response = Conference.class)
+	@GetMapping("/getParticipants/{idconference}")
+	public ResponseEntity<List<User>> getParticipants(@PathVariable int idconference) throws Exception {
+		List<User> list = conferenceService.getParticipants(idconference);
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+
 	}
 }
