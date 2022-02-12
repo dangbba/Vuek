@@ -121,11 +121,10 @@
                   <b-form-input
                     id="user_id"
                     v-model="user.user_id"
-                    @keyup.enter="confirm"
                   ></b-form-input>
                 </b-form-group>
               </form>
-              <form ref="form">
+              <form ref="form" autocomplete="off" onsubmit="return false">
                 <b-form-group
                   class="loginmodal"
                   label="비밀번호"
@@ -135,7 +134,7 @@
                     type="password"
                     id="user_pw"
                     v-model="user.user_pw"
-                    @keyup.enter="confirm"
+                    @keyup.enter="checkValue"
                   ></b-form-input>
                 </b-form-group>
               </form>
@@ -145,7 +144,7 @@
                 >
               </div>
               <hr />
-              <b-button @click="confirm"> 로그인 </b-button>
+              <b-button @click="checkValue"> 로그인 </b-button>
             </b-modal>
           </div>
         </b-navbar-nav>
@@ -156,8 +155,9 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-
 import Swal from "sweetalert2";
+
+
 import jwt_decode from "jwt-decode";
 
 const userStore = "userStore";
@@ -166,15 +166,9 @@ export default {
   name: "Navibar",
   data() {
     return {
-      signupCredential: {
-        userName: "",
-        userId: "",
-        password: "",
-        passwordConfirmation: "",
-      },
       user: {
-        user_id: null,
-        user_pw: null,
+        user_id: "",
+        user_pw: "",
       },
     };
   },
@@ -200,64 +194,19 @@ export default {
         this.$router.push({ name: "Home" });
       }
     },
-    signupIsValid: function (cred) {
-      console.log(cred);
+    checkValue: function () {
       if (
-        cred.username === "" ||
-        cred.password === "" ||
-        cred.passwordConfirmation === "" ||
-        cred.userid
+        this.user.user_pw === "" ||
+        this.user.user_id == ""
       ) {
         Swal.fire({
           icon: "error",
           title: "Stop!",
-          text: "이름, 아이디, 비밀번호, 비밀번호 확인란은 필수 입력사항입니다.",
-        });
-      } else if (cred.password !== cred.passwordConfirmation) {
-        Swal.fire({
-          icon: "error",
-          title: "PasswordNotMatch",
-          text: "비밀번호가 일치하지 않습니다",
-        });
-      } else if (cred.userName.length > 30) {
-        Swal.fire({
-          icon: "error",
-          title: "UsernameError",
-          text: "이름은 30자를 넘을 수 없습니다.",
-        });
-      } else if (cred.userId.length > 16) {
-        Swal.fire({
-          icon: "error",
-          title: "IdError",
-          text: "아이디는 16자를 넘을 수 없습니다 ",
-        });
-      } else if (
-        16 < cred.password.length ||
-        9 > cred.password.length ||
-        16 < cred.passwordConfirmation.length ||
-        9 > cred.passwordConfirmation.length
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 길이 오류",
-          text: "비밀번호(확인)는 9자 이상 16자 이하여야 합니다.",
-        });
-      } else if (
-        cred.password.search(/[0-9]/g) < 0 ||
-        cred.password.search(/[a-z]/gi) < 0 ||
-        cred.password.search(/[`~!@#$%^&*/?;:]/gi) < 0
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 유형 오류",
-          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+          text: "아이디, 비밀번호는 필수 입력사항입니다.",
         });
       } else {
-        this.signupCredential.signupUser();
+        this.confirm()
       }
-    },
-    isIdExist: function (id) {
-      console.log(id);
     },
     onClickLogout() {
       sessionStorage.removeItem("access-token");

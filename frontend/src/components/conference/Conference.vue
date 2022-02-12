@@ -5,14 +5,21 @@
     </div>
 
     <conference-search></conference-search>
-
     <conference-create></conference-create>
+
+
     <div class="row">
-      <conference-sort class="offset-5 col-4"></conference-sort>
+      <conference-sort class="offset-2 col-4"></conference-sort>
       <conference-filter class="col-3"></conference-filter>
+      <div class="col-3"> <!-- 종료된 회의 안보기 체크박스 --> <!-- 하나의 체크박스는 단일 boolean 값을 가진다 --> 
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-model="checked">
+        <label class="form-check-label" for="flexCheckDefault">
+          종료된 회의 보지 않기
+        </label>
+      </div>
     </div>
 
-    <conference-list></conference-list>
+    <conference-list :checked="checked"></conference-list> <!-- :checked="checked" -->
   </div>
 </template>
 
@@ -33,6 +40,7 @@ export default {
   },
   data() {
     return {
+      checked: false
     };
   },
   computed: {

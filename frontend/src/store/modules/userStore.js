@@ -40,7 +40,19 @@ const userStore = {
             commit("SET_IS_LOGIN_ERROR", true);
           }
         },
-        () => {}
+        (error) => {
+          console.log(error)
+          console.log(error.response)
+          if (error.response.data.message) {
+            alert(error.response.data.message)
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+          } else if (error.response.data['login failed']) { // 비밀번호 틀릴때 // 키값이 message가 아니라 login failed로 설정되어있음 // 키값에 공백있을때는 이렇게 접근
+            alert(error.response.data['login failed'])
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+          }
+        }
       );
     },
     getUserInfo({ commit }, token) {

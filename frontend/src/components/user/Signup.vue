@@ -108,6 +108,7 @@
 
 <script>
 import http from "@/config/http-common.js";
+import Swal from "sweetalert2";
 
 export default {
   name: "Signup",
@@ -126,27 +127,79 @@ export default {
 
   methods: {
     // 입력값 체크하기 - 체크가 성공하면 registBook 호출
-    checkValue() {
-      // 사용자 입력값 체크하기
-      // isbn, 제목, 저자, 가격, 설명이 없을 경우 각 항목에 맞는 메세지를 출력
-      let err = true;
-      let msg = "";
-      !this.name &&
-        ((msg = "이름을 확인해주세요."),
-        (err = false)) /*, this.$refs.name.focus()*/;
-      err && !this.id && ((msg = "ID를 확인해주세요."), (err = false)) /*,
-        this.$refs.id.focus()*/;
-      err &&
-        !this.pass &&
-        ((msg = "비밀번호를 확인해주세요."), (err = false)) /*,
-        this.$refs.id.focus()*/;
-      err &&
-        this.pass != this.passcheck &&
-        ((msg = "비밀번호를 다시 확인해주세요"), (err = false));
-      if (!err) alert(msg);
-      else this.registMember();
-    },  
-
+    // checkValue() {
+    //   // 사용자 입력값 체크하기
+    //   // isbn, 제목, 저자, 가격, 설명이 없을 경우 각 항목에 맞는 메세지를 출력
+    //   let err = true;
+    //   let msg = "";
+    //   !this.name &&
+    //     ((msg = "이름을 확인해주세요."),
+    //     (err = false)) /*, this.$refs.name.focus()*/;
+    //   err && !this.id && ((msg = "ID를 확인해주세요."), (err = false)) /*,
+    //     this.$refs.id.focus()*/;
+    //   err &&
+    //     !this.pass &&
+    //     ((msg = "비밀번호를 확인해주세요."), (err = false)) /*,
+    //     this.$refs.id.focus()*/;
+    //   err &&
+    //     this.pass != this.passcheck &&
+    //     ((msg = "비밀번호를 다시 확인해주세요"), (err = false));
+    //   if (!err) alert(msg);
+    //   else this.registMember();
+    // },  
+    checkValue: function () {
+      if (
+        this.name === "" ||
+        this.pass === "" ||
+        this.passcheck === "" ||
+        this.id == ""
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Stop!",
+          text: "이름, 아이디, 비밀번호, 비밀번호 확인란은 필수 입력사항입니다.",
+        });
+      } else if (this.pass !== this.passcheck) {
+        Swal.fire({
+          icon: "error",
+          title: "PasswordNotMatch",
+          text: "비밀번호가 일치하지 않습니다",
+        });
+      } else if (this.name.length > 30) {
+        Swal.fire({
+          icon: "error",
+          title: "UsernameError",
+          text: "이름은 30자를 넘을 수 없습니다.",
+        });
+      } else if (this.id.length > 16) {
+        Swal.fire({
+          icon: "error",
+          title: "IdError",
+          text: "아이디는 16자를 넘을 수 없습니다 ",
+        });
+      } else if (
+        16 < this.pass.length ||
+        9 > this.pass.length
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호 길이 오류",
+          text: "비밀번호(확인)는 9자 이상 16자 이하여야 합니다.",
+        });
+      } else if (
+        this.pass.search(/[0-9]/g) < 0 ||
+        this.pass.search(/[a-z]/gi) < 0 ||
+        this.pass.search(/[`~!@#$%^&*/?;:]/gi) < 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호 유형 오류",
+          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+        });
+      } else {
+        this.registMember();
+      }
+    },
     // 일단 회원가입할 때 독서 마라톤을 생성한다
     createMarathon(id) {
       http

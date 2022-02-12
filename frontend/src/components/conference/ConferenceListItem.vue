@@ -1,5 +1,5 @@
 <template>
-  <div class="col" v-if="item.isActive"> <!-- 진행중인 회의만 표기됨 -->
+  <div class="col" v-if="item.isActive || !checked"> <!-- 진행중인 회의만 표기됨 -->
     <b-card no-body bg-variant="dark" class="overflow-hidden mx-2 my-2" style="max-width: 540px;">
       <b-row no-gutters>
         <b-col md="6">
@@ -43,6 +43,7 @@ export default {
       type: Object,
       required: true,
     },
+    checked: Boolean
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),

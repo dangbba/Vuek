@@ -9,6 +9,7 @@
     coverColor="#5498e9"
     /> 
     <!-- 회원정보 수정 -->
+    <b-button sm class="me-3">프로필 이미지 수정</b-button>
     <b-button v-b-modal.modal2-prevent-closing class="me-3" @click="getUserData()">회원정보 수정</b-button>
       <b-modal
         id="modal2-prevent-closing"
@@ -24,12 +25,14 @@
             label-for="profileImg"
           >
             <b-form-file
+              multiple
+              type="file"
               id="profileImg"
               accept=".png, .jpg, .jpeg, .gif"
               v-model="user.profileImage"
               plain
             ></b-form-file>
-            <!-- <div class="mt-3">Selected file: {{ user.profileImage ? user.profileImage : '' }}</div> -->
+            <div class="mt-3">Selected file: {{ user.profileImage ? user.profileImage : '' }}</div>
           </b-form-group>
         </form>
         <form ref="form">
@@ -106,7 +109,6 @@
               id="user_goal"
               v-model="user.goal"
               placeholder="변경할 목표를 입력해주세요"
-              @keyup.enter="userInfoUpdate()"
             ></b-form-input>
           </b-form-group>
         </form>
@@ -120,14 +122,14 @@
               id="user_socialLink"
               v-model="user.socialLink"
               placeholder="변경할 SNS링크를 입력해주세요(https://----.--- 형식)"
-              @keyup.enter="userInfoUpdate()"
+              @keyup.enter="checkValue()"
             ></b-form-input>
           </b-form-group>
         </form>
 
 
         <hr />
-        <b-button @click="userInfoUpdate()"> 수정 </b-button>
+        <b-button @click="checkValue()"> 수정 </b-button>
       </b-modal>
     <b-button @click="deleteUser">회원탈퇴</b-button>
 
@@ -182,6 +184,7 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import http from "@/config/http-common.js";
+import Swal from "sweetalert2";
 
 
 const userStore = "userStore";
@@ -251,68 +254,112 @@ export default {
       this.user.profileImage = this.userInfo.profileImage
       
     },
-    checkInfo() { // 입력값 유효성 체크
-      console.log(this.user.profileImage)
-      if(this.user.user_pw != this.user.user_pw_check) {
-        alert('비밀번호를 동일하게 입력해주세요')
-        return false
-      // } else if(this.user.profileImage === null) {
-      //   alert('프로필 이미지를 등록해주세요')
-      //   return false
-      } else if(this.user.user_pw === '' && this.user.user_pw_check == '') {
-        alert('변경할 password를 입력해주세요')
-        return false
-      } else if(this.user.user_name === '') { // 변경할 유저네임 미입력시
-        alert('변경할 username을 입력해주세요')
-        return false
-      } else if(this.user.user_name === this.userInfo.userName ) {
-        if (confirm('username을 그대로 유지하시겠습니까?')) {
-          return true
-        } else {
-          return false
-        }
+    checkValue: function () {
+      if (
+        this.user.user_pw === "" ||
+        this.user.user_pw_check === "" ||
+        this.user.user_name === ""
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Stop!",
+          text: "이름, 비밀번호, 비밀번호 확인란은 필수 입력사항입니다.",
+        });
+      } else if (this.user.user_pw !== this.user.user_pw_check) {
+        Swal.fire({
+          icon: "error",
+          title: "PasswordNotMatch",
+          text: "비밀번호가 일치하지 않습니다",
+        });
+      } else if (this.user.user_name.length > 30) {
+        Swal.fire({
+          icon: "error",
+          title: "UsernameError",
+          text: "username은 30자를 넘을 수 없습니다.",
+        });
+      } else if (
+        16 < this.user.user_pw.length ||
+        9 > this.user.user_pw.length
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호 길이 오류",
+          text: "비밀번호(확인)는 9자 이상 16자 이하여야 합니다.",
+        });
+      } else if (
+        this.user.user_pw.search(/[0-9]/g) < 0 ||
+        this.user.user_pw.search(/[a-z]/gi) < 0 ||
+        this.user.user_pw.search(/[`~!@#$%^&*/?;:]/gi) < 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호 유형 오류",
+          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+        });
+      } else if (
+        this.user.user_pw.search(/[0-9]/g) < 0 ||
+        this.user.user_pw.search(/[a-z]/gi) < 0 ||
+        this.user.user_pw.search(/[`~!@#$%^&*/?;:]/gi) < 0
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호 유형 오류",
+          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+        });
+      } else if (
+        this.user.user_name === this.userInfo.userName 
+      ) {
+        Swal.fire({
+          title: 'username을 그대로 유지하시겠습니까?',
+          showCancelButton: true,
+          confirmButtonText: '네',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.userInfoUpdate()
+            Swal.fire('회원정보 수정이 완료되었습니다.', '', 'success')
+          }
+        });
       } else {
-        return true
+          this.userInfoUpdate()
+          Swal.fire('회원정보 수정이 완료되었습니다.', '', 'success')
       }
-
     },
-    userInfoUpdate() { // 회원정보 수정 // 2.11 저녁 기준 BE 수정 X
-      if(this.checkInfo()) {
-        http({
-          // headers: { 'Content-Type': 'multipart/form-data' }, // 확인 필요
-          method: 'put',
-          url: `/users/${this.userInfo.userId}`,
-          data: {
-            'password': this.user.user_pw,
-            'userId': this.userInfo.userId,
-            'userName': this.user.user_name,
-            'email': this.user.email,
-            'genre': this.user.genre,
-            'goal': this.user.goal,
-            'socialLink': this.user.socialLink,
-            'profileImage': this.user.profileImage // 확인 필요
-            }
-          })
-          .then((response) => {
-            console.log(response)
-            alert('회원정보 수정이 완료되었습니다')
+    userInfoUpdate() { // 회원정보 수정
+      console.log(this.user.profileImage)
+      http({
+        headers: { 'Content-Type': 'multipart/form-data' }, // 확인 필요
+        method: 'put',
+        url: `/users/${this.userInfo.userId}`,
+        data: {
+          'password': this.user.user_pw,
+          'userId': this.userInfo.userId,
+          'userName': this.user.user_name,
+          'email': this.user.email,
+          'genre': this.user.genre,
+          'goal': this.user.goal,
+          'socialLink': this.user.socialLink,
+          'profileImage': this.user.profileImage // 확인 필요
+          }
+        })
+        .then((response) => {
+          console.log(response)
+          // alert('회원정보 수정이 완료되었습니다')
 
-            // 갱신된 정보 페이지에 바로 렌더링이 안되는 문제 수정 (기존 userStore 참조)
-            let token = sessionStorage.getItem("access-token");
-            this.getUserInfo(token)
-            this.myLinks.email = this.userInfo.email, // 링크 갱신
-            this.myLinks.link = this.userInfo.socialLink // 링크 갱신
-           
-            // 수정 완료 후 폼 비우고 모달창 꺼지게
-            this.user.user_pw = ""
-            this.user.user_pw_check = ""
-            this.modalCheck = false
-            
-          })
-          .catch((err) => {
-            console.dir(err)
-          })
-      }
+          // 갱신된 정보 페이지에 바로 렌더링이 안되는 문제 수정 (기존 userStore 참조)
+          let token = sessionStorage.getItem("access-token");
+          this.getUserInfo(token)
+          this.myLinks.email = this.userInfo.email, // 링크 갱신
+          this.myLinks.link = this.userInfo.socialLink // 링크 갱신
+          
+          // 수정 완료 후 폼 비우고 모달창 꺼지게
+          this.user.user_pw = ""
+          this.user.user_pw_check = ""
+          this.modalCheck = false
+          
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
     },
     //독서마라톤 조회 기능
     getMarthonInfo() {

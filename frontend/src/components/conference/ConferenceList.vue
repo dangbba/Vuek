@@ -6,6 +6,7 @@
         v-for="item in conferenceItems"
         :key="item.id"
         :item="item"
+        :checked="checked"
       >
       </conference-list-item>
     </div>
@@ -27,6 +28,9 @@ export default {
   name: 'Home',
   components: {
     ConferenceListItem
+  },
+  props: {
+    checked: Boolean,
   },
   created: function () {
     this.LoadConferenceItems
