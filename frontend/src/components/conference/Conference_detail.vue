@@ -4,13 +4,6 @@
       <div id="session">
         <div id="session-header">
           <h1 id="session-title">{{ conferenceDetail.title }}</h1>
-          <input
-            class="btn btn-large btn-danger"
-            type="button"
-            id="buttonLeaveSession"
-            @click="leaveSession"
-            value="Leave session"
-          />
         </div>
         <div id="main-video" class="col-md-6">
           <user-video :stream-manager="mainStreamManager" />
@@ -33,9 +26,24 @@
     </div>
     <div class="ChatList"></div>
     <div class="ToolBox">
-      <button>비디오</button>
+      <div v-if="conferenceDetail.user.userId === userInfo.userId">
+      <!-- 방 종료 / 수정 관련 -->
+      <conference-detail-update></conference-detail-update>
+      <conference-detail-close></conference-detail-close>
+      <conference-detail-delete></conference-detail-delete> 
+            <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
+      </div>
+      <input
+            class="btn btn-large btn-danger"
+            type="button"
+            id="buttonLeaveSession"
+            @click="leaveSession"
+            value="Leave session"
+          />
     </div>
-    <div class="ChatBox"></div>
+    <div class="ChatBox">
+      <input placeholder="채팅창" />
+    </div>
     <hr />
     <div>
       <!-- 컨퍼런스 정보 관련 정보 표시(임시) -->
@@ -48,13 +56,7 @@
       </p>
     </div>
     <hr />
-    <div v-if="conferenceDetail.user.userId === userInfo.userId">
-      <!-- 방 종료 / 수정 관련 -->
-      <conference-detail-update></conference-detail-update>
-      <conference-detail-close></conference-detail-close>
-      <conference-detail-delete></conference-detail-delete> 
-            <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
-    </div>
+    
   </div>
 </template>
 
@@ -99,7 +101,6 @@ export default {
       publisher: undefined,
       subscribers: [],
       mySessionId: undefined,
-      count: 0,
     };
   },
   beforecreate() {
@@ -209,9 +210,6 @@ export default {
             );
           });
       });
-      if (this.count == 0) {
-        this.sessionStorage.setItem = ("name", "방장");
-      }
       window.addEventListener("beforeunload", this.leaveSession);
     },
 
@@ -225,7 +223,6 @@ export default {
       this.subscribers = [];
       this.OV = undefined;
 
-      this.count -= 1;
       window.removeEventListener("beforeunload", this.leaveSession);
       this.$router.push({
         path: `../../conference`,
@@ -321,24 +318,24 @@ export default {
   border: solid;
   float: left;
   width: 70%;
-  height: 800px;
+  height: 1152px;
 }
 .ChatList {
   border: solid;
   float: right;
   width: 30%;
-  height: 800px;
+  height: 1152px;
 }
 .ToolBox {
   border: solid;
   float: left;
   width: 70%;
-  height: 200px;
+  height: 288px;
 }
 .ChatBox {
   border: solid;
   float: right;
   width: 30%;
-  height: 200px;
+  height: 288px;
 }
 </style>
