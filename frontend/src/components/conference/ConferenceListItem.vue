@@ -16,7 +16,7 @@
               <!-- <p class="card-text">회의종료시간: {{ item.callEndTime }}</p> -->
               <p v-if="item.isActive" class="card-text">진행중 유무: <span class="text-success">진행중</span> </p> 
               <p v-else class="card-text">진행중 유무: <span class="text-danger">종료</span></p> 
-              <p class="card-text">방 참여 인원: {{ item.participant.length }}</p> <!--participant는 array이므로 참여인원수를 출력-->
+              <!-- <p class="card-text">방 참여 인원: {{ item.participant.length }}</p> participant는 array이므로 참여인원수를 출력-->
               
             </b-card-text>
           </b-card-body>
