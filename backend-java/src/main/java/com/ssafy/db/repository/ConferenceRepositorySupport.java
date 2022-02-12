@@ -1,7 +1,12 @@
 package com.ssafy.db.repository;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.CollectionPath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -52,19 +57,6 @@ public class ConferenceRepositorySupport {
 	public Conference getConferenceInfo(int idconference) {
 
 		QConference qConference = conference;
-
-//		QUserConference qUserConference = QUserConference.userConference;
-//		List uc = queryFactory
-//				.select(qUserConference.user)
-//				.from(qUserConference)
-//				.where(qUserConference.conference.id.eq((long) idconference))
-//				.fetch();
-//
-//		Collections.singletonList(qConference.participant).addAll(uc);
-//		JPAUpdateClause updateClause = new JPAUpdateClause(em, qConference);
-//		long count = updateClause.where(qConference.id.eq((long) idconference))
-//				.set(Collections.singletonList(qConference.participant).addAll(uc)).execute();
-
 		Conference con = (Conference) queryFactory
 				.from(qConference)
 				.where(qConference.conference.id.eq((long) idconference))

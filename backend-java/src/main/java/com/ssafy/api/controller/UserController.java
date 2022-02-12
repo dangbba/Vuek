@@ -104,8 +104,20 @@ public class UserController {
 
 	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)
 	@PutMapping("/{user_id}")
-	public ResponseEntity<String> updateUser(@ModelAttribute UserUpdateReq userUpdateReq) throws Exception {
-		userService.updateUser(userUpdateReq);
+	public ResponseEntity<String> updateUser(@RequestBody User user) throws Exception {
+		userService.updateUser(user);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
+
+//	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)
+//	@PutMapping("/{user_id}")
+//	public ResponseEntity<String> updateUser(@RequestBody UserUpdateReq userUpdateReq) throws Exception {
+//		System.out.println("-----------------test-------------------");
+//		System.out.println(userUpdateReq.getUser());
+//		System.out.println(userUpdateReq.getUser().getProfileImage());
+//		System.out.println("-----------------test-------------------");
+////		userService.updateUser(userUpdateReq);
+//		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+//	}
+
 }
