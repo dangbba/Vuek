@@ -197,10 +197,10 @@ public class ConferenceRepositorySupport {
 
 	public int countNumOfPeople(@PathVariable int idconference){
 		Query query = em.createNativeQuery(
-						"select count(participant_userId) " +
-								"from Conference_participant "+
-								"where Conference_conferenceId = :Conference_conferenceId")
-				.setParameter("Conference_conferenceId", idconference);
+						"select count(userId) " +
+								"from UserConference "+
+								"where conferenceId = :conferenceId")
+				.setParameter("conferenceId", idconference);
 		int num = Integer.parseInt(String.valueOf(query.getSingleResult()))+1 ;
 		em.close();
 
@@ -211,13 +211,25 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
 		Query query = em.createNativeQuery(
-				"delete from Conference_participant where Conference_conferenceId = :Conference_conferenceId " +
-						"and participant_userId = :participant_userId")
-				.setParameter("Conference_conferenceId", idconference)
-				.setParameter("participant_userId", user_id);
+				"delete from UserConference where conferenceId = :conferenceId " +
+						"and userId = :userId")
+				.setParameter("conferenceId", idconference)
+				.setParameter("userId", user_id);
 		query.executeUpdate();
 		em.close();
 	}
 
+	public List<User> getParticipants(@PathVariable int idconference){
+		Query query = em.createNativeQuery(
+						"select User " +
+								"from UserConference join User " +
+								"on UserConference.userId = User.userId " +
+								"where conferenceId = :conferenceId")
+				.setParameter("conferenceId", idconference);
+		List<User> list = query.getResultList();
+		em.close();
+
+		return list;
+	}
 }
 
