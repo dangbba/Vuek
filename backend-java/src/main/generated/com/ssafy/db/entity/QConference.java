@@ -26,7 +26,7 @@ public class QConference extends EntityPathBase<Conference> {
 
     public final DateTimePath<java.time.LocalDateTime> callEndTime = createDateTime("callEndTime", java.time.LocalDateTime.class);
 
-    public final DateTimePath<java.time.LocalDateTime> callStartTime = createDateTime("callStartTime", java.time.LocalDateTime.class);
+    public final StringPath callStartTime = createString("callStartTime");
 
     public final QConferenceType conferenceType;
 
@@ -36,7 +36,7 @@ public class QConference extends EntityPathBase<Conference> {
 
     public final NumberPath<Integer> isActive = createNumber("isActive", Integer.class);
 
-    public final CollectionPath<User, QUser> participant = this.<User, QUser>createCollection("participant", User.class, QUser.class, PathInits.DIRECT2);
+    public final ListPath<UserConference, QUserConference> participant = this.<UserConference, QUserConference>createList("participant", UserConference.class, QUserConference.class, PathInits.DIRECT2);
 
     public final StringPath thumbnailUrl = createString("thumbnailUrl");
 
