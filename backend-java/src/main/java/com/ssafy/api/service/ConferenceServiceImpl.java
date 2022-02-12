@@ -125,4 +125,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
 		conferenceRepositorySupport.participantClose(idconference, user_id);
 	}
+
+	@Override
+	public List<User> getParticipants(@PathVariable int idconference) {
+		return conferenceRepositorySupport.getParticipants(idconference);
+	}
 }
