@@ -21,25 +21,23 @@
           />
         </div>
       </div>
-      <div v-if="mainStreamManager">메인</div>
-      <div v-else>퍼블</div>
     </div>
     <div class="ChatList"></div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
-      <!-- 방 종료 / 수정 관련 -->
-      <conference-detail-update></conference-detail-update>
-      <conference-detail-close></conference-detail-close>
-      <conference-detail-delete></conference-detail-delete> 
-            <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
+        <!-- 방 종료 / 수정 관련 -->
+        <conference-detail-update></conference-detail-update>
+        <conference-detail-close></conference-detail-close>
+        <conference-detail-delete></conference-detail-delete>
+        <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
       </div>
       <input
-            class="btn btn-large btn-danger"
-            type="button"
-            id="buttonLeaveSession"
-            @click="leaveSession"
-            value="Leave session"
-          />
+        class="btn btn-large btn-danger"
+        type="button"
+        id="buttonLeaveSession"
+        @click="leaveSession"
+        value="Leave session"
+      />
     </div>
     <div class="ChatBox">
       <input placeholder="채팅창" />
@@ -49,23 +47,24 @@
       <!-- 컨퍼런스 정보 관련 정보 표시(임시) -->
       <p>데이터 표시 확인</p>
       <p>
-        conference name: {{ conferenceDetail.title }} /  conference type: {{ conferenceDetail.conferenceType.name }} 
+        conference name: {{ conferenceDetail.title }} / conference type:
+        {{ conferenceDetail.conferenceType.name }}
       </p>
       <p>
-        도서 제목: {{ transStr(conferenceDetail.bookDetail.title) }} / 줄거리: {{ transStr(conferenceDetail.bookDetail.overview) }} 
+        도서 제목: {{ transStr(conferenceDetail.bookDetail.title) }} / 줄거리:
+        {{ transStr(conferenceDetail.bookDetail.overview) }}
       </p>
     </div>
     <hr />
-    
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
-import ConferenceDetailUpdate from './ConferenceDetailUpdate';
-import ConferenceDetailClose from './ConferenceDetailClose';
-import ConferenceDetailDelete from './ConferenceDetailDelete';
+import ConferenceDetailUpdate from "./ConferenceDetailUpdate";
+import ConferenceDetailClose from "./ConferenceDetailClose";
+import ConferenceDetailDelete from "./ConferenceDetailDelete";
 
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
@@ -76,7 +75,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
-
 
 const conferenceStore = "conferenceStore";
 
@@ -107,44 +105,35 @@ export default {
     this.mySessionId = this.conferenceDetail.title;
   },
   created() {
-
-    this.getConferenceInfo(this.conferenceId)
+    this.getConferenceInfo(this.conferenceId);
     // 방 참여 이력 생성
     this.createHistory(this.historyData());
-
-    console.log("방 번호" + this.conferenceId);``
-    console.log("사람 수 : " + this.count);
+    console.log("방 번호" + this.conferenceId);
     this.mySessionId = this.conferenceId;
-
-
     this.joinSession();
-    this.count += 1;
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
     ...mapState(conferenceStore, ["conferenceDetail", "conferenceCategory"]),
   },
   methods: {
-    ...mapActions(conferenceStore, [
-      "getConferenceInfo",
-      "createHistory",
-    ]),
+    ...mapActions(conferenceStore, ["getConferenceInfo", "createHistory"]),
     historyData() {
       return {
         conference: {
-          id: this.conferenceId
+          id: this.conferenceId,
         },
-        user: { 
+        user: {
           userId: this.userInfo.userId,
         },
         // action: 1, // 뭔지 모르겠음 / null값 가능함 / 액션 기본값은 0
-      }
+      };
     },
     transStr(str) {
       // return str
-      let transedStr = str.replaceAll('<b>', '')
-      transedStr = transedStr.replaceAll('</b>', '')
-      return transedStr
+      let transedStr = str.replaceAll("<b>", "");
+      transedStr = transedStr.replaceAll("</b>", "");
+      return transedStr;
     },
     joinSession() {
       // --- Get an OpenVidu object ---
@@ -180,7 +169,7 @@ export default {
       // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.session
-          .connect(token, { clientData: this.userInfo.user_name })
+          .connect(token, { clientData: this.userInfo.userName })
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
