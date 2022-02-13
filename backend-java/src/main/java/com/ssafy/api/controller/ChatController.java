@@ -56,12 +56,12 @@ public class ChatController {
 		chatService.leaveRoom(chatMessageDto);
 	}
 
-	@GetMapping("/room/{idconference}")
+	@GetMapping("/topic/{idconference}")
 	public ChatRoomDto getChatRoomById(@PathVariable long idconference){
 		return chatService.getChatRoomById(idconference);
 	}
 
-	@PostMapping
+	@PostMapping("/topic/create")
 	@ResponseBody
 	public long createChatRoom(@RequestParam long idconference){
 		return chatService.createChatRoom(idconference);
