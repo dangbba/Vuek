@@ -98,7 +98,7 @@ public class BookSearchController {
 						.queryParam("output", "js")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
-						.queryParam("Start", randomNum(1, 100))
+						.queryParam("Start", "randomNum(1, 100)")
 						.build()
 				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
@@ -145,7 +145,7 @@ public class BookSearchController {
 						.queryParam("isbn", "isbn13")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
-						.queryParam("Start", randomNum(1, 100))
+						.queryParam("Start", "randomNum(1, 100)")
 						.build()
 				)
 				.exchangeToMono(response -> {
