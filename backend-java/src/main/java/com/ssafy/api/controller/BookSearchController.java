@@ -16,6 +16,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
+<<<<<<< HEAD
+=======
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
+>>>>>>> 786f0cbbf95f415330cb0d5dfa0fac5fbdf2fed1
 import static com.sun.el.util.MessageFactory.get;
 
 
@@ -81,12 +88,18 @@ public class BookSearchController {
 	}
 
 	public double randomNum(int min, int max){
+<<<<<<< HEAD
 		var randNum = Math.floor(Math.random()*(max-min+1)) + min;
+=======
+		double randNum = Math.floor(Math.random()*(100) + 1);
+>>>>>>> 786f0cbbf95f415330cb0d5dfa0fac5fbdf2fed1
 		return randNum;
 	}
 	@ApiOperation(value = "주목 할만한 신간 리스트", response = String.class)
 	@GetMapping("/newSpecial")
 	public String newSpecial() {
+		double randomNumber = randomNum(1, 100);
+		String randNum = String.valueOf(randomNumber);
 		Mono<String> mono = WebClient.builder().baseUrl("http://www.aladin.co.kr")
 				.build().get()
 				.uri(builder -> builder.path("/ttb/api/ItemList.aspx")
@@ -98,7 +111,11 @@ public class BookSearchController {
 						.queryParam("output", "js")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
+<<<<<<< HEAD
 						.queryParam("Start", "randomNum(1, 100)")
+=======
+						.queryParam("Start", randNum)
+>>>>>>> 786f0cbbf95f415330cb0d5dfa0fac5fbdf2fed1
 						.build()
 				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
