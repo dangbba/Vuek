@@ -44,4 +44,6 @@ public interface ConferenceService {
 	void participantClose(@PathVariable int idconference, @PathVariable String user_id) throws Exception;
 
 	List<User> getParticipants(@PathVariable int idconference) throws Exception;
+
+	List<Conference> getConferencesLimit(@RequestParam("limit") int limit) throws Exception;
 }

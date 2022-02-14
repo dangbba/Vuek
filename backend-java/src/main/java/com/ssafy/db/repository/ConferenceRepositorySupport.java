@@ -227,14 +227,14 @@ public class ConferenceRepositorySupport {
 		return list;
 	}
 
-	public void deleteUserConference(Conference	conference){
-		Query query2 = em.createNativeQuery(
-						"delete from UserConference where conferenceId = :conferenceId " +
-								"and userId = :userId")
-				.setParameter("conferenceId", conference.getId())
-				.setParameter("userId", conference.getUser().getUserId());
-		query2.executeUpdate();
+
+	public List<Conference> getConferencesLimit(int limit){
+		Query query = em.createNativeQuery(
+				"select * from Conference limit :num")
+				.setParameter("num", limit);
+		List<Conference> list = query.getResultList();
 		em.close();
+		return list;
 	}
 }
 
