@@ -93,7 +93,8 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public void enterConference(@RequestBody EnterWrapperDto enterWrapperDto) throws Exception {
 		conferenceRepositorySupport.enterConference(enterWrapperDto);
-		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUser().getUserId());
+		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUserId());
+//		marathonRepositorySupport.plusNowPages(enterWrapperDto.getUser().getUserId());
 	}
 
 	@Override

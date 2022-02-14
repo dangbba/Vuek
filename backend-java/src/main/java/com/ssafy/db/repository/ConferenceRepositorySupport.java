@@ -95,15 +95,18 @@ public class ConferenceRepositorySupport {
 
 		Conference con = (Conference) queryFactory
 				.from(qConference)
-				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
+				.where(qConference.id.eq((long) enterWrapperDto.getIdconference()))
+//				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
 				.fetchOne();
 
 		Query query = em.createNativeQuery(
 						"insert into " +
 								"UserConference (conferenceId, userId) " +
 								"values (:conferenceId, :userId)")
-				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
-				.setParameter("userId", enterWrapperDto.getUser().getUserId());
+				.setParameter("conferenceId", enterWrapperDto.getIdconference())
+				.setParameter("userId", enterWrapperDto.getUserId());
+//				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
+//				.setParameter("userId", enterWrapperDto.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 

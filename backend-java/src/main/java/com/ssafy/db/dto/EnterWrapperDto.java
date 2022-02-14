@@ -7,6 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnterWrapperDto {
-    private User user;
-    private ConferenceInfoDto conferenceInfoDto;
+    private String userId;
+    private long idconference;
+//    private User user;
+//    private ConferenceInfoDto conferenceInfoDto;
 }
