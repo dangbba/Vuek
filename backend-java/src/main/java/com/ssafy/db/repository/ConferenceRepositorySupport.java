@@ -238,11 +238,12 @@ public class ConferenceRepositorySupport {
 	}
 
 	public List<Conference> getConferencesLimit(int limit){
-		Query query = em.createNativeQuery(
-				"select * from Conference limit :num")
-				.setParameter("num", limit);
-		List<Conference> list = query.getResultList();
-		em.close();
+		QConference qConference = conference;
+		List<Conference> list = (List<Conference>) queryFactory
+				.from(qConference)
+				.limit(limit)
+				.fetch();
+
 		return list;
 	}
 }

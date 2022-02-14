@@ -12,8 +12,8 @@ import static javax.persistence.FetchType.*;
 public class UserBook {
 
     @Id
-    @GeneratedValue
-    @Column(name = "userBook_Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userBookId")
     private int id;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "bookDetailId")

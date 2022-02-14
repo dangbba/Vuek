@@ -1,7 +1,9 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.service.BookSearchService;
+import com.ssafy.api.service.UserBookService;
 import com.ssafy.db.entity.BookDetail;
+import com.ssafy.db.entity.UserBook;
 import lombok.var;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,12 +11,16 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RequestMapping("/api/v1/search/")
 @RestController
@@ -27,6 +33,9 @@ public class BookSearchController {
 
 	@Autowired
 	private BookSearchService bookSearchService;
+
+	@Autowired
+	private UserBookService userBookService;
 
 	@ApiOperation(value = "네이버 api를 이용한 검색기능", response = String.class)
 	@GetMapping("/naver")
@@ -196,6 +205,22 @@ public class BookSearchController {
 	@GetMapping("/{isbn}")
 	public Integer isExistBookDetail(@PathVariable String isbn) throws Exception {
 		return bookSearchService.isExistBookDetail(isbn);
+	}
+
+	@ApiOperation(value = "읽은 도서들을 조회한다.", response = UserBook.class)
+	@GetMapping("/userBooks")
+	public ResponseEntity<List<UserBook>> getUserBooksByUserId(String userId) throws Exception {
+		List<UserBook> list = userBookService.getUserBooksByUserId(userId);
+		return new ResponseEntity<List<UserBook>>(list, HttpStatus.OK);
+
+	}
+
+	@ApiOperation(value = "읽은 도서를 생성한다.", response = Integer.class)
+	@GetMapping("/createUserBook")
+	public ResponseEntity<Integer> createUserBook(UserBook userBook) throws Exception {
+		int num = userBookService.createUserBook(userBook);
+		return new ResponseEntity<Integer>(num, HttpStatus.OK);
+
 	}
 }
 
