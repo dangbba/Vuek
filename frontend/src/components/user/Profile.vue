@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container text-center">
+    <h2 class="fw-bold my-5 text-start">프로필</h2>
+    <!-- <h2 class="fw-bold my-5 text-start">Profile</h2> -->
     
     <vue-profile 
     :nickname="`${userInfo.userName}`"
@@ -9,7 +11,7 @@
     coverColor="#5498e9"
     /> 
     <!-- 회원정보 수정 -->
-    <b-button sm class="me-3">프로필 이미지 수정</b-button>
+    
     <b-button v-b-modal.modal2-prevent-closing class="me-3" @click="getUserData()">회원정보 수정</b-button>
       <b-modal
         id="modal2-prevent-closing"
@@ -18,7 +20,27 @@
         hide-footer
         v-if="modalCheck"
       > 
-        <form ref="form">
+      
+      <!-- <b-button v-b-modal.modalPopover sm class="me-3">프로필 이미지 선택</b-button>
+      <b-modal id="modalPopover" size="sm" title="프로필 이미지 선택" ok-only>
+      <b-form-group label="Radios using sub-components" v-slot="{ ariaDescribedby }">
+        <b-form-radio-group
+          id="radio-group-2"
+          v-model="selected"
+          :aria-describedby="ariaDescribedby"
+          name=""
+        >
+          <b-form-radio value="1"><img src="@/assets/profile/1.jpg" alt="img_1" width="100px"></b-form-radio>
+          <b-form-radio value="2"><img src="@/assets/profile/2.jpg" alt="img_2" width="100px"></b-form-radio>
+          <b-form-radio value="3"><img src="@/assets/profile/3.jpg" alt="img_3" width="100px"></b-form-radio>
+          <b-form-radio value="4"><img src="@/assets/profile/4.jpg" alt="img_4" width="100px"></b-form-radio>
+          <b-form-radio value="5"><img src="@/assets/profile/5.jpg" alt="img_5" width="100px"></b-form-radio>
+        </b-form-radio-group>
+      </b-form-group>
+      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+      </b-modal> -->
+      
+        <!-- <form ref="form">
           <b-form-group
             type="file"
             label="프로필 이미지 등록"
@@ -34,7 +56,8 @@
             ></b-form-file>
             <div class="mt-3">Selected file: {{ user.profileImage ? user.profileImage : '' }}</div>
           </b-form-group>
-        </form>
+        </form> -->
+
         <form ref="form">
           <b-form-group
             label="변경할 username"
@@ -126,20 +149,18 @@
             ></b-form-input>
           </b-form-group>
         </form>
-
-
         <hr />
-        <b-button @click="checkValue()"> 수정 </b-button>
+        <b-button class="float-end" variant="outline-primary" @click="checkValue()"> 수정 </b-button>
       </b-modal>
-    <b-button @click="deleteUser">회원탈퇴</b-button>
+    <b-button @click="deleteConfirm">회원탈퇴</b-button>
 
 
     <!-- 독서 마라톤 관련 -->
-    <b-row class="justify-content-center mt-4" v-if="marathon.max">  <!-- max value 있을 때(서버에 독서마라톤 정보 있을 때)만 렌더링 -->
-      <p class="fs-5 fw-bold">
-        <i class="fas fa-running text-primary"></i>
+    <b-row class="justify-content-center mt-5" v-if="marathon.max">  <!-- max value 있을 때(서버에 독서마라톤 정보 있을 때)만 렌더링 -->
+      <p class="fs-3 fw-bold">
+        <i class="fas fa-running" style="color: #0dcaf0;"></i>
           독서마라톤 
-        <i class="fas fa-running text-primary"></i>
+        <i class="fas fa-running" style="color: #0dcaf0;"></i>
       </p> <!-- 폰트어썸 아이콘 -->
       <b-progress
         :max="marathon.max"
@@ -153,7 +174,7 @@
         </b-progress-bar>
       </b-progress>
       
-      <p v-if="marathon.value !== 0 && marathon.value===marathon.max">
+      <p v-if="marathon.value !== 0 && marathon.value >= marathon.max">
         마라톤을 100% 달성했습니다! 거리를 갱신해주세요.
         <b-button v-b-modal.modal-sm size="sm" variant="warning" class="ms-2" @click="marathon.modalCheck=true">갱신하기!</b-button>
         <b-modal v-if="marathon.modalCheck" hide-footer hide-header id="modal-sm" size="sm" title="독서마라톤 거리 갱신">
@@ -165,16 +186,14 @@
           </b-input-group>
         </b-modal>
       </p>
-      <p v-else>
-        완주까지 {{ marathon.max -  marathon.value }}km!
-      </p>
+      <h5 v-else>
+        완주까지 <span class="text-warning">{{ marathon.max -  marathon.value }}km!</span>
+      </h5>
       <p v-if="marathon.value===0">
         화상회의에 참여하여 달린 거리를 up!
       </p>
 
     </b-row>
-    <div class="space"></div>
-
   </div>
   
 </template>
@@ -214,35 +233,53 @@ export default {
       },
       modalCheck: false,
       changeValue: 0,
+      selected: null,
     };
   },
   methods: {
     ...mapMutations(userStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     ...mapActions(userStore, ["getUserInfo"]),
     // 회원탈퇴 기능
+    deleteConfirm() {
+      Swal.fire({
+        icon: "question",
+        text: '탈퇴하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '네',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteUser()
+        } else {
+          Swal.fire({
+            icon: "info",
+            text: "탈퇴가 취소되었습니다.",
+          });
+        }
+      })
+    },
     deleteUser() {
       // 확인창
-      if (confirm('탈퇴하시겠습니까?')) {
-        http({
-        method: 'delete',
-        url: `/users/${this.userInfo.userId}`,
+      http({
+      method: 'delete',
+      url: `/users/${this.userInfo.userId}`,
+      })
+      .then((response) => {
+        console.log(response);
+        // 로그아웃
+        this.SET_IS_LOGIN(false);
+        this.SET_USER_INFO(null);
+        this.$router.push({
+          path: "/",
         })
-        .then((response) => {
-          console.log(response);
-          // 로그아웃
-          this.SET_IS_LOGIN(false);
-          this.SET_USER_INFO(null);
-          this.$router.push({
-            path: "/",
-          })
-          alert('탈퇴가 완료되었습니다')
-        })
-        .catch((err) => {
-          console.dir(err);
-        })
-      } else {
-        alert('탈퇴가 취소되었습니다')
-      }
+        // alert('탈퇴가 완료되었습니다')
+        Swal.fire({
+          icon: "info",
+          text: "탈퇴가 완료되었습니다.",
+        });
+      })
+      .catch((err) => {
+        console.dir(err);
+      })
     },
     getUserData() { // 기존 정보 가져오기
       this.modalCheck = true
@@ -310,18 +347,18 @@ export default {
         this.user.user_name === this.userInfo.userName 
       ) {
         Swal.fire({
-          title: 'username을 그대로 유지하시겠습니까?',
+          icon: "question",
+          text: 'username을 그대로 유지하시겠습니까?',
           showCancelButton: true,
           confirmButtonText: '네',
         }).then((result) => {
           if (result.isConfirmed) {
             this.userInfoUpdate()
-            Swal.fire('회원정보 수정이 완료되었습니다.', '', 'success')
           }
         });
       } else {
           this.userInfoUpdate()
-          Swal.fire('회원정보 수정이 완료되었습니다.', '', 'success')
+          // Swal.fire('회원정보 수정이 완료되었습니다.', '', 'success')
       }
     },
     userInfoUpdate() { // 회원정보 수정
@@ -344,6 +381,10 @@ export default {
         .then((response) => {
           console.log(response)
           // alert('회원정보 수정이 완료되었습니다')
+          Swal.fire({
+            icon: "success",
+            text: "회원정보 수정이 완료되었습니다.",
+          });
 
           // 갱신된 정보 페이지에 바로 렌더링이 안되는 문제 수정 (기존 userStore 참조)
           let token = sessionStorage.getItem("access-token");
@@ -373,12 +414,14 @@ export default {
           this.marathon.max = response.data.goalPages
           this.marathon.id = response.data.id
           this.changeValue = response.data.nowPages
-          
         })
         .catch((error) => {
-          console.log(error.response)
-          alert('독서 마라톤 정보 조회에 실패했습니다. 관리자에게 문의하세요')
-        });
+          console.log(error)
+          Swal.fire({
+            icon: "info",
+            text: "독서 마라톤 정보 조회에 실패했습니다. 관리자에게 문의하세요.",
+          })
+        })
     },
     // 독서마라톤 목표(goalPages)수정 기능 --> 백엔드에 확인 필요
     updateGoal(){
@@ -389,14 +432,22 @@ export default {
       })
         .then((response) => {
           console.log(response)
-          alert('갱신 성공!')
+          // alert('갱신 성공!')
+          Swal.fire({
+            icon: "success",
+            text: "갱신 성공!",
+          })
           this.marathon.modalCheck = false
           this.getMarthonInfo()
         })
         .catch((error) => {
           console.log(error)
           this.marathon.modalCheck = false
-          alert('갱신에 실패했습니다. 관리자에게 문의하세요')
+          // alert('갱신에 실패했습니다. 관리자에게 문의하세요')
+          Swal.fire({
+            icon: "error",
+            text: "갱신에 실패했습니다. 관리자에게 문의하세요.",
+          })
         });
     },
     color() { // 퍼센트에 따른 색상 변경 가능(보류)
@@ -422,7 +473,4 @@ export default {
 </script>
 
 <style>
-.space {
-  height:350px;
-}
 </style>

@@ -17,7 +17,7 @@
           label="용도"
           label-for="usage-roominput"
         >
-          <b-form-select v-model="selectedOption" :options="options">
+          <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
             <template #first>
               <b-form-select-option :value="null" disabled>--카테고리를 선택해주세요--</b-form-select-option>
             </template>
