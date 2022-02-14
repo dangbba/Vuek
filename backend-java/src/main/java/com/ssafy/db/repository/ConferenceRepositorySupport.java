@@ -128,8 +128,12 @@ public class ConferenceRepositorySupport {
 	}
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
 		QConferenceHistory qConferenceHistory = QConferenceHistory.conferenceHistory;
-		List<ConferenceHistory> list = queryFactory.select(qConferenceHistory).from(qConferenceHistory)
-				.where(qConferenceHistory.user.userId.eq(user_id)).fetch();
+		List<ConferenceHistory> list = queryFactory
+				.select(qConferenceHistory)
+				.from(qConferenceHistory)
+				.where(qConferenceHistory.user.userId.eq(user_id))
+				.orderBy(qConferenceHistory.id.desc())
+				.fetch();
 
 		return list;
 	}
@@ -238,11 +242,13 @@ public class ConferenceRepositorySupport {
 	}
 
 	public List<Conference> getConferencesLimit(int limit){
-		Query query = em.createNativeQuery(
-				"select * from Conference limit :num")
-				.setParameter("num", limit);
-		List<Conference> list = query.getResultList();
-		em.close();
+		QConference qConference = conference;
+		List<Conference> list = (List<Conference>) queryFactory
+				.from(qConference)
+				.limit(limit)
+				.orderBy(qConference.id.desc())
+				.fetch();
+
 		return list;
 	}
 }
