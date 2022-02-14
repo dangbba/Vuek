@@ -216,7 +216,7 @@ public class BookSearchController {
 	}
 
 	@ApiOperation(value = "읽은 도서를 생성한다.", response = Integer.class)
-	@GetMapping("/createUserBook")
+	@PostMapping("/createUserBook")
 	public ResponseEntity<Integer> createUserBook(UserBook userBook) throws Exception {
 		int num = userBookService.createUserBook(userBook);
 		return new ResponseEntity<Integer>(num, HttpStatus.OK);
