@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.db.entity.BookDetail;
 import com.ssafy.db.entity.UserBook;
 import com.ssafy.db.repository.UserBookRepository;
 import com.ssafy.db.repository.UserBookRepositorySupport;
@@ -16,14 +17,13 @@ public class UserBookServiceImpl implements UserBookService {
     UserBookRepositorySupport userBookRepositorySupport;
 
     @Override
-    public int createUserBook(UserBook userBook) throws Exception {
-        userBookRepository.save(userBook);
-        return userBook.getId();
+    public void createUserBook(String isbn, String userId) throws Exception {
+        userBookRepositorySupport.createUserBook(isbn, userId);
     }
 
     @Override
-    public List<UserBook> getUserBooksByUserId(String userId) throws Exception {
-        List<UserBook> list = userBookRepositorySupport.getUserBooksByUserId(userId);
-        return null;
+    public List<BookDetail> getUserBooksByUserId(String userId) throws Exception {
+        List<BookDetail> list = userBookRepositorySupport.getUserBooksByUserId(userId);
+        return list;
     }
 }

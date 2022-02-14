@@ -209,17 +209,17 @@ public class BookSearchController {
 
 	@ApiOperation(value = "읽은 도서들을 조회한다.", response = UserBook.class)
 	@GetMapping("/userBooks")
-	public ResponseEntity<List<UserBook>> getUserBooksByUserId(String userId) throws Exception {
-		List<UserBook> list = userBookService.getUserBooksByUserId(userId);
-		return new ResponseEntity<List<UserBook>>(list, HttpStatus.OK);
+	public ResponseEntity<List<BookDetail>> getUserBooksByUserId(String userId) throws Exception {
+		List<BookDetail> list = userBookService.getUserBooksByUserId(userId);
+		return new ResponseEntity<List<BookDetail>>(list, HttpStatus.OK);
 
 	}
 
 	@ApiOperation(value = "읽은 도서를 생성한다.", response = Integer.class)
 	@PostMapping("/createUserBook")
-	public ResponseEntity<Integer> createUserBook(UserBook userBook) throws Exception {
-		int num = userBookService.createUserBook(userBook);
-		return new ResponseEntity<Integer>(num, HttpStatus.OK);
+	public ResponseEntity<String> createUserBook(String isbn, String userId) throws Exception {
+		userBookService.createUserBook(isbn, userId);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 
 	}
 }
