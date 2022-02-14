@@ -63,16 +63,10 @@
 <script>
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
-<<<<<<< Updated upstream
-import ConferenceDetailUpdate from "./ConferenceDetailUpdate";
-import ConferenceDetailClose from "./ConferenceDetailClose";
-import ConferenceDetailDelete from "./ConferenceDetailDelete";
-=======
 import ConferenceDetailUpdate from './ConferenceDetailUpdate';
 import ConferenceDetailClose from './ConferenceDetailClose';
 import ConferenceDetailDelete from './ConferenceDetailDelete';
 import ConferenceChat from './ConferenceChat';
->>>>>>> Stashed changes
 
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
