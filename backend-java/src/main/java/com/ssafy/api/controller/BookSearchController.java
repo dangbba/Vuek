@@ -87,7 +87,6 @@ public class BookSearchController {
 	@ApiOperation(value = "주목 할만한 신간 리스트", response = String.class)
 	@GetMapping("/newSpecial")
 	public String newSpecial() {
-		double randNum = randomNum(1, 100);
 		Mono<String> mono = WebClient.builder().baseUrl("http://www.aladin.co.kr")
 				.build().get()
 				.uri(builder -> builder.path("/ttb/api/ItemList.aspx")
@@ -99,7 +98,7 @@ public class BookSearchController {
 						.queryParam("output", "js")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
-						.queryParam("startIndex", randNum)
+						.queryParam("Start", randomNum(1, 100))
 						.build()
 				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
@@ -146,6 +145,7 @@ public class BookSearchController {
 						.queryParam("isbn", "isbn13")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
+						.queryParam("Start", randomNum(1, 100))
 						.build()
 				)
 				.exchangeToMono(response -> {
