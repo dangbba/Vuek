@@ -26,7 +26,7 @@ public class UserBookRepositorySupport {
                 .setParameter("userId", userId);
         List<BookDetail> list = query.getResultList();
         em.close();
-        
+
         return list;
     }
 

@@ -126,7 +126,7 @@ public class ConferenceRepositorySupport {
 		em.close();
 
 	}
-	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
+	public List<ConferenceHistory> getConferenceHistoryByUserId(String user_id) {
 		QConferenceHistory qConferenceHistory = QConferenceHistory.conferenceHistory;
 		List<ConferenceHistory> list = queryFactory
 				.select(qConferenceHistory)

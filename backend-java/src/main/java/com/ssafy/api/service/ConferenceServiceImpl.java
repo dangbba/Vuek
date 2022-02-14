@@ -105,7 +105,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 
 	@Override
 	public List<ConferenceHistory> getConferenceHistory(@RequestParam String user_id) throws Exception {
-		return conferenceRepositorySupport.findConferenceHistoryByUserId(user_id);
+		return conferenceRepositorySupport.getConferenceHistoryByUserId(user_id);
 	}
 
 	@Override
