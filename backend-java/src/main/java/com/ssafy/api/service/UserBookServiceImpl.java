@@ -4,9 +4,11 @@ import com.ssafy.db.entity.UserBook;
 import com.ssafy.db.repository.UserBookRepository;
 import com.ssafy.db.repository.UserBookRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserBookServiceImpl implements UserBookService {
     @Autowired
     UserBookRepository userBookRepository;
