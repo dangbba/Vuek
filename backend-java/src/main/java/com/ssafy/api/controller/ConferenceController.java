@@ -1,8 +1,11 @@
 package com.ssafy.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.ssafy.api.request.ConferenceJoinPostReq;
 import com.ssafy.api.service.ConferenceService;
 import com.ssafy.db.dto.EnterWrapperDto;
 import com.ssafy.db.entity.Conference;
@@ -276,13 +279,13 @@ public class ConferenceController {
 		return new ResponseEntity<>(json, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-//	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@PostMapping("/createParticipant")
-//	public ResponseEntity<String> enterConference( @RequestBody EnterWrapperDto enterWrapperDto ) throws Exception {
-//		conferenceService.enterConference(enterWrapperDto);
-//		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//
-//	}
+	@ApiOperation(value = "방에 참여한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("/join")
+	public ResponseEntity<String> enterConference( @RequestBody EnterWrapperDto enterWrapperDto ) throws Exception {
+		conferenceService.enterConference(enterWrapperDto);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+
+	}
 
 	@ApiOperation(value = "방 인원수를 센다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/count/{idconference}")
