@@ -128,8 +128,12 @@ public class ConferenceRepositorySupport {
 	}
 	public List<ConferenceHistory> findConferenceHistoryByUserId(String user_id) {
 		QConferenceHistory qConferenceHistory = QConferenceHistory.conferenceHistory;
-		List<ConferenceHistory> list = queryFactory.select(qConferenceHistory).from(qConferenceHistory)
-				.where(qConferenceHistory.user.userId.eq(user_id)).fetch();
+		List<ConferenceHistory> list = queryFactory
+				.select(qConferenceHistory)
+				.from(qConferenceHistory)
+				.where(qConferenceHistory.user.userId.eq(user_id))
+				.orderBy(qConferenceHistory.id.desc())
+				.fetch();
 
 		return list;
 	}
