@@ -45,28 +45,29 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public void closeConference(Conference conference) throws Exception {
 		conferenceRepositorySupport.closeConference(conference);
+		conferenceRepositorySupport.deleteUserConference(conference);
 	}
 
 	@Override
 	public List<ConferenceType> getConferenceCategory() throws Exception {
 		return conferenceRepositorySupport.getConferenceCategory();
 	}
-	
+
 	@Override
 	public Conference getConferenceInfo(int idconference) throws Exception {
 		return conferenceRepositorySupport.getConferenceInfo(idconference);
 	}
-	
+
 	@Override
 	public void updateConferenceInfo(Conference conference) throws Exception {
 		conferenceRepositorySupport.updateConferenceInfo(conference);
 	}
-	
+
 	@Override
 	public List<Conference> getConference() throws Exception {
 		return conferenceRepositorySupport.getConferences();
 	}
-	
+
 	@Override
 	public List<Conference> getConferenceBySort(@RequestParam String sort, @RequestParam String asc) throws Exception {
 		if(sort.equals("title")) {
@@ -82,7 +83,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<Conference> searchByTitle(@RequestParam String word) throws Exception {
 		return conferenceRepositorySupport.getConferenceByTitle(word);
 	}
-	
+
 	@Override
 	public List<Conference> getConferenceByCategory(@RequestParam int conference_type_id) throws Exception {
 		return conferenceRepositorySupport.getConferenceByCategory(conference_type_id);
@@ -100,16 +101,18 @@ public class ConferenceServiceImpl implements ConferenceService {
 //		conferenceRepositorySupport.createConferenceHistory(conferenceHistory);
 		conferenceHistoryRepository.save(conferenceHistory);
 	}
-	
+
 	@Override
 	public List<ConferenceHistory> getConferenceHistory(@RequestParam String user_id) throws Exception {
 		return conferenceRepositorySupport.findConferenceHistoryByUserId(user_id);
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteConference(Conference conference) {
 		try {
 			conferenceRepository.deleteById(conference.getId());
+			conferenceRepositorySupport.deleteUserConference(conference);
 			return true;
 		} catch (Exception e) {
 			return false;

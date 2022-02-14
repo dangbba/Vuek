@@ -203,8 +203,8 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
 		Query query = em.createNativeQuery(
-				"delete from UserConference where conferenceId = :conferenceId " +
-						"and userId = :userId")
+						"delete from UserConference where conferenceId = :conferenceId " +
+								"and userId = :userId")
 				.setParameter("conferenceId", idconference)
 				.setParameter("userId", user_id);
 		query.executeUpdate();
@@ -222,6 +222,16 @@ public class ConferenceRepositorySupport {
 		em.close();
 
 		return list;
+	}
+
+	public void deleteUserConference(Conference	conference){
+		Query query2 = em.createNativeQuery(
+						"delete from UserConference where conferenceId = :conferenceId " +
+								"and userId = :userId")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("userId", conference.getUser().getUserId());
+		query2.executeUpdate();
+		em.close();
 	}
 }
 

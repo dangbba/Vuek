@@ -2,6 +2,7 @@ package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.openvidu.java.client.OpenViduRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -30,6 +31,7 @@ public class User implements Serializable {
     String goal;
     String socialLink;
     String profileImage;
+    OpenViduRole role;
 //    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
@@ -38,6 +40,7 @@ public class User implements Serializable {
     public void prePersist(){
         this.genre = this.genre == null ? "없음" : this.genre;
         this.goal = this.goal == null ? "없음" : this.goal;
+        this.role = this.role == null ? OpenViduRole.PUBLISHER : this.role;
     }
 
 }
