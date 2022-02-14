@@ -9,22 +9,12 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
-
-import java.awt.print.Book;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URLEncoder;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.sun.el.util.MessageFactory.get;
 
@@ -90,9 +80,14 @@ public class BookSearchController {
 		return mono.block();
 	}
 
+	public double randomNum(int min, int max){
+		var randNum = Math.floor(Math.random()*(max-min+1)) + min;
+		return randNum;
+	}
 	@ApiOperation(value = "주목 할만한 신간 리스트", response = String.class)
 	@GetMapping("/newSpecial")
 	public String newSpecial() {
+		double randNum = randomNum(1, 100);
 		Mono<String> mono = WebClient.builder().baseUrl("http://www.aladin.co.kr")
 				.build().get()
 				.uri(builder -> builder.path("/ttb/api/ItemList.aspx")
@@ -104,6 +99,7 @@ public class BookSearchController {
 						.queryParam("output", "js")
 						.queryParam("Cover", "Big")
 						.queryParam("MaxResults", "100")
+						.queryParam("startIndex", randNum)
 						.build()
 				).exchangeToMono(response -> {
 					return response.bodyToMono(String.class);
