@@ -134,4 +134,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<User> getParticipants(@PathVariable int idconference) {
 		return conferenceRepositorySupport.getParticipants(idconference);
 	}
+
+	@Override
+	public List<Conference> getConferencesLimit(@RequestParam("limit") int limit){
+		return conferenceRepositorySupport.getConferencesLimit(limit);
+	}
 }

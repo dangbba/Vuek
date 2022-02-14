@@ -295,7 +295,7 @@ public class ConferenceController {
 	}
 
 	@ApiOperation(value = "참여자가 방을 나간다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/participantClonse/{idconference}/{user_id}")
+	@PostMapping("/participantClose/{idconference}/{user_id}")
 	public ResponseEntity<String> participantClose(@PathVariable int idconference, @PathVariable String user_id ) throws Exception {
 		conferenceService.participantClose(idconference, user_id);
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -307,5 +307,12 @@ public class ConferenceController {
 		List<User> list = conferenceService.getParticipants(idconference);
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 
+	}
+
+	@ApiOperation(value = "infinite Loading")
+	@GetMapping("/conferencesLimit")
+	public Object getConferencesLimit(@RequestParam("limit") int limit) throws Exception {
+		List<Conference> list = conferenceService.getConferencesLimit(limit);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }
