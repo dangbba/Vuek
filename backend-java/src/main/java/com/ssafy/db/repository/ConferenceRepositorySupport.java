@@ -242,6 +242,7 @@ public class ConferenceRepositorySupport {
 		List<Conference> list = (List<Conference>) queryFactory
 				.from(qConference)
 				.limit(limit)
+				.orderBy(qConference.id.desc())
 				.fetch();
 
 		return list;
