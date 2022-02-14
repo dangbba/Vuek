@@ -45,14 +45,6 @@ public class ConferenceRepositorySupport {
 				.setParameter("isActive", conference.getIsActive());
 		query.executeUpdate();
 		em.close();
-
-		Query query2 = em.createNativeQuery(
-						"delete from UserConference where conferenceId = :conferenceId " +
-								"and userId = :userId")
-				.setParameter("conferenceId", conference.getId())
-				.setParameter("userId", conference.getUser().getUserId());
-		query2.executeUpdate();
-		em.close();
 	}
 
 	public List<ConferenceType> getConferenceCategory() {
@@ -230,6 +222,16 @@ public class ConferenceRepositorySupport {
 		em.close();
 
 		return list;
+	}
+
+	public void deleteUserConference(Conference	conference){
+		Query query2 = em.createNativeQuery(
+						"delete from UserConference where conferenceId = :conferenceId " +
+								"and userId = :userId")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("userId", conference.getUser().getUserId());
+		query2.executeUpdate();
+		em.close();
 	}
 }
 
