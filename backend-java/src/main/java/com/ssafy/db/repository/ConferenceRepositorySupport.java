@@ -95,15 +95,18 @@ public class ConferenceRepositorySupport {
 
 		Conference con = (Conference) queryFactory
 				.from(qConference)
-				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
+				.where(qConference.id.eq((long) enterWrapperDto.getIdconference()))
+//				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
 				.fetchOne();
 
 		Query query = em.createNativeQuery(
 						"insert into " +
 								"UserConference (conferenceId, userId) " +
 								"values (:conferenceId, :userId)")
-				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
-				.setParameter("userId", enterWrapperDto.getUser().getUserId());
+				.setParameter("conferenceId", enterWrapperDto.getIdconference())
+				.setParameter("userId", enterWrapperDto.getUserId());
+//				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
+//				.setParameter("userId", enterWrapperDto.getUser().getUserId());
 		query.executeUpdate();
 		em.close();
 
@@ -203,8 +206,8 @@ public class ConferenceRepositorySupport {
 	@Transactional
 	public void participantClose(@PathVariable int idconference, @PathVariable String user_id){
 		Query query = em.createNativeQuery(
-				"delete from UserConference where conferenceId = :conferenceId " +
-						"and userId = :userId")
+						"delete from UserConference where conferenceId = :conferenceId " +
+								"and userId = :userId")
 				.setParameter("conferenceId", idconference)
 				.setParameter("userId", user_id);
 		query.executeUpdate();
@@ -222,6 +225,16 @@ public class ConferenceRepositorySupport {
 		em.close();
 
 		return list;
+	}
+
+	public void deleteUserConference(Conference	conference){
+		Query query2 = em.createNativeQuery(
+						"delete from UserConference where conferenceId = :conferenceId " +
+								"and userId = :userId")
+				.setParameter("conferenceId", conference.getId())
+				.setParameter("userId", conference.getUser().getUserId());
+		query2.executeUpdate();
+		em.close();
 	}
 }
 
