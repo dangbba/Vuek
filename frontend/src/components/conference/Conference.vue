@@ -1,25 +1,31 @@
 <template>
   <div class="container">
-    <div class="header">
-      <h1 class="fw-bold my-5">Conference List</h1>
-    </div>
+    <h2 class="fw-bold my-5">컨퍼런스 목록</h2>
+    <!-- <h2 class="fw-bold my-5">Conference List</h2> -->
 
-    <conference-search></conference-search>
     <conference-create></conference-create>
+    <conference-search></conference-search>
 
+    <b-row class="mt-4">
+      <b-col md="4">
+       <conference-sort></conference-sort>
+      </b-col>
+      <b-col md="4">
+        <conference-filter></conference-filter>
+      </b-col>
+      <b-col offset-md="2" class="mt-3">
+        <div> <!-- 종료된 회의 안보기 체크박스 --> <!-- 하나의 체크박스는 단일 boolean 값을 가진다 --> 
+          <input class="form-check-input me-2 my-0" type="checkbox" id="flexCheckDefault" v-model="checked">
+          <label class="form-check-label" for="flexCheckDefault">
+            종료된 회의 보지 않기
+          </label>
+        </div>
+      </b-col>
 
-    <div class="row">
-      <conference-sort class="offset-2 col-4"></conference-sort>
-      <conference-filter class="col-3"></conference-filter>
-      <div class="col-3"> <!-- 종료된 회의 안보기 체크박스 --> <!-- 하나의 체크박스는 단일 boolean 값을 가진다 --> 
-        <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-model="checked">
-        <label class="form-check-label" for="flexCheckDefault">
-          종료된 회의 보지 않기
-        </label>
-      </div>
-    </div>
+    </b-row>
 
     <conference-list :checked="checked"></conference-list> <!-- :checked="checked" -->
+
   </div>
 </template>
 
@@ -51,4 +57,5 @@ export default {
 </script>
 
 <style>
+
 </style>

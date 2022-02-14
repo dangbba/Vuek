@@ -1,21 +1,28 @@
 <template>
-  <div class="container">
-    <b-form inline class="searchBox mt-3 row offset-7 col-5" autocomplete="off" onsubmit="return false"> 
-      <b-form-input
-        class="form-control d-inline"
-        v-model.trim="text"
-        placeholder="검색어를 입력하세요"
-        @keyup.enter="conferenceSearch"
-      >
-      </b-form-input>
-      <b-button class="offset-10 col-2 mt-1" @click="conferenceSearch">검색</b-button>
-    </b-form>
+  <div class="mt-3">
+    <b-row>
+      <b-col md="4" offset-md="7" class="pe-0">
+        <b-form-input
+          type="search"
+          class="form-control"
+          v-model="text"
+          placeholder="검색어를 입력하여 회의 검색"
+          @keyup.enter="conferenceSearch"
+          trim 
+        >
+        </b-form-input>
+      </b-col>
+      <b-col md="1">
+        <b-button @click="conferenceSearch">검색</b-button>
+      </b-col>
+    </b-row>
   </div>
 
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 const conferenceStore = "conferenceStore";
 
@@ -26,11 +33,15 @@ export default {
     conferenceSearch() {
       console.log(this.text)
       const value = this.text
-      if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ){ 
-        return alert('검색어를 입력해주세요!')
-        }else{ 
-          return this.searchByTitle(value)
-        }
+      if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length )){ 
+        var swalAlert = Swal.fire({
+          icon: "error",
+          text: "검색어를 입력해주세요.",
+        })
+        return swalAlert
+      } else { 
+        return this.searchByTitle(value)
+      }
     }
   },
   data: function () {

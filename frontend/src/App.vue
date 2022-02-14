@@ -27,14 +27,13 @@ export default {
   font-family: 'Gothic A1', sans-serif;
 }
 
-
 #app {
   background-color: #343a40;
   color: whitesmoke;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
 }
 
 #nav {
@@ -49,4 +48,18 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+h2 {
+  border-left:6px solid #0b5ed7;
+  padding-left: 12px;
+}
+
+.close {
+  font-size: 1.5em;
+  color: #858585;
+  border: 0;
+  outline: 0;
+  background-color: transparent
+} 
+
 </style>

@@ -1,16 +1,18 @@
 <template>
   <div class="col" v-if="item.isActive || !checked"> <!-- 진행중인 회의만 표기됨 -->
-    <b-card no-body bg-variant="dark" class="overflow-hidden mx-2 my-2" style="max-width: 540px;">
+    <b-card no-body bg-variant="dark" class="overflow-hidden shadow">
       <b-row no-gutters>
         <b-col md="6">
           <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
           <b-card-img v-else :src="thumbnail_url" alt="book_image" class="rounded-3 mt-3 ms-3"></b-card-img>
         </b-col>
         <b-col md="6" class="mb-3">
-          <b-card-body :title="item.title"> <!--방 제목-->
+          <b-card-body :title="item.title" class="my-2"> <!--방 제목-->
+          <hr class="my-2">
             <b-card-text>
-              <p class="card-text">회의번호: {{ item.id }}</p> <!--회의 번호-->
-              <p class="card-text">주제도서: {{ transStr(item.bookDetail.title) }}</p>
+              <!-- <p class="card-text">회의번호: {{ item.id }}</p> -->
+              <p class="card-text my-2">도서명: {{ transStr(item.bookDetail.title) }}</p>
+              <hr class="my-2">
               <p class="card-text">카테고리: {{ item.conferenceType.name }}</p> 
               <p class="card-text">시작시간: {{ item.callStartTime }}</p>
               <!-- <p class="card-text">회의종료시간: {{ item.callEndTime }}</p> -->
@@ -20,8 +22,8 @@
               
             </b-card-text>
           </b-card-body>
-          <b-button variant="primary" @click="enterConference" v-if="item.isActive">입장</b-button> 
-          <b-button variant="secondary" class="disabled" v-else>입장불가</b-button>
+          <b-button variant="primary" @click="enterConference" v-if="item.isActive" class="float-end me-2">입장</b-button> 
+          <b-button variant="secondary" class="disabled float-end me-2" v-else>입장불가</b-button>
         </b-col>
       </b-row>
     </b-card>
@@ -68,7 +70,7 @@ export default {
   },
   data: function () {
     return {
-      thumbnail_url: require('@/assets/thumbnail/thumbnail_default_img.png') // 원래는 thumbnail 없을때만....
+      thumbnail_url: require('@/assets/thumbnail/thumbnail_default_img.jpg') // book cover url null 값일때 기본이미지 
     }
   }
 }
@@ -76,6 +78,6 @@ export default {
 
 <style scoped>
 .card {
-  height: 520px;
+  height: 100%;
 }
 </style>

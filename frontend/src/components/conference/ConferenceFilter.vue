@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-form-select v-model="selected" :options="options" class="mb-3">
+    <b-form-select v-model="selected" :options="options" class="mb-3" style="height: 2.5rem">
       <template #first>
         <b-form-select-option :value="null" disabled>--카테고리를 선택해주세요--</b-form-select-option>
       </template>
     </b-form-select>
-    <b-button class="ms-2" @click="getFilter">선택</b-button>
+    <b-button class="ms-2" @click="getFilter">조회</b-button>
 
     <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
   </div>
@@ -14,6 +14,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 const conferenceStore = "conferenceStore";
 
@@ -24,7 +25,11 @@ export default {
     getFilter() {
       // console.log(this.selected)
       if (this.selected == null) {
-        alert('카테고리를 선택해주세요')
+        // alert('카테고리를 선택해주세요')
+        Swal.fire({
+          icon: "error",
+          text: "카테고리를 선택해주세요.",
+        })
       } else {
         this.getConferenceByCategory(this.selected)
       }

@@ -2,7 +2,7 @@
   <div class="container my-5 px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
-        <h1>회원가입</h1>
+        <h2>회원가입</h2>
         <div class="my-5">
           <form id="userform" method="post" action="">
             <div class="text-start">
@@ -93,12 +93,14 @@
             </div>    
             <br />
             <!-- Submit Button-->
-            <b-button variant="primary" @click="checkValue"
-              >Sign Up</b-button
-            >&nbsp;
-            <b-button variant="danger" @click="resetValue"
-              >Cancel</b-button
-            >
+            <div class="float-end">
+              <b-button variant="primary" @click="checkValue"
+                >제출</b-button
+              >&nbsp;
+              <b-button @click="resetValue"
+                >취소</b-button
+              >
+            </div>
           </form>
         </div>
       </div>
@@ -213,7 +215,10 @@ export default {
         })
         .catch((err) => {
           console.log(err.response)
-          alert("독서마라톤 생성에 실패했습니다. 관리자에게 문의하세요.")
+          Swal.fire({
+            icon: "error",
+            text: "독서마라톤 생성에 실패했습니다. 관리자에게 문의하세요.",
+          })
         })
     },
     registMember() {
@@ -234,15 +239,19 @@ export default {
             msg = "회원가입을 축하합니다.";
             // 독서마라톤 생성
             this.createMarathon(this.id)
-            alert(msg);
+            Swal.fire({
+              icon: "success",
+              text: msg,
+            })
             this.$router.push({ name: "Home" });
           }
         })
         .catch((err) => {
-          if (err.response.data === "이미 존재하는 사용자 ID입니다.") {
-            alert(err.response.data)
-          }
+          Swal.fire({
+            icon: "error",
+            text: err.response.data,
         })
+      })
     },
     resetValue() {
       this.$router.push("/");

@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="text-center">
     <b-button
       v-b-modal.modal3-prevent-closing
       variant="primary"
-      class="col-4 mb-3"
+      class="col-8 mb-3"
       @click="$bvModal.show('modal-scoped')"
+      size="lg"
       >컨퍼런스 생성하기</b-button
     >
     <b-modal scrollable id="modal3-prevent-closing" ref="modal" title="컨퍼런스 생성하기">
@@ -15,7 +16,7 @@
           label="용도"
           label-for="usage-roominput"
         >
-          <b-form-select v-model="selectedOption" :options="options">
+          <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
             <template #first>
               <b-form-select-option :value="null" disabled
                 >--카테고리를 선택해주세요--</b-form-select-option
@@ -53,40 +54,45 @@
           ></b-form-textarea>
         </b-form-group>
       </form>
-      <form ref="form" class="">
+      <form ref="form" class="mb-2">
         <b-form-group
           type="search"
           class="searchmodal"
           label="도서 검색"
           label-for="bookSearch"
         >
-          <b-form-input
-            id="bookSearch"
-            placeholder="키워드 입력"
-            v-model="bookSearchValue"
-            plain
-            @keydown.enter.prevent="bookSearch()"
-          >
-          </b-form-input>
-          <b-button class="offset-10" @click="bookSearch()">search</b-button>
+          <b-row>
+            <b-col md="10">
+              <b-form-input
+                id="bookSearch"
+                placeholder="키워드 입력"
+                v-model="bookSearchValue"
+                plain
+                @keydown.enter.prevent="bookSearch()"
+              >
+              </b-form-input>
+            </b-col>
+            <b-col>
+              <b-button variant="outline-primary" @click="bookSearch()">검색</b-button>
+            </b-col>
+          </b-row>
         </b-form-group>
       </form>
-      <div v-if="bookData===1">
+      <div v-if="bookData===1" class="mx-2 mt-3 text-secondary">
         <p>도서를 검색해서 선택해주세요.</p>
       </div>
       <div v-else-if="bookData===2">
-        <p>선택된 도서: {{ selectedBook }}    <span class="text-decoration-underline" @click="bookData=1">[선택 취소]</span></p>
+        <p class="d-inline">선택된 도서: {{ selectedBook }}</p><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
       </div>
-      <div v-else-if="bookData.length===0">
+      <div v-else-if="bookData.length===0" class="mx-2 mt-3 text-danger">
         <p>검색결과가 없습니다.</p>
       </div>
       <div v-else>
-        <!-- {{ bookData }} -->
         <b-list-group>
           <b-list-group-item v-for="book in bookData" :key=book.isbn>
             {{ transStr(book.title) }}    
-            <a :href="book.link" class="text-reset" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">[상세보기]</a>
-            <span class="text-decoration-underline" @click="selectBook(book)">[도서선택]</span>
+            <b-button size="sm" variant="outline-success" class="ms-2" :href="book.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세보기</b-button>
+            <b-button size="sm" variant="outline-primary" class="ms-2" @click="selectBook(book)">도서선택</b-button>
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -196,17 +202,25 @@ export default {
       }
     },
     bookSearch() {
-       http({
-        method: "get",
-        url: `/search/naver?query=${this.bookSearchValue}`,
-      })
-        .then((response) => {
-          console.log(response);
-          this.bookData = response.data.items
+      // 유효성 검사
+      if (this.bookSearchValue !== "") {
+        http({
+          method: "get",
+          url: `/search/naver?query=${this.bookSearchValue}`,
         })
-        .catch((error) => {
-          console.dir(error);
-        });
+          .then((response) => {
+            console.log(response);
+            this.bookData = response.data.items
+          })
+          .catch((error) => {
+            console.dir(error);
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "검색어를 입력해주세요.",
+        })
+      }
     },
     transStr(str) {
       // return str

@@ -15,7 +15,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-button v-b-toggle.sidebar-variant>메뉴</b-button>
+        <b-navbar-brand v-b-toggle.sidebar-variant>메뉴</b-navbar-brand>
         <b-sidebar
           v-if="userInfo"
           id="sidebar-variant"
@@ -86,67 +86,63 @@
           </div>
         </b-sidebar>
 
-        <b-navbar-nav class="ml-auto" v-if="userInfo">
-          <b-nav-item class="align-self-center">
-            <h5 class="Hello">{{ userInfo.userName }} 님 안녕하세요</h5>
+        <!-- <b-collapse is-nav>
+        </b-collapse> -->
+
+        <b-navbar-nav v-if="userInfo">
+          <b-nav-item>
+            <h5 class="Hello my-0">
+              <router-link to="/profile" class="text-reset text-decoration-none">
+                {{ userInfo.userName }}님 안녕하세요
+              </router-link>
+            </h5>
           </b-nav-item>
-          <b-button
-            class="link align-self-center"
-            @click.prevent="onClickLogout"
-            >로그아웃
-          </b-button>
+          <b-nav-item href="#" @click.prevent="onClickLogout">로그아웃</b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-nav class="but" v-else>
-          <div>
-            <router-link to="/signup">
-              <b-button>회원가입</b-button>
-            </router-link>
-            <b-button v-b-modal.modal2-prevent-closing>로그인</b-button>
-            <b-modal
-              id="modal2-prevent-closing"
-              ref="modal"
-              title="로그인"
-              hide-footer
-            >
-              <b-alert show variant="danger" v-if="isLoginError">
-                아이디 또는 비밀번호를 확인하세요
-              </b-alert>
-              <form ref="form">
-                <b-form-group
-                  class="loginmodal"
-                  label="아이디"
-                  label-for="user_id"
-                >
-                  <b-form-input
-                    id="user_id"
-                    v-model="user.user_id"
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-              <form ref="form" autocomplete="off" onsubmit="return false">
-                <b-form-group
-                  class="loginmodal"
-                  label="비밀번호"
-                  label-for="user_pw"
-                >
-                  <b-form-input
-                    type="password"
-                    id="user_pw"
-                    v-model="user.user_pw"
-                    @keyup.enter="checkValue"
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-              <div class="find_password">
-                <a href="/forget_password"
-                  >아이디 또는 비밀번호를 잊으셨나요?</a
-                >
-              </div>
-              <hr />
-              <b-button @click="checkValue"> 로그인 </b-button>
-            </b-modal>
-          </div>
+        <b-navbar-nav v-else>
+          <b-nav-item>
+            <router-link to="/signup" class="text-reset text-decoration-none">회원가입</router-link>
+          </b-nav-item>
+          <b-nav-item v-b-modal.modal2-prevent-closing>로그인</b-nav-item>
+          <b-modal
+            id="modal2-prevent-closing"
+            ref="modal"
+            title="로그인"
+            hide-footer
+          >
+            <b-alert show variant="danger" v-if="isLoginError">
+              아이디 또는 비밀번호를 확인하세요
+            </b-alert>
+            <form ref="form">
+              <b-form-group
+                class="loginmodal"
+                label="아이디"
+                label-for="user_id"
+              >
+                <b-form-input
+                  id="user_id"
+                  v-model="user.user_id"
+                ></b-form-input>
+              </b-form-group>
+            </form>
+            <form ref="form" autocomplete="off" onsubmit="return false">
+              <b-form-group
+                class="loginmodal"
+                label="비밀번호"
+                label-for="user_pw"
+              >
+                <b-form-input
+                  type="password"
+                  id="user_pw"
+                  v-model="user.user_pw"
+                  @keyup.enter="checkValue"
+                ></b-form-input>
+              </b-form-group>
+            </form>
+            <hr />
+            <b-button class="float-end" variant="outline-primary" @click="checkValue"> 로그인 </b-button>
+          </b-modal>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -265,4 +261,8 @@ export default {
 .Hello {
   color: gold;
 }
+
+
+
+
 </style>
