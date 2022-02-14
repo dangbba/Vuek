@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
-import static com.sun.el.util.MessageFactory.get;
 
 
 @RequestMapping("/api/v1/search/")
