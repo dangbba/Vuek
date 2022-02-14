@@ -9,10 +9,10 @@
           <user-video :stream-manager="mainStreamManager" />
         </div>
         <div id="video-container" class="col-md-6">
-          <!-- <user-video
+          <user-video
             :stream-manager="publisher"
             @click.native="updateMainVideoStreamManager(publisher)"
-          /> -->
+          />
           <user-video
             v-for="sub in subscribers"
             :key="sub.stream.connection.connectionId"
@@ -173,7 +173,7 @@ export default {
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
 
-            let publisher = this.OV.initPublisher(undefined, {
+            let publisher = this.OV.initPublisher(this.userInfo.userName, {
               audioSource: undefined, // The source of audio. If undefined default microphone
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
