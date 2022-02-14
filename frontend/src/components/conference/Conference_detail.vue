@@ -24,6 +24,7 @@
     </div>
     <div class="ChatList">
       <chat-message-sender></chat-message-sender>
+      <chat-chat></chat-chat>
     </div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
@@ -73,6 +74,7 @@ import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
 import ConferenceChat from './ConferenceChat.vue';
 import ChatMessageSender from './ChatMessageSender.vue';
+import ChatChat from './ChatChat.vue';
 
 const userStore = "userStore";
 
@@ -92,6 +94,7 @@ export default {
     ConferenceDetailDelete,
     ConferenceChat,
     ChatMessageSender,
+    ChatChat,
   },
   data() {
     return {
