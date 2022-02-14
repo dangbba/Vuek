@@ -22,7 +22,9 @@
         </div>
       </div>
     </div>
-    <div class="ChatList"></div>
+    <div class="ChatList">
+      <chat-message-sender></chat-message-sender>
+    </div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
         <!-- 방 종료 / 수정 관련 -->
@@ -63,13 +65,14 @@
 <script>
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
-import ConferenceDetailUpdate from './ConferenceDetailUpdate';
-import ConferenceDetailClose from './ConferenceDetailClose';
-import ConferenceDetailDelete from './ConferenceDetailDelete';
-import ConferenceChat from './ConferenceChat';
+import ConferenceDetailUpdate from "./ConferenceDetailUpdate";
+import ConferenceDetailClose from "./ConferenceDetailClose";
+import ConferenceDetailDelete from "./ConferenceDetailDelete";
 
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
+import ConferenceChat from './ConferenceChat.vue';
+import ChatMessageSender from './ChatMessageSender.vue';
 
 const userStore = "userStore";
 
@@ -88,6 +91,7 @@ export default {
     ConferenceDetailClose,
     ConferenceDetailDelete,
     ConferenceChat,
+    ChatMessageSender,
   },
   data() {
     return {

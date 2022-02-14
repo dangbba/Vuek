@@ -20,43 +20,12 @@
                   <span class="white--text headline">{{ user.name.charAt(0) }}</span>
                 </v-avatar>
               </v-list-item-avatar>
-              <v-list-item-content>
+              <v-list-item-content> 
                 <v-list-item-title>{{ user.name }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-      </div>
-      <div class="chat-container">
-        <div class="header">
-          <v-card
-            color="grey lighten-4"
-            flat
-            tile
-            class="flex-grow-1"
-          >
-            <v-toolbar dense>
-              <v-app-bar-nav-icon @click="userList = !userList"></v-app-bar-nav-icon>
-              <v-toolbar-title>{{ roomName }} conversation</v-toolbar-title>
-              <div class="flex-grow-1"></div>
-              <!-- <v-btn
-                color="error"
-                @click="unsubscribe"
-              >Leave this room...</v-btn> -->
-            </v-toolbar>
-          </v-card>
-        </div>
-        <!-- <div class="content"> -->
-        <form id="usernameForm" name="usernameForm">
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-          </div>
-        
-        <!-- <div class="footer"> -->
-          <div class="form-group">
-            <button type="submit" class="accent username-submit">Start Chatting</button>
-          </div>
-        </form>
       </div>
     </div>
   <!-- <div id="chat-page" class="hidden"> -->
@@ -82,19 +51,35 @@
 </template>
 
 <script>
-export default {
-  name: 'ConferenceChat',
-  mounted() {
-    console.log(this.$refs.vue);
-    console.log(this.$refs.vue.textContent);
-    console.log(this.$route.query.usernamePage);
-    console.log(this.$route.query.chatPage);
-    console.log(this.$route.query.messageForm);
-    console.log(this.$route.query.messageInput);
-    console.log(this.$route.query.messageArea);
-    console.log(this.$route.query.connectingElement);
-  },
-};
+// import {mapState, mapActions} from "vuex";
+
+// export default {
+//   name: 'ConferenceChat',
+//   computed: {
+//     ...mapState(conferenceStore, ["conferenceInfo"]),
+//     ...mapState(chatStore, ["conferenceChat"]),
+//   },
+//   created() {
+//   },
+//   data() {
+//     return {
+//       conferenceId: this.$rout.params.contentId,
+//     }
+//   },
+//   methods: {
+//     ...mapActions(chatStore, ["conferenceChat"])
+//   },
+//   mounted() {
+//     console.log(this.$refs.vue);
+//     console.log(this.$refs.vue.textContent);
+//     console.log(this.$route.query.usernamePage);
+//     console.log(this.$route.query.chatPage);
+//     console.log(this.$route.query.messageForm);
+//     console.log(this.$route.query.messageInput);
+//     console.log(this.$route.query.messageArea);
+//     console.log(this.$route.query.connectingElement);
+//   },
+// };
 </script>
 
 <style scoped>
@@ -210,7 +195,7 @@ button.accent {
     margin-right: auto;
     background-color: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-    margin-top: 30px;
+    /* margin-top: 30px; */
     height: calc(100% - 60px);
     max-height: 600px;
     position: relative;
