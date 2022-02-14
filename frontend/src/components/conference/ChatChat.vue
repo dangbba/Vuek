@@ -15,7 +15,22 @@
       :key="idx"
     >
       <h3>유저이름: {{ item.userName }}</h3>
-      <h3>내용: {{ item.content }}</h3>
+      <div class="chat-container">
+      <div class="chat-header">
+        <h2>Chat Box</h2>
+      </div>
+      <div class="connecting">Connecting...</div>
+      <ul id="messageArea">
+      </ul>
+      <form id="messageForm" name="messageForm" nameForm="messageForm">
+        <div class="form-group">
+          <div class="input-group clearfix">
+            <input type="text" id="message" placeholder="메시지를 입력하세요." autocomplete="off" class="form-control" />
+          <button type="submit" class="primary">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
     </div>
   </div>
 </template>
@@ -25,7 +40,7 @@ import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 
 export default {
-  name: 'App',
+  name: 'ChatChat',
   data() {
     return {
       userName: "",
@@ -34,7 +49,7 @@ export default {
     }
   },
   created() {
-    // App.vue가 생성되면 소켓 연결을 시도합니다.
+    // ChatChat.vue가 생성되면 소켓 연결을 시도합니다.
     this.connect()
   },
   methods: {
