@@ -145,9 +145,9 @@ export default {
       bookSearchValue: "",
       selectedOption: null, // (명세서 상) 업무를 기본값으로 하라고 하지만 선택사항 없는 상황에서 선택하는 것이 나은 것 같아서 수정
       options: [ // 카테고리를 조회해서 DB에서 데이터를 연동했으면 좋았겠지만 구현 편의상 직접 작성함 // 카테고리 명칭 바뀌면 이 부분을 수정해야함
-        { value: "1", text: "업무" },
-        { value: "2", text: "교육" },
-        { value: "3", text: "기타" },
+        { value: "1", text: "책 소개" },
+        { value: "2", text: "토의" },
+        { value: "3", text: "세미나" },
       ],
       bookData: 1,
       selectedBook: '',
