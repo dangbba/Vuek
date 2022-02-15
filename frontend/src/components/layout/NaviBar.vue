@@ -243,7 +243,7 @@ export default {
       this.SET_USER_INFO(null);
       Swal.fire({
           icon: "success",
-          text: "로그아웃이 완료되었습니다.",
+          text: "정상적으로 로그아웃 되었습니다.",
         });
       if (this.$route.path != "/") {
         this.$router.push({ name: "Home" });
