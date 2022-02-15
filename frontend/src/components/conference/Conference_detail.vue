@@ -24,7 +24,6 @@
         {{ send }}
       </div>
       <chat-message-sender></chat-message-sender>
-      <chat-chat></chat-chat>
     </div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
@@ -43,13 +42,14 @@
       />
     </div>
     <div class="ChatBox">
-      <b-input v-model="message" type="text" @keyup="sendMessage" placeholder="채팅창" />
+      <!-- <b-input v-model="message" type="text" @keyup="sendMessage" placeholder="채팅창" />
       <div
       v-for="(item, idx) in recvList"
       :key="idx"
     >
     </div>
-      <conference-chat></conference-chat>
+      <conference-chat></conference-chat> -->
+      <chat-chat></chat-chat>
     </div>
     <hr />
     <div>
@@ -77,11 +77,11 @@ import ConferenceDetailDelete from "./ConferenceDetailDelete";
 
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
-import ConferenceChat from './ConferenceChat.vue';
+// import ConferenceChat from './ConferenceChat.vue';
 import ChatMessageSender from './ChatMessageSender.vue';
 import ChatChat from './ChatChat.vue';
-import Stomp from 'webstomp-client'
-import SockJS from 'sockjs-client'
+// import Stomp from 'webstomp-client'
+// import SockJS from 'sockjs-client'
 
 const userStore = "userStore";
 
@@ -99,7 +99,7 @@ export default {
     ConferenceDetailUpdate,
     ConferenceDetailClose,
     ConferenceDetailDelete,
-    ConferenceChat,
+    // ConferenceChat,
     ChatMessageSender,
     ChatChat,
   },
@@ -127,7 +127,7 @@ export default {
     this.createHistory(this.historyData());
     console.log("방 번호" + this.conferenceId);
     this.mySessionId = this.conferenceId;
-    this.joinSession();
+    // this.joinSession();
     // vue가 생성되면 소켓 연결을 시도합니다.
     this.connect()
   },
@@ -222,55 +222,55 @@ export default {
     },
 
     //chat
-    sendMessage (e) {
-      if(e.keyCode === 13 && this.message !== ''){
-        this.send()
-        this.message = ''
-      }
-    },    
-    send() {
-      console.log("Send message:" + this.message);
-      if (this.stompClient && this.messageContent) {
-        const msg = { 
-          userName: this.userName,
-          content: this.message 
-        };
-        this.stompClient.send('/topic/public', JSON.stringify(msg), {});
-      }
-    },    
-    connect() {
-      const serverURL = "https://localhost:8080/api/"
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
-      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-      this.stompClient.connect(
-        {},
-        frame => {
-          // 소켓 연결 성공
-          this.connected = true;
-          console.log('소켓 연결 성공', frame);
-          this.stompClient.subscribe("/send", res => {
-            console.log('구독으로 받은 메시지 입니다.', res.body);
-            this.recvList.push(JSON.parse(res.body))
-          });
-        },
-        error => {
-          // 소켓 연결 실패
-          console.log('소켓 연결 실패', error);
-          this.connected = false;
-        }
-      );              
-      // this.stompClient.connect({}, onConnected, onError);      
-    },
+    // sendMessage (e) {
+    //   if(e.keyCode === 13 && this.message !== ''){
+    //     this.send()
+    //     this.message = ''
+    //   }
+    // },    
+    // send() {
+    //   console.log("Send message:" + this.message);
+    //   if (this.stompClient && this.messageContent) {
+    //     const msg = { 
+    //       userName: this.userName,
+    //       content: this.message 
+    //     };
+    //     this.stompClient.send('/topic/public', JSON.stringify(msg), {});
+    //   }
+    // },    
+    // connect() {
+    //   const serverURL = "https://localhost:8080/api/"
+    //   let socket = new SockJS(serverURL);
+    //   this.stompClient = Stomp.over(socket);
+    //   console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+    //   this.stompClient.connect(
+    //     {},
+    //     frame => {
+    //       // 소켓 연결 성공
+    //       this.connected = true;
+    //       console.log('소켓 연결 성공', frame);
+    //       this.stompClient.subscribe("/send", res => {
+    //         console.log('구독으로 받은 메시지 입니다.', res.body);
+    //         this.recvList.push(JSON.parse(res.body))
+    //       });
+    //     },
+    //     error => {
+    //       // 소켓 연결 실패
+    //       console.log('소켓 연결 실패', error);
+    //       this.connected = false;
+    //     }
+    //   );              
+    //   // this.stompClient.connect({}, onConnected, onError);      
+    // },
 
-    // onConnected() {
-    //   this.stompClient.subscribe('/conference/view/', this.sendMessage);
-    //   this.stompClient.send('/conference/view/', this.sendMessage);
-    // },
-    // onError() {
-    //   this.connetingElement.textContent = 'Could not connect to WebSocket server.'
-    //   this.connetingElement.style.color = 'red';
-    // },
+    // // onConnected() {
+    // //   this.stompClient.subscribe('/conference/view/', this.sendMessage);
+    // //   this.stompClient.send('/conference/view/', this.sendMessage);
+    // // },
+    // // onError() {
+    // //   this.connetingElement.textContent = 'Could not connect to WebSocket server.'
+    // //   this.connetingElement.style.color = 'red';
+    // // },
 
 
     leaveSession() {

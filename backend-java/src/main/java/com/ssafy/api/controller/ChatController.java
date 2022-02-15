@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 //	}
 //
 //}
+//@CrossOrigin(originPatterns = {"*"})
 @CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RestController
 @RequestMapping("/api/v1/chat")

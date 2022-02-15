@@ -22,18 +22,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
+                .allowCredentials(false)
                 .maxAge(3000);
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // configuration.addAllowedOrigin("*");
-        configuration.addAllowedOriginPattern("*");
+         configuration.addAllowedOrigin("*");
+//        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false);
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
