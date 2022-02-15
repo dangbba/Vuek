@@ -16,5 +16,5 @@ module.exports = {
     svgRule.uses.clear();
     svgRule.use("vue-svg-loader").loader("vue-svg-loader");
   },
-  outputDir: '../backend-java/src/main/resources/dist'
+  //outputDir: '../backend-java/src/main/resources/dist'
 };
