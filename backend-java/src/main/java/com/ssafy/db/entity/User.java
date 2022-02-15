@@ -31,7 +31,6 @@ public class User implements Serializable {
     String goal;
     String socialLink;
     String profileImage;
-    OpenViduRole role;
 //    @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
@@ -40,7 +39,6 @@ public class User implements Serializable {
     public void prePersist(){
         this.genre = this.genre == null ? "없음" : this.genre;
         this.goal = this.goal == null ? "없음" : this.goal;
-        this.role = this.role == null ? OpenViduRole.PUBLISHER : this.role;
     }
 
 }

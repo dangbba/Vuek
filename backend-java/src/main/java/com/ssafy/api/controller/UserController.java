@@ -100,9 +100,19 @@ public class UserController {
 
 	@ApiOperation(value = "유저를 삭제한다, SUCCESS/FAIL", response = String.class)
 	@DeleteMapping("/{user_id}")
-	public ResponseEntity<String> deleteUser(@PathVariable String user_id) throws Exception {
-		userService.deleteUser(user_id);
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable String user_id) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			System.out.println(user_id + " : user Id test!!!!!!!!!!!");
+			userService.deleteUser(user_id);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception error) {
+			resultMap.put("message", error.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@ApiOperation(value = "유저정보를 수정한다, SUCCESS/FAIL", response = String.class)

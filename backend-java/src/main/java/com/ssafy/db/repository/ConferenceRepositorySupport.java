@@ -231,6 +231,8 @@ public class ConferenceRepositorySupport {
 		return list;
 	}
 
+	@Modifying
+	@Transactional
 	public void deleteUserConference(Conference	conference) {
 		Query query2 = em.createNativeQuery(
 						"delete from UserConference where conferenceId = :conferenceId " +
