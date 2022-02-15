@@ -52,6 +52,10 @@ export default {
 h2 {
   border-left:6px solid #0b5ed7;
   padding-left: 12px;
+  text-shadow: 2px 2px 2px gray;
+/* background-color: #E1F5FE;
+  color: #ffffff;
+  text-shadow: 4px 4px 0px #bdbdbd; */
 }
 
 .close {
