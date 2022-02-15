@@ -88,9 +88,9 @@ export default {
       roomContent: "", 
       selectedOption: null,
       options : [
-        { value: '1', text: '업무' },
-        { value: '2', text: '교육' },
-        { value: '3', text: '기타' },
+        { value: "1", text: "책 소개" },
+        { value: "2", text: "토의" },
+        { value: "3", text: "세미나" },
       ]
     };
   },
