@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="bookItems.length===0">
-      {{ bookItems }}
+      <p>검색결과가 없습니다.</p>
     </div>
     <div v-else>
       <h2 class="my-5">검색결과</h2>
@@ -97,7 +97,7 @@ export default {
     bookmark(isbn) {
       const obj = {
         isbn: isbn.split(" ")[1],
-        userId: this.userId
+        userId: this.userInfo.userId
       }
       this.createUserBook(obj)
       this.bookmarkSign = !this.bookmarkSign

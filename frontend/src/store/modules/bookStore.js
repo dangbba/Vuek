@@ -34,9 +34,10 @@ const bookStore = {
     
     // eslint-disable-next-line
     createUserBook: function ({commit}, data) {
+      console.log(data)
       http({
-      method: 'get',
-      url: `/search/createUserBook?isbn=${data.isbn}userId=${data.userId}`,
+      method: 'post',
+      url: `/search/createUserBook?isbn=${data.isbn}&userId=${data.userId}`,
       })
         .then((response) => {
           console.log(response);

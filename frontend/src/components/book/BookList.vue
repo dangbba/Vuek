@@ -21,8 +21,11 @@
               bg-variant="dark"
               tag="article"
               no-body 
-              class="overflow-hidden"
+              class="overflow-hidden card-image"
               >
+                <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
+                  <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
+                </div>
                 <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p> {{ item.author }}</p>
@@ -56,8 +59,11 @@
               bg-variant="dark"
               tag="article"
               no-body 
-              class="overflow-hidden"
+              class="overflow-hidden card-image"
               >
+                <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
+                  <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
+                </div>
                 <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
@@ -103,8 +109,11 @@
               bg-variant="dark"
               tag="article"
               no-body 
-              class="overflow-hidden"
+              class="overflow-hidden card-image"
               >
+                <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
+                  <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
+                </div>
                 <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
@@ -138,8 +147,11 @@
               bg-variant="dark"
               tag="article"
               no-body 
-              class="overflow-hidden"
+              class="overflow-hidden card-image"
               >
+                <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
+                  <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
+                </div>
                 <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
@@ -171,7 +183,7 @@ import http from "@/config/http-common.js";
 import carousel from "vue-owl-carousel2";
 import _ from 'lodash'
 import BookConferenceCreate from './BookConferenceCreate.vue';
-
+import { mapActions, mapState } from "vuex";
 
 export default {
   name:"bookList",
@@ -198,8 +210,11 @@ export default {
     this.getBestSeller()
     this.getNewSpecial()
   },
-  
+  computed: {
+    ...mapState("userStore", ['userInfo'])
+  },
   methods:{
+    ...mapActions("bookStore", ['createUserBook']),
     getBestSeller() {
       http({
         method: "get",
@@ -258,6 +273,14 @@ export default {
     },
     replaceByDefault(e) {
       e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
+    },
+    bookmark(isbn) {
+      const obj = {
+        isbn: isbn,
+        userId: this.userInfo.userId
+      }
+      this.createUserBook(obj)
+      this.bookmarkSign = !this.bookmarkSign
     }
   },
 };
@@ -282,5 +305,25 @@ export default {
 .card-font {
   font-family: 'Gowun Batang', serif;
   font-size: 20px;
+}
+
+.bookmark-button {
+font-size: 50px;
+cursor: pointer;
+border-radius: 10rem;
+position: absolute;
+z-index: 2;
+/* color: #ffd700; */
+/* background-color: transparent; */
+/* border: transparent; */
+}
+
+.bookmark-button :hover {
+color: #ffd700;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
 }
 </style>
