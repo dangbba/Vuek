@@ -72,7 +72,7 @@ public class ConferenceController {
 		Long conferenceId = conference.getId();
 		return new ResponseEntity<Long>(conferenceId, HttpStatus.OK);
 	}
-
+//
 //	@PostMapping("/join")
 //	public ResponseEntity<JSONObject> getToken(@RequestBody String sessionNameParam, HttpSession httpSession) throws Exception {
 //		System.out.println("Getting a token from OpenVidu Server | {sessionName}=" + sessionNameParam);
