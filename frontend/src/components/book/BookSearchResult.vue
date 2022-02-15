@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div v-if="!bookItems">
+    <div v-if="bookItems.length===0">
       {{ bookItems }}
     </div>
     <div v-else>
@@ -20,9 +20,16 @@
           bg-variant="dark"
           tag="article"
           no-body 
-          class="overflow-hidden"
+          class="overflow-hidden card-image"
           >
+          <div class="container">
+            <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn)">
+              <!-- <i class="far fa-bookmark"></i> --> <!-- 클래스 바인딩해서 아이콘 색깔 채워보려 했으나 요소가 여러개라X -->
+              <!-- <i :index="index" :class="[{ 'far' : bookmarkSign, 'fas': !bookmarkSign }, 'fa-bookmark']"></i> -->
+              <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
+            </div>
             <b-card-img :src="imgPath(item.image)" @error="replaceByDefault"></b-card-img>
+          </div>
             <b-card-text class="px-3 pt-3 mb-0">
               <p> {{ item.author }}</p>
               <hr>
@@ -40,13 +47,14 @@
         </b-col>
       </b-row>
     </div>
+
   </div>
-  
+
 </template>
 
 <script>
 import BookConferenceCreateBySearch from './BookConferenceCreateBySearch.vue';
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "BookSearchResult",
@@ -55,16 +63,18 @@ export default {
   },
   data() {
     return {
-      
+      bookmarkSign: true
     };
   },
   created() {
 
   },
   computed: {
-    ...mapState("bookStore", ['bookItems'])
+    ...mapState("bookStore", ['bookItems']),
+    ...mapState("userStore", ['userInfo'])
   },
   methods:{
+    ...mapActions("bookStore", ['createUserBook']),
     imgPath(url) {
       let transedUrl = url.replace('=m1&', '=m200&') 
       return transedUrl
@@ -83,6 +93,14 @@ export default {
     },
     replaceByDefault(e) {
       e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
+    },
+    bookmark(isbn) {
+      const obj = {
+        isbn: isbn.split(" ")[1],
+        userId: this.userId
+      }
+      this.createUserBook(obj)
+      this.bookmarkSign = !this.bookmarkSign
     }
   },
 };
@@ -108,4 +126,25 @@ export default {
   font-family: 'Gowun Batang', serif;
   font-size: 20px;
 }
+
+.bookmark-button {
+font-size: 50px;
+cursor: pointer;
+border-radius: 10rem;
+position: absolute;
+z-index: 2;
+/* color: #ffd700; */
+/* background-color: transparent; */
+/* border: transparent; */
+}
+
+.bookmark-button :hover {
+color: #ffd700;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+}
+
 </style>

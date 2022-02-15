@@ -160,7 +160,7 @@
       <p class="fs-3 fw-bold">
         <i class="fas fa-running" style="color: #0dcaf0;"></i>
           독서마라톤 
-        <i class="fas fa-running" style="color: #0dcaf0;"></i>
+        <!-- <i class="fas fa-running" style="color: #0dcaf0;"></i> -->
       </p> <!-- 폰트어썸 아이콘 -->
       <b-progress
         :max="marathon.max"
@@ -192,8 +192,15 @@
       <p v-if="marathon.value===0">
         화상회의에 참여하여 달린 거리를 up!
       </p>
-
+      
     </b-row>
+
+       
+    <p class="fs-3 fw-bold mt-3">
+      <i class="far fa-bookmark" style="color: #0dcaf0;"></i>
+        나의 책갈피
+    </p> <!-- 폰트어썸 아이콘 -->
+    <b-button size="sm" variant="warning">확인하기</b-button>
   </div>
   
 </template>

@@ -1,6 +1,6 @@
 import http from "@/config/http-common.js";
 import router from "@/router/index.js"
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 const bookStore = {
   namespaced: true,
@@ -15,19 +15,6 @@ const bookStore = {
 
   },
   actions: {
-    LoadBookItems: function ({commit}) {
-      http({
-      method: 'get',
-      url: `/books`,
-      })
-        .then((response) => {
-          // console.log(response);
-          commit('LOAD_book_ITEMS', response.data)
-        })
-        .catch((err) => {
-          console.dir(err);
-      });
-    },
     searchBookItems : function ({commit}, search_value) {
       http({
         method: "get",
@@ -44,23 +31,25 @@ const bookStore = {
           console.dir(error);
         });
     },
-
-
-    // 방 참여 및 참여 이력 생성
+    
     // eslint-disable-next-line
-    createHistory: function ({dispatch}, book_data) {
+    createUserBook: function ({commit}, data) {
       http({
-        method: "post",
-        url: `/books/createHistory`,
-        data: book_data
+      method: 'get',
+      url: `/search/createUserBook?isbn=${data.isbn}userId=${data.userId}`,
       })
         .then((response) => {
-          console.log(response)
+          console.log(response);
+          Swal.fire({
+            icon: "success",
+            text: "북마크가 추가되었습니다!",
+          });
         })
-        .catch((error) => {
-          console.dir(error);
-        });
+        .catch((err) => {
+          console.dir(err);
+      });
     },
+
   },
 };
 
