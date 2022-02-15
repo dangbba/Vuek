@@ -1,5 +1,7 @@
 import jwt_decode from "jwt-decode";
 import { findById, login } from "../../api/user";
+import Swal from "sweetalert2";
+
 
 const userStore = {
   namespaced: true,
@@ -44,11 +46,17 @@ const userStore = {
           console.log(error)
           console.log(error.response)
           if (error.response.data.message) {
-            alert(error.response.data.message)
+            Swal.fire({
+              icon: "error",
+              text: error.response.data.message,
+            });
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
           } else if (error.response.data['login failed']) { // 비밀번호 틀릴때 // 키값이 message가 아니라 login failed로 설정되어있음 // 키값에 공백있을때는 이렇게 접근
-            alert(error.response.data['login failed'])
+            Swal.fire({
+              icon: "error",
+              text: error.response.data['login failed']
+            })
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
           }

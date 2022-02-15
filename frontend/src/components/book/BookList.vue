@@ -28,13 +28,19 @@
               no-body 
               class="overflow-hidden"
               >
-                <b-card-text class="px-3 pt-3">
+                <b-card-text class="px-3 pt-3 mb-0">
                   <p> {{ item.author }}</p>
                   <hr>
                   <p class="card-font">{{ truncDiscription(unescapeHtml(item.description)) }}</p>
                 </b-card-text>
-
-                <b-button :href="item.link" variant="secondary" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                <b-row class="bg-dark mt-0 pt-0">
+                  <b-col>
+                    <b-button :href="item.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                  </b-col>
+                  <b-col class="ps-0">
+                    <book-conference-create :item="item"></book-conference-create>
+                  </b-col>
+                </b-row>
               </b-card>
             </b-col>
           </b-row>
@@ -60,13 +66,19 @@
               no-body 
               class="overflow-hidden"
               >
-                <b-card-text class="px-3 pt-3 card-font">
+                <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
                   <p class="card-font">{{ truncDiscription(unescapeHtml(item.description)) }}</p>
                 </b-card-text>
-
-                <b-button :href="item.link" variant="secondary" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                <b-row class="bg-dark mt-0 pt-0">
+                  <b-col>
+                    <b-button :href="item.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                  </b-col>
+                  <b-col class="ps-0">
+                    <book-conference-create :item="item"></book-conference-create>
+                  </b-col>
+                </b-row>
               </b-card>
             </b-col>
           </b-row>
@@ -104,13 +116,19 @@
               no-body 
               class="overflow-hidden"
               >
-                <b-card-text class="px-3 pt-3">
+                <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
                   <p class="card-font">{{ truncDiscription(unescapeHtml(item.description)) }}</p>
                 </b-card-text>
-
-                <b-button :href="item.link" variant="secondary" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                <b-row class="bg-dark mt-0 pt-0">
+                  <b-col>
+                    <b-button :href="item.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                  </b-col>
+                  <b-col class="ps-0">
+                    <book-conference-create :item="item"></book-conference-create>
+                  </b-col>
+                </b-row>
               </b-card>
             </b-col>
           </b-row>
@@ -136,13 +154,19 @@
               no-body 
               class="overflow-hidden"
               >
-                <b-card-text class="px-3 pt-3">
+                <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
                   <p class="card-font">{{ truncDiscription(unescapeHtml(item.description)) }}</p>
                 </b-card-text>
-
-                <b-button :href="item.link" variant="secondary" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                <b-row class="bg-dark mt-0 pt-0">
+                  <b-col>
+                    <b-button :href="item.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세페이지로</b-button>
+                  </b-col>
+                  <b-col class="ps-0">
+                    <book-conference-create :item="item"></book-conference-create>
+                  </b-col>
+                </b-row>                
               </b-card>
             </b-col>
           </b-row>
@@ -159,11 +183,14 @@
 import http from "@/config/http-common.js";
 import carousel from "vue-owl-carousel2";
 import _ from 'lodash'
+import BookConferenceCreate from './BookConferenceCreate.vue';
+
 
 export default {
   name:"bookList",
   components:{
     carousel,
+    BookConferenceCreate,  
   },
   data() {
     return {
@@ -180,11 +207,11 @@ export default {
       newSpecialItems2: [],
     };
   },
-
   created() {
     this.getBestSeller()
     this.getNewSpecial()
   },
+  
   methods:{
     getBestSeller() {
       http({
@@ -241,7 +268,10 @@ export default {
         .replace(/&quot;/g, '"')
         .replace(/&#039;/g, "'")
         .replace(/&#39;/g, "'");
-    }
+    },
+    // replaceByDefault(e) {
+    //   e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
+    // } // 링크 깨진 이미지 src 대체하는 방법인데 여기에 있는 카드의 이미지에는 적용이 안됨
   },
 };
 

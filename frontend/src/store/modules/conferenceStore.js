@@ -1,5 +1,6 @@
 import http from "@/config/http-common.js";
 import router from "@/router/index.js"
+import Swal from "sweetalert2";
 
 const conferenceStore = {
   namespaced: true,
@@ -113,8 +114,11 @@ const conferenceStore = {
           }); // router를 import 안해서 에러가 있었음
         })
         .catch((error) => {
-          console.log('zzzzzzzz')
-          alert('컨퍼런스 룸 생성에 실패했습니다.')
+          // alert('컨퍼런스 룸 생성에 실패했습니다.')
+          Swal.fire({
+            icon: "error",
+            text: "컨퍼런스 룸 생성에 실패했습니다.",
+          });
           console.dir(error)
         });
 
@@ -154,12 +158,15 @@ const conferenceStore = {
       console.log(conference_id)
       http({
         method: "post",
-        url: `/conferences/close?conferenceId=${conference_id}`, 
+        url: `/conferences/close?idconference=${conference_id}`, 
       })
         .then((response) => {
           console.log(response);
           dispatch('LoadConferenceItems');
-          alert("회의가 종료되었습니다.")
+          Swal.fire({
+            icon: "success",
+            text: "회의가 종료되었습니다.",
+          });
           router.push({
             path: `/conference`,
           });
@@ -178,6 +185,10 @@ const conferenceStore = {
         .then((response) => {
           console.log(response);
           dispatch('getConferenceInfo', conference_data.id);
+          Swal.fire({
+            icon: "success",
+            text: "컨퍼런스 룸 정보가 수정되었습니다.",
+          });
         })
         .catch((error) => {
           console.dir(error);

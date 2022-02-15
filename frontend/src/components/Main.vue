@@ -62,10 +62,10 @@
             phase : 'When you learn to read you will be born again... and you will never be quite so alone again.',
             phase_ko : '당신이 독서를 할 때 당신은 다시 태어날 것이다. 그리고 결코 다시는 외롭지 않을 것이다.',
             writer : 'Rumer Godden' },
-          { no : 5,
-            phase : 'Books are the plane, and the train, and the road. They are the destination, and the journey. They are home.',
-            phase_ko : '책들은 비행기이자 기차이며 길이다. 그것은 목적지이자 여행이고 집이다.',
-            writer : 'Anna Quindlen' }
+          // { no : 5,
+          //   phase : 'Books are the plane, and the train, and the road. They are the destination, and the journey. They are home.',
+          //   phase_ko : '책들은 비행기이자 기차이며 길이다. 그것은 목적지이자 여행이고 집이다.',
+          //   writer : 'Anna Quindlen' }
         ]
       }
     },

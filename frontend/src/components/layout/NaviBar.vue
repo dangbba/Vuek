@@ -187,7 +187,7 @@ export default {
         this.user.user_id = ""
         this.user.user_pw = ""
         await this.getUserInfo(token);
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "Book" });
       }
     },
     checkValue: function () {
@@ -241,7 +241,15 @@ export default {
       sessionStorage.removeItem("access-token");
       this.SET_IS_LOGIN(false);
       this.SET_USER_INFO(null);
-      if (this.$route.path != "/") this.$router.push({ name: "Home" });
+      Swal.fire({
+          icon: "success",
+          text: "로그아웃이 완료되었습니다.",
+        });
+      if (this.$route.path != "/") {
+        this.$router.push({ name: "Home" });
+      } else if (this.$route.path != "/book") {
+        this.$router.push({ name: "Home" });
+      }
     },
   },
 };
