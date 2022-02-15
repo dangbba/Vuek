@@ -128,27 +128,6 @@ export default {
   },
 
   methods: {
-    // 입력값 체크하기 - 체크가 성공하면 registBook 호출
-    // checkValue() {
-    //   // 사용자 입력값 체크하기
-    //   // isbn, 제목, 저자, 가격, 설명이 없을 경우 각 항목에 맞는 메세지를 출력
-    //   let err = true;
-    //   let msg = "";
-    //   !this.name &&
-    //     ((msg = "이름을 확인해주세요."),
-    //     (err = false)) /*, this.$refs.name.focus()*/;
-    //   err && !this.id && ((msg = "ID를 확인해주세요."), (err = false)) /*,
-    //     this.$refs.id.focus()*/;
-    //   err &&
-    //     !this.pass &&
-    //     ((msg = "비밀번호를 확인해주세요."), (err = false)) /*,
-    //     this.$refs.id.focus()*/;
-    //   err &&
-    //     this.pass != this.passcheck &&
-    //     ((msg = "비밀번호를 다시 확인해주세요"), (err = false));
-    //   if (!err) alert(msg);
-    //   else this.registMember();
-    // },  
     checkValue: function () {
       if (
         this.name === "" ||
@@ -199,7 +178,21 @@ export default {
           text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
         });
       } else {
-        this.registMember();
+        Swal.fire({
+        icon: "question",
+        text: '입력하신 정보로 제출하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '네',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.registMember();
+          } else {
+            Swal.fire({
+              icon: "warning",
+              text: "취소되었습니다.",
+            });
+          }
+        });
       }
     },
     // 일단 회원가입할 때 독서 마라톤을 생성한다
