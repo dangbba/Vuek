@@ -18,14 +18,15 @@ public class UserBookRepositorySupport {
     private final JPAQueryFactory queryFactory;
 
     public List<BookDetail> getUserBooksByUserId(String userId){
-        Query query = em.createNativeQuery(
-                        "select BookDetail.bookDetailId, BookDetail.title, BookDetail.author, BookDetail.overview, BookDetail.price, BookDetail.publishDate, BookDetail.publisher, BookDetail.sailStatus, BookDetail.titleUrl, BookDetail.isbn " +
-                                "from UserBook join BookDetail " +
-                                "on UserBook.bookDetailId = BookDetail.bookDetailId " +
-                                "where UserBook.userId = :userId")
-                .setParameter("userId", userId);
-        List<BookDetail> list = query.getResultList();
-        em.close();
+        QBookDetail qBookDetail = QBookDetail.bookDetail;
+        QUserBook qUserBook = QUserBook.userBook;
+        List<BookDetail> list = (List<BookDetail>) queryFactory
+                .select(qBookDetail)
+                .from(qUserBook)
+                .join(qBookDetail)
+                .on(qUserBook.bookDetail.id.eq(qBookDetail.id))
+                .where(qUserBook.user.userId.eq(userId))
+                .fetch();
 
         return list;
     }
