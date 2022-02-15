@@ -17,7 +17,9 @@
       <b-card-text>
         <p>회의 번호: {{ history.conference.id }}</p>
         <hr>
-        <h4>주제 도서: {{ transStr(history.conference.bookDetail.title) }}</h4>
+        <h4 class="d-inline me-3">주제 도서: {{ transStr(history.conference.bookDetail.title) }}</h4>
+        <!-- <b-button :href="history.conference.bookDetail.link" onclick="window.open(this.href, '_blank', 'width=800, height=600');">상세정보</b-button> -->
+        <!--DB에 상세 링크 정보가 없어서 X -->
         <hr>
         <h5 class="mb-3">컨퍼런스 제목: {{ history.conference.title }}</h5>
         <p>컨퍼런스 내용: {{ history.conference.description }}</p>

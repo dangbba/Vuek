@@ -29,11 +29,7 @@ export default {
         confirmButtonText: '네',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.userInfoUpdate()
-          Swal.fire({
-            icon: "success",
-            text: "회의가 종료되었습니다.",
-          });
+          this.conferenceClose(this.conferenceId)
         } else {
           Swal.fire({
             icon: "warning",
