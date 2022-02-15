@@ -50,7 +50,7 @@ const conferenceStore = {
       url: `/conferences`,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit('LOAD_CONFERENCE_ITEMS', response.data)
         })
         .catch((err) => {
@@ -79,7 +79,7 @@ const conferenceStore = {
       url: `/conferences/getConferenceBySort?asc=${sort_option}`,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit('LOAD_CONFERENCE_SORTED_ITEMS', response.data);
         })
         .catch((err) => {
@@ -93,7 +93,7 @@ const conferenceStore = {
       url: `/conferences/searchByTitle?word=${search_value}`,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit('LOAD_CONFERENCE_ITEMS', response.data);
         })
         .catch((err) => {
@@ -130,7 +130,7 @@ const conferenceStore = {
         url: `/conferences/conference-categories`,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit('LOAD_CONFERENCE_CATEGORY', response.data);
         })
         .catch((error) => {
@@ -139,14 +139,14 @@ const conferenceStore = {
     },
     // 방 세부정보 조회
     getConferenceInfo: function ({commit}, conference_id) {
-      console.log('store')
+      // console.log('store')
       console.log(conference_id)
       http({
         method: "get",
         url: `/conferences/conference-info/${conference_id}`,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           commit('LOAD_CONFERENCE_DETAIL', response.data);
         })
         .catch((error) => {
@@ -155,7 +155,7 @@ const conferenceStore = {
     },
     // 방 종료
     conferenceClose: function ({dispatch}, conference_id) {
-      console.log(conference_id)
+      // console.log(conference_id)
       http({
         method: "post",
         url: `/conferences/close?idconference=${conference_id}`, 
