@@ -3,7 +3,7 @@
     <b-card no-body bg-variant="dark" class="overflow-hidden shadow">
       <b-row no-gutters>
         <b-col md="6">
-          <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
+          <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" @error="replaceByDefault" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
           <b-card-img v-else :src="thumbnail_url" alt="book_image" class="rounded-3 mt-3 ms-3"></b-card-img>
         </b-col>
         <b-col md="6" class="mb-3">
@@ -66,6 +66,9 @@ export default {
     transUrl(url) {
       let transedUrl = url.replace('=m1&', '=m200&') 
       return transedUrl
+    },
+    replaceByDefault(e) {
+      e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
     }
   },
   data: function () {

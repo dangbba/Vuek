@@ -54,7 +54,7 @@
           ></b-form-textarea>
         </b-form-group>
       </form>
-      <form ref="form" class="mb-2">
+      <form ref="form" class="mb-3">
         <b-form-group
           type="search"
           class="searchmodal"
@@ -82,7 +82,7 @@
         <p>도서를 검색해서 선택해주세요.</p>
       </div>
       <div v-else-if="bookData===2">
-        <h5 class="d-inline ms-2 mt-3">선택 도서: {{ selectedBook }}</h5><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
+        <h5 class="d-inline ms-2 mt-2">선택 도서: {{ selectedBook }}</h5><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
       </div>
       <div v-else-if="bookData.length===0" class="mx-2 mt-3 text-danger">
         <p>검색결과가 없습니다.</p>
@@ -91,8 +91,9 @@
         <b-list-group>
           <b-list-group-item v-for="book in bookData" :key=book.isbn>
             <b-row>
-              <b-col md="3" v-if="book.image">
-                <img :src="book.image" alt="book_img" >
+              <b-col md="3">
+                <img :src="book.image" alt="book_img" v-if="book.image" @error="replaceByDefault" style="width:82px;">
+                <img :src="require('@/assets/thumbnail/thumbnail_default_img.jpg')" alt="book_img" style="width:82px;" v-else>
               </b-col>
               <b-col md="9">
                 <h5>{{ transStr(book.title) }}</h5>
@@ -194,7 +195,7 @@ export default {
     },
     formReset() {
       this.selectedOption = null;
-      this.thumbnailFile = "";
+      // this.thumbnailFile = "";
       this.roomName = "";
       this.roomContent = "";
       this.roomSearchValue = "";
@@ -257,6 +258,9 @@ export default {
       this.selectedBook = this.transStr(book.title)
       this.bookData = 2
       this.bookDetail.id = this.checkBookInDB(book)
+    },
+    replaceByDefault(e) {
+      e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
     }
   },
 };
