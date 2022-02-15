@@ -1,9 +1,8 @@
 <template>
   <div>
     <div>
-      <h2 class="fw-bold mt-5 mb-4">베스트 셀러</h2>
-      <!-- <h2 class="fw-bold mt-5 mb-4">Best Sellers</h2> -->
       
+      <h2 class="fw-bold mt-5 mb-4">베스트 셀러</h2>
       <div class="carousel">
         <carousel v-bind="options" @initialized="init" @changed="changed" :nav="false">
 
@@ -20,14 +19,11 @@
             >
               <b-card
               bg-variant="dark"
-              :title="item.title"
-              :img-src="imgPath(item.itemId, item.isbn)"
-              img-alt="Image"
-              img-top
               tag="article"
               no-body 
               class="overflow-hidden"
               >
+                <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p> {{ item.author }}</p>
                   <hr>
@@ -58,14 +54,11 @@
             >
               <b-card
               bg-variant="dark"
-              :title="item.title"
-              :img-src="imgPath(item.itemId, item.isbn)"
-              img-alt="Image"
-              img-top
               tag="article"
               no-body 
               class="overflow-hidden"
               >
+                <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
@@ -85,8 +78,8 @@
 
         </carousel>
       </div>
-
     </div>
+    
     <hr />
     <div>
       <h2 class="mt-5 mb-4">신간 도서</h2>
@@ -108,14 +101,11 @@
             >
               <b-card
               bg-variant="dark"
-              :title="item.title"
-              :img-src="imgPath(item.itemId, item.isbn)"
-              img-alt="Image"
-              img-top
               tag="article"
               no-body 
               class="overflow-hidden"
               >
+                <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
@@ -146,14 +136,11 @@
             >
               <b-card
               bg-variant="dark"
-              :title="item.title"
-              :img-src="imgPath(item.itemId, item.isbn)"
-              img-alt="Image"
-              img-top
               tag="article"
               no-body 
               class="overflow-hidden"
               >
+                <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>
                 <b-card-text class="px-3 pt-3 mb-0">
                   <p>{{ item.author }}</p>
                   <hr>
@@ -269,9 +256,9 @@ export default {
         .replace(/&#039;/g, "'")
         .replace(/&#39;/g, "'");
     },
-    // replaceByDefault(e) {
-    //   e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
-    // } // 링크 깨진 이미지 src 대체하는 방법인데 여기에 있는 카드의 이미지에는 적용이 안됨
+    replaceByDefault(e) {
+      e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
+    }
   },
 };
 
