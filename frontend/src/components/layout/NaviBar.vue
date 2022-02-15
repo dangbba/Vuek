@@ -245,9 +245,8 @@ export default {
           icon: "success",
           text: "정상적으로 로그아웃 되었습니다.",
         });
-      if (this.$route.path != "/") {
-        this.$router.push({ name: "Home" });
-      } else if (this.$route.path != "/book") {
+      if (this.$route.path !== "/" || this.$route.path !== "/book") {
+        console.log(this.$route.path)
         this.$router.push({ name: "Home" });
       }
     },

@@ -4,7 +4,7 @@
       
       <h2 class="fw-bold mt-5 mb-4">베스트 셀러</h2>
       <div class="carousel">
-        <carousel v-bind="options" @initialized="init" @changed="changed" :nav="false">
+        <carousel v-bind="options" :nav="false">
 
           <!-- slide(0,4)로 bestSeller 4권묶음 -->
           <b-row class="justify-content-center">
@@ -86,7 +86,7 @@
       <!-- <h2 class="mt-5 mb-4">New books</h2> -->
 
       <div class="carousel-wrap">
-        <carousel v-bind="options" @initialized="init" @changed="changed" :nav="false">
+        <carousel v-bind="options" :nav="false">
 
           <!-- slide(0,4)로 newSpecial 4권묶음 -->
           <b-row class="justify-content-center">
