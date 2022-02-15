@@ -1,14 +1,14 @@
 <template>
   <div class="text-center">
     <b-button
-      v-b-modal.modal3-prevent-closing
       variant="primary"
-      class="col-8 mb-3"
-      @click="$bvModal.show('modal-scoped')"
-      size="lg"
-      >컨퍼런스 생성하기</b-button
+      @click="$bvModal.show(item.isbn); selectBook(item)"
+      >컨퍼런스 생성</b-button
     >
-    <b-modal scrollable id="modal3-prevent-closing" ref="modal" title="컨퍼런스 생성하기">
+    
+    <b-modal scrollable :id=item.isbn ref="modal" title="컨퍼런스 생성하기" v-if="userInfo">
+      <h5 class="d-inline">주제 도서: {{ selectedBook }}</h5>
+      <hr>
       <form ref="form">
         <b-form-group
           class="roommodal"
@@ -54,7 +54,9 @@
           ></b-form-textarea>
         </b-form-group>
       </form>
-      <form ref="form" class="mb-3">
+
+      <!-- 회의생성할때 쓰는 naver book api와 베스트셀러 / 신간도서의 알라딘 api의 isbn 가져오는 방식이 달라서 검색기능 재사용은 어려움-->
+      <!-- <form ref="form" class="mb-2">
         <b-form-group
           type="search"
           class="searchmodal"
@@ -77,12 +79,13 @@
             </b-col>
           </b-row>
         </b-form-group>
-      </form>
-      <div v-if="bookData===1" class="mx-2 mt-3 text-secondary">
+      </form> -->
+
+<!-- <div v-if="bookData===1" class="mx-2 mt-3 text-secondary">
         <p>도서를 검색해서 선택해주세요.</p>
       </div>
       <div v-else-if="bookData===2">
-        <h5 class="d-inline ms-2 mt-2">선택 도서: {{ selectedBook }}</h5><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
+        <h5 class="d-inline ms-2 mt-3">선택된 도서: {{ selectedBook }}</h5><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
       </div>
       <div v-else-if="bookData.length===0" class="mx-2 mt-3 text-danger">
         <p>검색결과가 없습니다.</p>
@@ -91,9 +94,8 @@
         <b-list-group>
           <b-list-group-item v-for="book in bookData" :key=book.isbn>
             <b-row>
-              <b-col md="3">
-                <img :src="book.image" alt="book_img" v-if="book.image" @error="replaceByDefault" style="width:82px;">
-                <img :src="require('@/assets/thumbnail/thumbnail_default_img.jpg')" alt="book_img" style="width:82px;" v-else>
+              <b-col md="3" v-if="book.image">
+                <img :src="book.image" alt="book_img" >
               </b-col>
               <b-col md="9">
                 <h5>{{ transStr(book.title) }}</h5>
@@ -104,8 +106,7 @@
             </b-row>
           </b-list-group-item>
         </b-list-group>
-      </div>
-
+      </div> -->
 
       <br />
       <template #modal-footer="{ ok, cancel }">
@@ -134,15 +135,16 @@ import { mapState, mapActions } from "vuex";
 import Swal from "sweetalert2";
 import http from "@/config/http-common.js";
 
+
 export default {
-  name: "ConferenceCreate",
+  name: "BookConferenceCreateBySearch",
   data() {
     return {
       roomName: "",
       roomContent: "",
       bookSearchValue: "",
-      selectedOption: null,
-      options: [
+      selectedOption: null, // (명세서 상) 업무를 기본값으로 하라고 하지만 선택사항 없는 상황에서 선택하는 것이 나은 것 같아서 수정
+      options: [ // 카테고리를 조회해서 DB에서 데이터를 연동했으면 좋았겠지만 구현 편의상 직접 작성함 // 카테고리 명칭 바뀌면 이 부분을 수정해야함
         { value: "1", text: "책 소개" },
         { value: "2", text: "토의" },
         { value: "3", text: "세미나" },
@@ -152,18 +154,20 @@ export default {
       bookDetailId: null
     };
   },
-  created() {},
+  props: {
+    item: Object,
+  },
   computed: {
     ...mapState("userStore", ["userInfo"]),
   },
   methods: {
     ...mapActions("conferenceStore", ["createRoom"]),
     roomIsValid: function () {
-      if (this.selectedOption === null || this.roomName === "" || this.bookDetailId === null) {
+      if (this.selectedOption === null || this.roomName === "") {
         Swal.fire({
           icon: "error",
           title: "Stop!",
-          text: "용도, 제목, 도서는 필수 입력사항입니다.",
+          text: "용도, 제목은 필수 입력사항입니다.",
         });
         return false;
       } else if (this.roomName.length > 31) {
@@ -195,11 +199,11 @@ export default {
     },
     formReset() {
       this.selectedOption = null;
-      // this.thumbnailFile = "";
+      this.thumbnailFile = "";
       this.roomName = "";
       this.roomContent = "";
       this.roomSearchValue = "";
-      this.bookData = 1 ;
+      // this.bookData = 1 ;
     }, // 입력된 form 지우기
     roomCreate() {
       if (this.roomIsValid()) {
@@ -239,9 +243,9 @@ export default {
     },
     // isbn으로 책 pk 검색
     checkBookInDB(book) {
-      //  console.log(book)
+       console.log(book)
        const isbn = book.isbn.split(" ")[1]
-      //  console.log(isbn)
+       console.log(isbn)
        http({
         method: "get",
         url: `/search/${isbn}`,
@@ -255,17 +259,21 @@ export default {
         });
     },
     selectBook(book) {
-      this.selectedBook = this.transStr(book.title)
-      this.bookData = 2
-      this.bookDetail.id = this.checkBookInDB(book)
-    },
-    replaceByDefault(e) {
-      e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
+      if (this.userInfo) {
+        this.selectedBook = this.transStr(book.title)
+        // this.bookData = 2
+        this.bookDetail.id = this.checkBookInDB(book)
+      } else {
+        Swal.fire({
+          icon: "warning",
+          text: "컨퍼런스를 생성하려면 로그인해주세요!",
+        })
+      }
+
     }
   },
 };
 </script>
 
 <style>
-
 </style>

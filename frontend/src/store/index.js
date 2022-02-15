@@ -5,6 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 
 import userStore from "@/store/modules/userStore.js";
 import conferenceStore from "@/store/modules/conferenceStore.js";
+import bookStore from "@/store/modules/bookStore.js";
 // import chatStore from "@/store/modules/chatStore.js";
 
 Vue.use(Vuex);
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
   modules: {
     userStore,
     conferenceStore,
+    bookStore
     // chatStore,
   },
   state,

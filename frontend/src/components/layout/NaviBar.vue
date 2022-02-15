@@ -14,7 +14,7 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse id="nav-collapse" is-nav class="text-center">
         <b-navbar-brand v-b-toggle.sidebar-variant>메뉴</b-navbar-brand>
         <b-sidebar
           v-if="userInfo"
@@ -86,9 +86,6 @@
           </div>
         </b-sidebar>
 
-        <!-- <b-collapse is-nav>
-        </b-collapse> -->
-
         <b-navbar-nav v-if="userInfo">
           <b-nav-item>
             <h5 class="Hello my-0">
@@ -98,6 +95,7 @@
             </h5>
           </b-nav-item>
           <b-nav-item href="#" @click.prevent="onClickLogout">로그아웃</b-nav-item>
+
         </b-navbar-nav>
 
         <b-navbar-nav v-else>
@@ -144,6 +142,11 @@
             <b-button class="float-end" variant="outline-primary" @click="checkValue"> 로그인 </b-button>
           </b-modal>
         </b-navbar-nav>
+
+        <b-collapse is-nav>
+        </b-collapse>
+
+        <book-search></book-search>
       </b-collapse>
     </b-navbar>
   </div>
@@ -152,6 +155,7 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import Swal from "sweetalert2";
+import BookSearch from "@/components/book/BookSearch.vue"
 
 
 import jwt_decode from "jwt-decode";
@@ -160,6 +164,9 @@ const userStore = "userStore";
 
 export default {
   name: "Navibar",
+  components: {
+    BookSearch
+  },
   data() {
     return {
       user: {

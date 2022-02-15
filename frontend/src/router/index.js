@@ -5,6 +5,7 @@ import About from "../views/About.vue";
 import Profile from "../components/user/Profile.vue";
 import Signup from "../components/user/Signup.vue";
 import Book from "../components/book/Book.vue";
+import BookSearchResult from "../components/book/BookSearchResult.vue";
 import Conference from "../components/conference/Conference.vue";
 import Conference_detail from "../components/conference/Conference_detail.vue";
 import store from "../store/index";
@@ -45,6 +46,11 @@ const routes = [
     path: "/conference/view/:contentId",
     name: "Conference_detail",
     component: Conference_detail,
+  },
+  {
+    path: "/book/search",
+    name: "BookSearchResult",
+    component: BookSearchResult,
   },
 ];
 

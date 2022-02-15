@@ -137,7 +137,7 @@ import http from "@/config/http-common.js";
 
 
 export default {
-  name: "ConferenceCreate",
+  name: "BookConferenceCreate",
   data() {
     return {
       roomName: "",
