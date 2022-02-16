@@ -54,60 +54,6 @@
           ></b-form-textarea>
         </b-form-group>
       </form>
-
-      <!-- 회의생성할때 쓰는 naver book api와 베스트셀러 / 신간도서의 알라딘 api의 isbn 가져오는 방식이 달라서 검색기능 재사용은 어려움-->
-      <!-- <form ref="form" class="mb-2">
-        <b-form-group
-          type="search"
-          class="searchmodal"
-          label="도서 검색"
-          label-for="bookSearch"
-        >
-          <b-row>
-            <b-col sm="9" md="10" class="pe-0">
-              <b-form-input
-                id="bookSearch"
-                placeholder="키워드 입력"
-                v-model="bookSearchValue"
-                plain
-                @keydown.enter.prevent="bookSearch()"
-              >
-              </b-form-input>
-            </b-col>
-            <b-col md="2" class="pe-0">
-              <b-button variant="outline-primary" @click="bookSearch()">검색</b-button>
-            </b-col>
-          </b-row>
-        </b-form-group>
-      </form> -->
-
-<!-- <div v-if="bookData===1" class="mx-2 mt-3 text-secondary">
-        <p>도서를 검색해서 선택해주세요.</p>
-      </div>
-      <div v-else-if="bookData===2">
-        <h5 class="d-inline ms-2 mt-3">선택된 도서: {{ selectedBook }}</h5><b-button size="sm" @click="bookData=1" class="ms-2">선택 취소</b-button>
-      </div>
-      <div v-else-if="bookData.length===0" class="mx-2 mt-3 text-danger">
-        <p>검색결과가 없습니다.</p>
-      </div>
-      <div v-else>
-        <b-list-group>
-          <b-list-group-item v-for="book in bookData" :key=book.isbn>
-            <b-row>
-              <b-col md="3" v-if="book.image">
-                <img :src="book.image" alt="book_img" >
-              </b-col>
-              <b-col md="9">
-                <h5>{{ transStr(book.title) }}</h5>
-                <p class="mb-1">저자: {{ transStr(book.author) }}</p>
-                <b-button size="sm" variant="outline-success" :href="book.link" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">상세보기</b-button>
-                <b-button size="sm" variant="outline-primary" class="ms-2" @click="selectBook(book)">도서선택</b-button>
-              </b-col>
-            </b-row>
-          </b-list-group-item>
-        </b-list-group>
-      </div> -->
-
       <br />
       <template #modal-footer="{ ok, cancel }">
         <b-button

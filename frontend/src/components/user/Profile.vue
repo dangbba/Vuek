@@ -192,15 +192,11 @@
       <p v-if="marathon.value===0">
         화상회의에 참여하여 달린 거리를 up!
       </p>
-      
+      <bookmark></bookmark>
     </b-row>
 
        
-    <p class="fs-3 fw-bold mt-3">
-      <i class="far fa-bookmark" style="color: #0dcaf0;"></i>
-        나의 책갈피
-    </p> <!-- 폰트어썸 아이콘 -->
-    <b-button size="sm" variant="warning">확인하기</b-button>
+
   </div>
   
 </template>
@@ -211,10 +207,14 @@ import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
 import http from "@/config/http-common.js";
 import Swal from "sweetalert2";
+import Bookmark from './Bookmark'
 
 
 const userStore = "userStore";
 export default {
+  components: {
+    Bookmark,
+  },
   data() {
     return {
       myLinks: {         

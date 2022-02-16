@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div v-if="bookItems.length===0">
-      <p>검색결과가 없습니다.</p>
+    <div v-if="bookItems.length===0" class="text-center mt-5">
+      <h4>검색결과가 없습니다.</h4>
     </div>
     <div v-else>
       <h2 class="my-5">검색결과</h2>
@@ -31,7 +31,7 @@
             <b-card-img :src="imgPath(item.image)" @error="replaceByDefault"></b-card-img>
           </div>
             <b-card-text class="px-3 pt-3 mb-0">
-              <p> {{ item.author }}</p>
+              <p> {{ transStr(item.author) }}</p>
               <hr>
               <p class="card-font">{{ transStr(item.description) }}</p>
             </b-card-text>

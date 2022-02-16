@@ -38,6 +38,7 @@ export default {
         })
         return swalAlert
       } else { 
+        this.text = ''
         return this.searchBookItems(value)
       }
     }
