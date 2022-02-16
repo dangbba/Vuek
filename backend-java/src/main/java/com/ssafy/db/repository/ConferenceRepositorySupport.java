@@ -52,6 +52,7 @@ public class ConferenceRepositorySupport {
 		em.close();
 		return list;
 	}
+
 	@Modifying
 	@Transactional
 	public Conference getConferenceInfo(int idconference) {
