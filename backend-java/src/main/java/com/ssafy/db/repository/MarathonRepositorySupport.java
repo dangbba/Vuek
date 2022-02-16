@@ -21,14 +21,14 @@ public class MarathonRepositorySupport {
 
     public Marathon getMarathon(@PathVariable String user_id){
         QMarathon qMarathon = QMarathon.marathon;
-        Marathon marathon = queryFactory.select(qMarathon).from(qMarathon).where(qMarathon.userId.eq(user_id)).fetchOne();
+        Marathon marathon = queryFactory.select(qMarathon).from(qMarathon).where(qMarathon.user.userId.eq(user_id)).fetchOne();
         return marathon;
     }
 
     public void plusNowPages(@PathVariable String user_id){
         QMarathon qMarathon = QMarathon.marathon;
         JPAUpdateClause updateClause = new JPAUpdateClause(em, qMarathon);
-        long count = updateClause.where(qMarathon.userId.eq(user_id))
+        long count = updateClause.where(qMarathon.user.userId.eq(user_id))
                 .set(qMarathon.nowPages, qMarathon.nowPages.add(1))
                 .execute();
     }

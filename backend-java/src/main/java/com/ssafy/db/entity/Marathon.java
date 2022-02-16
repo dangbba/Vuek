@@ -6,6 +6,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -14,8 +16,9 @@ public class Marathon {
     @GeneratedValue
     @Column(name = "marathonId")
     private int id;
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId")
-    private String userId;
+    private User user;
     private int goalPages;
     private int nowPages;
 
