@@ -51,16 +51,28 @@ public class UserRepositorySupport {
     public void updateUser(User user){
         QUser qUser = QUser.user;
         JPAUpdateClause updateClause = new JPAUpdateClause(em, qUser);
-        long count = updateClause
-                .set(qUser.userName, user.getUserName())
-                .set(qUser.password, passwordEncoder.encode(user.getPassword()))
-                .set(qUser.email, user.getEmail())
-                .set(qUser.genre, user.getGenre())
-                .set(qUser.goal, user.getGoal())
-                .set(qUser.socialLink, user.getSocialLink())
-                .set(qUser.profileImage, user.getProfileImage())
-                .where(qUser.userId.eq(user.getUserId()))
-                .execute();
+        if(user.getPassword() != null){
+            long count = updateClause
+                    .set(qUser.userName, user.getUserName())
+                    .set(qUser.password, passwordEncoder.encode(user.getPassword()))
+                    .set(qUser.email, user.getEmail())
+                    .set(qUser.genre, user.getGenre())
+                    .set(qUser.goal, user.getGoal())
+                    .set(qUser.socialLink, user.getSocialLink())
+                    .set(qUser.profileImage, user.getProfileImage())
+                    .where(qUser.userId.eq(user.getUserId()))
+                    .execute();
+        }else{
+            long count = updateClause
+                    .set(qUser.userName, user.getUserName())
+                    .set(qUser.email, user.getEmail())
+                    .set(qUser.genre, user.getGenre())
+                    .set(qUser.goal, user.getGoal())
+                    .set(qUser.socialLink, user.getSocialLink())
+                    .set(qUser.profileImage, user.getProfileImage())
+                    .where(qUser.userId.eq(user.getUserId()))
+                    .execute();
+        }
         em.close();
     }
 
