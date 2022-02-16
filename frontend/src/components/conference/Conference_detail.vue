@@ -116,9 +116,6 @@ export default {
       mySessionId: undefined,
     };
   },
-  beforecreate() {
-    this.mySessionId = this.conferenceDetail.title;
-  },
   created() {
     this.getConferenceInfo(this.conferenceId);
     // 방 참여 이력 생성
