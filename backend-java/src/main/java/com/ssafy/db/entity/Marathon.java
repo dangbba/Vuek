@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 @Setter
 public class Marathon {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "marathonId")
     private int id;
     @ManyToOne(fetch = LAZY)
