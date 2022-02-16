@@ -79,7 +79,7 @@
               type="password"
               id="user_pw"
               v-model="user.user_pw"
-              placeholder="변경할 password를 입력해주세요"
+              placeholder="변경할 password를 입력해주세요(미입력시 기존pw 유지)"
             ></b-form-input>
           </b-form-group>
         </form>
@@ -300,16 +300,14 @@ export default {
     },
     checkValue: function () {
       if (
-        this.user.user_pw === "" ||
-        this.user.user_pw_check === "" ||
         this.user.user_name === ""
       ) {
         Swal.fire({
           icon: "error",
           title: "Stop!",
-          text: "이름, 비밀번호, 비밀번호 확인란은 필수 입력사항입니다.",
+          text: "이름은 필수 입력사항입니다.",
         });
-      } else if (this.user.user_pw !== this.user.user_pw_check) {
+      } else if ( this.user.user_pw !== this.user.user_pw_check) {
         Swal.fire({
           icon: "error",
           title: "PasswordNotMatch",
@@ -321,35 +319,27 @@ export default {
           title: "UsernameError",
           text: "username은 30자를 넘을 수 없습니다.",
         });
-      } else if (
-        16 < this.user.user_pw.length ||
-        9 > this.user.user_pw.length
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 길이 오류",
-          text: "비밀번호(확인)는 9자 이상 16자 이하여야 합니다.",
-        });
-      } else if (
-        this.user.user_pw.search(/[0-9]/g) < 0 ||
-        this.user.user_pw.search(/[a-z]/gi) < 0 ||
-        this.user.user_pw.search(/[`~!@#$%^&*/?;:]/gi) < 0
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 유형 오류",
-          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
-        });
-      } else if (
-        this.user.user_pw.search(/[0-9]/g) < 0 ||
-        this.user.user_pw.search(/[a-z]/gi) < 0 ||
-        this.user.user_pw.search(/[`~!@#$%^&*/?;:]/gi) < 0
-      ) {
-        Swal.fire({
-          icon: "error",
-          title: "비밀번호 유형 오류",
-          text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
-        });
+      } if (this.user.user_pw) {
+          if (
+            16 < this.user.user_pw.length ||
+            9 > this.user.user_pw.length
+          ) {
+            Swal.fire({
+              icon: "error",
+              title: "비밀번호 길이 오류",
+              text: "비밀번호(확인)는 9자 이상 16자 이하여야 합니다.",
+            });
+          } else if (
+            this.user.user_pw.search(/[0-9]/g) < 0 ||
+            this.user.user_pw.search(/[a-z]/gi) < 0 ||
+            this.user.user_pw.search(/[`~!@#$%^&*/?;:]/gi) < 0
+          ) {
+              Swal.fire({
+                icon: "error",
+                title: "비밀번호 유형 오류",
+                text: "비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.",
+              });
+            } 
       } else if (
         this.user.user_name === this.userInfo.userName 
       ) {
@@ -370,11 +360,9 @@ export default {
     },
     userInfoUpdate() { // 회원정보 수정
       console.log(this.user.profileImage)
-      http({
-        headers: { 'Content-Type': 'multipart/form-data' }, // 확인 필요
-        method: 'put',
-        url: `/users/${this.userInfo.userId}`,
-        data: {
+      let obj = {}
+      if (this.user.user_pw) {
+        obj = {
           'password': this.user.user_pw,
           'userId': this.userInfo.userId,
           'userName': this.user.user_name,
@@ -382,8 +370,23 @@ export default {
           'genre': this.user.genre,
           'goal': this.user.goal,
           'socialLink': this.user.socialLink,
-          'profileImage': this.user.profileImage // 확인 필요
-          }
+          'profileImage': this.user.profileImage
+        }
+      } else {
+        obj = {
+          'userId': this.userInfo.userId,
+          'userName': this.user.user_name,
+          'email': this.user.email,
+          'genre': this.user.genre,
+          'goal': this.user.goal,
+          'socialLink': this.user.socialLink,
+          'profileImage': this.user.profileImage
+        }
+      }
+      http({
+        method: 'put',
+        url: `/users/${this.userInfo.userId}`,
+        data: obj
         })
         .then((response) => {
           console.log(response)

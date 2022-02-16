@@ -55,6 +55,7 @@
 <script>
 import BookConferenceCreateBySearch from './BookConferenceCreateBySearch.vue';
 import { mapState, mapActions } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   name: "BookSearchResult",
@@ -63,7 +64,7 @@ export default {
   },
   data() {
     return {
-      bookmarkSign: true
+      // bookmarkSign: true
     };
   },
   created() {
@@ -95,12 +96,19 @@ export default {
       e.target.src = require('@/assets/thumbnail/thumbnail_default_img.jpg')
     },
     bookmark(isbn) {
-      const obj = {
-        isbn: isbn.split(" ")[1],
-        userId: this.userInfo.userId
+      if (this.userInfo) {
+        const obj = {
+          isbn: isbn.split(" ")[1],
+          userId: this.userInfo.userId
+        }
+        this.createUserBook(obj)
+        this.bookmarkSign = !this.bookmarkSign
+      } else {
+          Swal.fire({
+            icon: "warning",
+            text:  "책갈피를 하시려면 로그인해주세요!",
+          });
       }
-      this.createUserBook(obj)
-      this.bookmarkSign = !this.bookmarkSign
     }
   },
 };
@@ -115,9 +123,6 @@ export default {
   background-color: #343a40;
   border-radius: 15px;
 }
-.card {
-  height: 100%;
-}
 .card-text {
   height: 100%;
   color: whitesmoke;
@@ -128,23 +133,23 @@ export default {
 }
 
 .bookmark-button {
-font-size: 50px;
-cursor: pointer;
-border-radius: 10rem;
-position: absolute;
-z-index: 2;
-/* color: #ffd700; */
-/* background-color: transparent; */
-/* border: transparent; */
+  font-size: 50px;
+  cursor: pointer;
+  border-radius: 10rem;
+  position: absolute;
+  z-index: 2;
+  /* color: #ffd700; */
+  /* background-color: transparent; */
+  /* border: transparent; */
 }
 
 .bookmark-button :hover {
-color: #ffd700;
+  color: #ffd700;
 }
 
 .card-image {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: 100%;
 }
 
 </style>

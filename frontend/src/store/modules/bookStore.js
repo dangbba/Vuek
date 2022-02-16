@@ -6,13 +6,15 @@ const bookStore = {
   namespaced: true,
   state: {
     bookItems: [], // 책 검색 데이터 저장
-    bookmark: [], // 읽은책 저장
+    userBookmark: [], // 읽은책 조회시 저장
   },
   mutations: {
     LOAD_BOOK_ITEMS: function (state, results) {
       state.bookItems = results
     },
-
+    LOAD_USER_BOOK_ITEMS: function (state, results) {
+      state.userBookmark = results 
+    },
   },
   actions: {
     searchBookItems : function ({commit}, search_value) {
@@ -43,14 +45,30 @@ const bookStore = {
           console.log(response);
           Swal.fire({
             icon: "success",
-            text: "북마크가 추가되었습니다!",
+            text: "책갈피가 추가되었습니다!",
           });
         })
         .catch((err) => {
           console.dir(err);
+          Swal.fire({
+            icon: "warning",
+            text: "이미 등록된 책갈피입니다!",
+          });
       });
     },
-
+    getUserBook : function ({commit}, user_id) {
+      http({
+        method: "get",
+        url: `search/userBooks?userId=${user_id}`,
+      })
+        .then((response) => {
+          console.log(response);
+          commit('LOAD_USER_BOOK_ITEMS', response.data);
+        })
+        .catch((error) => {
+          console.dir(error);
+        });
+    },
   },
 };
 
