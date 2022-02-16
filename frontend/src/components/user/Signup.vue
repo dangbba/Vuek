@@ -199,8 +199,11 @@ export default {
     createMarathon(id) {
       http
         .post(`/marathon/create`, {
-          userId: id,
-          goalPages: 1 // 기본적으로 1으로 생성
+          user: {
+             userId: id,
+          },
+          goalPages: 5, // 기본적으로 1으로 생성
+          nowPages: 0,
         })
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.

@@ -4,11 +4,13 @@
     <i class="far fa-bookmark" style="color: #0dcaf0;"></i>
       나의 책갈피
   </p> <!-- 폰트어썸 아이콘 -->
-  <b-button size="sm" variant="warning">확인하기</b-button>
+  <b-button size="sm" variant="warning" @click="getUserBook(userInfo.userId)">확인하기</b-button>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name:"Bookmark",
   data() {
@@ -17,8 +19,12 @@ export default {
   },
 
   methods:{
-
+    ...mapActions("bookStore", ['getUserBook']),
   },
+  computed:{
+    ...mapState("userStore", ["userInfo"]),
+    ...mapState("bookStore", ["userBookmark"]),
+  }
 };
 
 </script>

@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    alert("데이터 응답 실패");
+    // alert("데이터 응답 실패");
     return Promise.reject(error);
   }
 );
