@@ -14,7 +14,7 @@
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
 | | | :black_square_button: Kotlin | |
 
-<!-- 필수 항목 -->
+
 
 ## 프로젝트 소개
 
@@ -37,7 +37,7 @@
   - URL: https://i6c205.p.ssafy.io
   - 테스트 계정: // 로그인이 필요한 경우, 사용 가능한 테스트 계정(ID/PW) 기입
 
-<!-- 자유 양식 -->
+
 
 ## 팀 소개
 * 김성현: 팀장, 백엔드 개발
@@ -47,13 +47,13 @@
 * 문찬송: 프론트엔드 개발
 * 김성준: 백엔드 개발
 
-<!-- 자유 양식 -->
+
 
 ## 프로젝트 상세 설명
 
-// 개발 환경, 기술 스택, 시스템 구성도, ERD, 기능 상세 설명 등
 
-주요 기술 스택 
+
+#### 주요 기술 스택 
 
 - Vue 
 
@@ -65,12 +65,17 @@
 
 
 
-시스템 구성도
+#### 시스템 구성도
+
+![service_architecture2](C:\Users\multicampus\Desktop\git_2\S06P12C205\문서\팀 회의 자료\시스템구성도\service_architecture2.jpg)
 
 
 
-
-
-ERD
+#### ERD
 
 ![모두의책갈피ERD](C:\Users\multicampus\Desktop\git_2\S06P12C205\문서\팀 회의 자료\ERD\모두의책갈피ERD.png)
+
+
+
+#### 기능상세설명
+
