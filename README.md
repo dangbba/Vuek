@@ -27,11 +27,9 @@
 * 주요 기능
   - 회원 관리
   - 화상 미팅룸
-  - 그룹 채팅
   
 * 주요 기술
   - WebRTC
-  - WebSocket
   - JWT Authentication
   - REST API
   
@@ -57,10 +55,22 @@
 
 주요 기술 스택 
 
-Vue 
+- Vue 
 
-Spring Boot 
+- Spring Boot 
 
-MySQL 
+- MySQL 
 
-JPA
+- JPA
+
+
+
+시스템 구성도
+
+
+
+
+
+ERD
+
+![모두의책갈피ERD](C:\Users\multicampus\Desktop\git_2\S06P12C205\문서\팀 회의 자료\ERD\모두의책갈피ERD.png)
