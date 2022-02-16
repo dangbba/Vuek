@@ -4,7 +4,9 @@
     <i class="far fa-bookmark" style="color: #0dcaf0;"></i>
       나의 책갈피
   </p> <!-- 폰트어썸 아이콘 -->
-  <b-button size="sm" variant="warning" @click="getUserBook(userInfo.userId)">확인하기</b-button>
+    <b-button size="sm" v-b-modal.modal-prevent-closing variant="warning" @click="getUserBook(userInfo.userId)">확인하기</b-button>
+    <b-modal scrollable id="modal-prevent-closing" ref="modal" title="나의 책갈피">
+    </b-modal>
   </div>
 </template>
 

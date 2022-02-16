@@ -370,7 +370,7 @@ export default {
           'genre': this.user.genre,
           'goal': this.user.goal,
           'socialLink': this.user.socialLink,
-          'profileImage': this.user.profileImage // 확인 필요
+          'profileImage': this.user.profileImage
         }
       } else {
         obj = {
@@ -380,11 +380,10 @@ export default {
           'genre': this.user.genre,
           'goal': this.user.goal,
           'socialLink': this.user.socialLink,
-          'profileImage': this.user.profileImage // 확인 필요
+          'profileImage': this.user.profileImage
         }
       }
       http({
-        headers: { 'Content-Type': 'multipart/form-data' }, // 확인 필요
         method: 'put',
         url: `/users/${this.userInfo.userId}`,
         data: obj
