@@ -16,7 +16,7 @@ public class UserBook {
     @Column(name = "userBookId")
     private int id;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "bookDetailId")
+    @JoinColumn(name = "bookDetailId", unique = true)
     private BookDetail bookDetail;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId")
