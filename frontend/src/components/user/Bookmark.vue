@@ -19,7 +19,6 @@ export default {
     return {
     };
   },
-
   methods:{
     ...mapActions("bookStore", ['getUserBook']),
   },
