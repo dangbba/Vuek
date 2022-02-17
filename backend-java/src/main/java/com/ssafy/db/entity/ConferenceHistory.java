@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -27,6 +28,6 @@ public class ConferenceHistory {
 
     @PrePersist
     public void insertedTime() {
-        this.insertedTime = LocalDateTime.now();
+        this.insertedTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 }
