@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="fw-bold my-5">회의 참여 이력</h2>
     <!-- <h2 class="fw-bold my-5">Conference History</h2> -->
-    <div v-if="conferenceHistory" class="text-center">
+    <div v-if="conferenceHistory.length===0" class="text-center">
       현재 참여한 회의 이력이 없습니다.
     </div>
     <div v-else class="mt-4">
