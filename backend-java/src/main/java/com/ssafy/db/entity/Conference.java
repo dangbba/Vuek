@@ -35,7 +35,7 @@ public class Conference {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "conferenceTypeId")
     private ConferenceType conferenceType;
-    private String callStartTime;
+    private LocalDateTime callStartTime;
     private LocalDateTime callEndTime;
     private String thumbnailUrl;
     private String title;
@@ -48,8 +48,7 @@ public class Conference {
 
     @PrePersist
     public void callStartTime() {
-        String formatDate = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
-        this.callStartTime = formatDate;
+        this.callStartTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
     public void callEndTime() {

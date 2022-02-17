@@ -26,7 +26,7 @@
           <h5 class="historyContent">독서모임 제목: {{ history.conference.title }}</h5>
           <p class="historyContent">내용: {{ history.conference.description }}</p>
           <p class="historyContent">카테고리: {{ history.conference.conferenceType.name }}</p>
-          <p class="historyContent">시작시간: {{ history.conference.callStartTime }}</p>
+          <p class="historyContent">시작시간: {{ transTime(history.conference.callStartTime) }}</p>
           <p class="historyContent">입장시간: {{ transTime(history.insertedTime) }}</p>
           <p class="mb-0">종료시간: 
             <span v-if="history.conference.callEndTime">{{ transTime(history.conference.callEndTime) }}</span>
