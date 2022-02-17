@@ -51,17 +51,28 @@
 
 ## 프로젝트 상세 설명
 
+#### 개발환경
+
+- OS : Windows 10
+- Server : AWS EC2
+  - Ubuntu 20.04.1
+  - Docker 20.10.12
+- Backend
+  - Java : Java 1.8.0
+  - Framework : SpringBoot 2.4.5
+  - ORM : JPA(Hibernate)
+  - Nginx : 1.18.0 (Ubuntu)
+  - IDE : Intellij 2021.1.3 / Visual Studio Code 1.59
+  - Dependency tool : gradle-6.7
+  - Database : MySQL 8.0
+  - Image Server : AWS S3 & CloudFront
+- Frontend - HTML5, CSS3, Javascript(Es6) - Vue 3.0.0 - @vue/cli 4.5.0 - Vuex 4.0.0 - Vue-axios 3.2.4
 
 
-#### 주요 기술 스택 
 
-- Vue 
+#### 기술 스택 
 
-- Spring Boot 
-
-- MySQL 
-
-- JPA
+![기술스택](C:\Users\multicampus\Desktop\기술스택\기술스택.png)
 
 
 
@@ -78,4 +89,6 @@
 
 
 
+
+#### 핵심기능
 
