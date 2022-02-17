@@ -63,7 +63,7 @@
   - ORM : JPA(Hibernate)
   - Nginx : 1.18.0 (Ubuntu)
   - IDE : Intellij 2021.1.3 / Visual Studio Code 1.59
-  - Dependency tool : gradle-6.7
+  - Dependency tool : gradle-6.9.2
   - Database : MySQL 8.0
   - Image Server : AWS S3 & CloudFront
 - Frontend - HTML5, CSS3, Javascript(Es6) - Vue 3.0.0 - @vue/cli 4.5.0 - Vuex 4.0.0 - Vue-axios 3.2.4
