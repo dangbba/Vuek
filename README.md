@@ -78,13 +78,13 @@
 
 #### 시스템 구성도
 
-![service_architecture2](C:\Users\multicampus\Desktop\git_2\S06P12C205\문서\팀 회의 자료\시스템구성도\service_architecture2.jpg)
+![service_architecture2](/문서/팀 회의 자료/시스템구성도/service_architecture2.jpg)
 
 
 
 #### ERD
 
-![모두의책갈피ERD](C:\Users\multicampus\Desktop\git_2\S06P12C205\문서\팀 회의 자료\ERD\모두의책갈피ERD.png)
+![모두의책갈피ERD](/문서/팀 회의 자료/ERD/모두의책갈피ERD.png)
 
 
 
