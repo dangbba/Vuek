@@ -18,9 +18,7 @@
         </span>
       </div>
     </div>
-    <div class="BookInfo">
-
-    </div>
+    <div class="BookInfo"></div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
         <!-- 방 종료 / 수정 관련 -->
@@ -312,6 +310,22 @@ export default {
       this.audioEnabled = !this.audioEnabled;
       this.publisher.publishAudio(this.audioEnabled);
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    const answer = window.confirm("회의를 나가시겠습니까?");
+    if (answer) {
+      if (this.session) this.session.disconnect();
+
+      this.session = undefined;
+      this.mainStreamManager = undefined;
+      this.publisher = undefined;
+      this.subscribers = [];
+      this.OV = undefined;
+      window.removeEventListener("beforeunload", this.leaveSession);
+      next();
+    } else {
+      next(false);
+    }
   },
 };
 </script>
