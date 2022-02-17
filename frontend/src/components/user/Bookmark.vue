@@ -18,7 +18,7 @@
             저자: {{ transStr(bookmark.author) }} / 출판사: {{ transStr(bookmark.publisher) }}
             <div v-if="bookmark.overview">
               <hr>
-              줄거리: {{ transStr(bookmark.overview) }}
+              줄거리: {{ unescapeHtml(transStr(bookmark.overview)) }}
             </div>
           </b-card-text>
         </b-card>
@@ -52,6 +52,18 @@ export default {
       let transedStr = str.replaceAll('<b>', '')
       transedStr = transedStr.replaceAll('</b>', '')
       return transedStr
+    },
+    unescapeHtml(str) {
+      if (str == null) {
+        return "";
+      }
+      return str
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'")
+        .replace(/&#39;/g, "'");
     },
   },
   computed:{

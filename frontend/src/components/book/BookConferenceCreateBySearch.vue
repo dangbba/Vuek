@@ -28,13 +28,13 @@
       <form ref="form">
         <b-form-group
           class="roommodal"
-          label="방 제목"
+          label="독서모임 제목"
           label-for="title"
         >
           <b-form-input
             id="title"
             v-model="roomName"
-            placeholder="방 제목을 입력해주세요"
+            placeholder="독서모임 제목을 입력해주세요"
           ></b-form-input>
         </b-form-group>
       </form>
@@ -42,13 +42,13 @@
         <b-form-group
           type="textarea"
           class="roommodal"
-          label="설명"
+          label="독서모임 소개"
           label-for="description"
         >
           <b-form-textarea
             id="description"
             v-model="roomContent"
-            placeholder="설명을 입력해주세요"
+            placeholder="독서모임 소개를 입력해주세요"
             row="3"
             max-rows="6"
           ></b-form-textarea>
