@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
@@ -47,12 +48,12 @@ public class Conference {
 
     @PrePersist
     public void callStartTime() {
-        String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        String formatDate = LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         this.callStartTime = formatDate;
     }
 
     public void callEndTime() {
-        this.callEndTime = LocalDateTime.now();
+        this.callEndTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
 }

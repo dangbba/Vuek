@@ -9,6 +9,7 @@ import com.ssafy.db.entity.User;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -100,7 +101,7 @@ public class UserRepositorySupport {
         userBook.executeUpdate();
         em.close();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         Query conference = em.createNativeQuery(
                         "update Conference set userId = null, isActive = 0, callEndTime = :callEndTime where userId = :userId")
