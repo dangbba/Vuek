@@ -1,7 +1,7 @@
 <template>
-  <b-col>
-    <b-button @click="closeConference()">회의 종료</b-button> 
-  </b-col>
+  <div class="d-inline">
+    <b-button class="mx-2" variant="dark" @click="closeConference();">독서모임 종료</b-button> 
+  </div>
 </template>
 
 <script>
@@ -16,20 +16,21 @@ export default {
   },
   data() {
     return {
-        conferenceId: this.$route.params.contentId,
-      }
+      conferenceId: this.$route.params.contentId,
+    }
   },
   methods: {
     ...mapActions(conferenceStore, ["conferenceClose"]),
     closeConference() {
       Swal.fire({
         icon: "question",
-        text: '회의를 종료하시겠습니까?',
+        text: '독서모임을 종료하시겠습니까?',
         showCancelButton: true,
         confirmButtonText: '네',
       }).then((result) => {
         if (result.isConfirmed) {
           this.conferenceClose(this.conferenceId)
+          this.$emit('change') // 상위컴포넌트로 이벤트 발생시켜서 상위컴포넌트의 데이터 조작(isClosed -> true로 만들기)
         } else {
           Swal.fire({
             icon: "warning",
@@ -37,7 +38,7 @@ export default {
           });
         }
       });
-    }
+    },
   },
 };
 </script>

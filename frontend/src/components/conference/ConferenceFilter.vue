@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-select v-model="selected" :options="options" class="mb-3" style="height: 2.5rem">
+    <b-form-select v-model="selected" :options="options" class="mb-3 ms-2" style="height: 2.5rem">
       <template #first>
         <b-form-select-option :value="null" disabled>--카테고리를 선택해주세요--</b-form-select-option>
       </template>
@@ -42,6 +42,7 @@ export default {
         { value: "1", text: "책 소개" },
         { value: "2", text: "토의" },
         { value: "3", text: "세미나" },
+        { value: "4", text: "기타" },
       ]
     }
   },

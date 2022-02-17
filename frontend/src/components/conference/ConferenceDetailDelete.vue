@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button variant="dark" @click="deleteConference()">회의 삭제</b-button>
+    <b-button variant="dark" @click="deleteConference()">독서모임 삭제</b-button>
   </div>
 </template>
 

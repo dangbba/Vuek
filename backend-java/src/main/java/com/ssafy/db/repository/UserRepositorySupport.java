@@ -4,11 +4,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserUpdateReq;
-import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -80,18 +83,30 @@ public class UserRepositorySupport {
     @Transactional
     public void deleteByUserId(String user_id) {
 
-        String test = "jesonk3";
-        System.out.println(user_id + " : user Id ,Support test!!!!!!!!!!!");
         Query conferencehistory = em.createNativeQuery(
                         "delete from ConferenceHistory where userId = :userId")
-//                        "update conferencehistory set userId = null where userId = :userId")
                 .setParameter("userId", user_id);
         conferencehistory.executeUpdate();
         em.close();
 
-        Query conference = em.createNativeQuery(
-                        "update Conference set userId = null, isActive = 0 where userId = :userId")
+        Query marathon = em.createNativeQuery(
+                        "delete from Marathon where userId = :userId")
                 .setParameter("userId", user_id);
+        marathon.executeUpdate();
+        em.close();
+
+        Query userBook = em.createNativeQuery(
+                        "delete from UserBook where userId = :userId")
+                .setParameter("userId", user_id);
+        userBook.executeUpdate();
+        em.close();
+
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+
+        Query conference = em.createNativeQuery(
+                        "update Conference set userId = null, isActive = 0, callEndTime = :callEndTime where userId = :userId")
+                .setParameter("userId", user_id)
+                .setParameter("callEndTime", now);
         conference.executeUpdate();
         em.close();
 
@@ -113,35 +128,4 @@ public class UserRepositorySupport {
         deleteHistoryNull.executeUpdate();
         em.close();
     }
-
-//    @Modifying
-//    @Transactional
-//    public void updateUser(UserUpdateReq userUpdateReq) throws Exception {
-//        String imgPath = null;
-//        if (userUpdateReq.getProfileImage().isEmpty() == false) {
-//            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-//            UUID uuid = UUID.randomUUID();
-//            String fileName = uuid + "_" + userUpdateReq.getProfileImage().getOriginalFilename();
-//            File saveFile = new File(projectPath + "/" + fileName);
-//            if(saveFile.exists() == false) {
-//                saveFile.mkdirs();
-//            }
-//            imgPath = "\\backend-java\\src\\main\\resources\\static\\files\\" + fileName;
-//            userUpdateReq.getProfileImage().transferTo(saveFile);
-//        }
-//        QUser qUser = QUser.user;
-//        JPAUpdateClause updateClause = new JPAUpdateClause(em, qUser);
-//        long count = updateClause
-//                .set(qUser.userName, userUpdateReq.getUser().getUserName())
-////                .set(qUser.password, passwordEncoder.encode(userUpdateReq.getUser().getPassword()))
-//                .set(qUser.email, userUpdateReq.getUser().getEmail())
-//                .set(qUser.genre, userUpdateReq.getUser().getGenre())
-//                .set(qUser.goal, userUpdateReq.getUser().getGoal())
-//                .set(qUser.socialLink,userUpdateReq.getUser().getSocialLink())
-//                .set(qUser.profileImage, imgPath)
-//                .where(qUser.userId.eq(userUpdateReq.getUser().getUserId()))
-//                .execute();
-//        em.close();
-//    }
-
 }

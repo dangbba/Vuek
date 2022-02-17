@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div class="d-inline">
     <b-button 
     v-b-modal.modal3-prevent-closing 
     variant="primary" 
     @click="$bvModal.show('modal-scoped'); beforeRoomInfo()"
-    >컨퍼런스 정보 수정하기</b-button>
+    >독서모임 정보 수정하기</b-button>
       <b-modal
       id="modal3-prevent-closing"
       ref="modal"
-      title="컨퍼런스 정보 수정하기"
+      title="독서모임 정보 수정하기"
     >
       <form ref="form">
         <b-form-group
           class="roommodal"
           id="dropdown-1"
-          label="용도"
+          label="독서모임 카테고리"
           label-for="usage-roominput"
         >
           <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
@@ -27,13 +27,13 @@
       <form ref="form">
         <b-form-group
           class="roommodal"
-          label="방 제목"
+          label="독서모임 제목"
           label-for="name-roominput"
         >
           <b-form-input
             id="name-input"
             v-model="roomName"
-            placeholder="수정할 방 제목을 입력해주세요"
+            placeholder="수정할 독서모임 제목을 입력해주세요"
           ></b-form-input>
         </b-form-group>
       </form>
@@ -41,13 +41,13 @@
         <b-form-group
           type="textarea"
           class="roommodal"
-          label="설명"
+          label="독서모임 소개"
           label-for="content-roominput"
         >
           <b-form-textarea
             id="textarea"
             v-model="roomContent"
-            placeholder="수정할 방 설명을 입력해주세요"
+            placeholder="수정할 독서모임 소개를 입력해주세요"
             row="3"
             max-rows="6"
           ></b-form-textarea>
@@ -91,6 +91,7 @@ export default {
         { value: "1", text: "책 소개" },
         { value: "2", text: "토의" },
         { value: "3", text: "세미나" },
+        { value: "4", text: "기타" },
       ]
     };
   },

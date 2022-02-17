@@ -187,10 +187,10 @@
         </b-modal>
       </p>
       <h5 v-else>
-        완주까지 <span class="text-warning">{{ marathon.max -  marathon.value }}km!</span>
+        목표 달성까지 <span class="text-warning">{{ marathon.max -  marathon.value }}km!</span>
       </h5>
       <p v-if="marathon.value===0">
-        화상회의에 참여하여 달린 거리를 up!
+        독서모임에 참여하거나 책갈피를 등록하여 달린 거리를 up!
       </p>
       <bookmark></bookmark>
     </b-row>

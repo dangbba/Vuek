@@ -1,76 +1,82 @@
 <template>
   <div>
-    <div class="Conference">
-      <div id="session">
-        <div id="session-header">
-          <h1 id="session-title">{{ conferenceDetail.title }}</h1>
-        </div>
-        <div id="main-video" class="col-md-6">
-          <user-video :stream-manager="mainStreamManager" />
-        </div>
-        <div id="video-container" class="col-md-6">
-          <user-video
-            v-for="sub in subscribers"
-            :key="sub.stream.connection.connectionId"
-            :stream-manager="sub"
-            @click.native="updateMainVideoStreamManager(sub)"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="ChatList">
-      <b-input v-model="message" type="text" />
-      <div calss="box-body">
-        {{ send }}
-      </div>
-      <chat-message-sender></chat-message-sender>
-    </div>
-    <div class="ToolBox">
-      <div v-if="conferenceDetail.user.userId === userInfo.userId">
-        <!-- 방 종료 / 수정 관련 -->
-        <conference-detail-update></conference-detail-update>
-        <conference-detail-close></conference-detail-close>
-        <conference-detail-delete></conference-detail-delete>
-        <!--회의 이력 생성으로 인해 FK관련 삭제 제한이 있어 현재 회의 삭제기능 안됨 (회의 이력 생성을 안하면 동작하는 기능임) -->
-      </div>
-      <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonLeaveSession"
-        @click="leaveSession"
-        value="Leave session"
-      />
-      <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonVideo"
-        @click="videoOnOff"
-        value="videoOnOff"
-      />
-      <input
-        class="btn btn-large btn-danger"
-        type="button"
-        id="buttonAudio"
-        @click="audioOnOff"
-        value="audioOnOff"
-      />
-    </div>
-    <div class="ChatBox">
-    </div>
-    <hr />
-    <div>
-      <!-- 컨퍼런스 정보 관련 정보 표시(임시) -->
-      <p>데이터 표시 확인</p>
-      <p>
-        conference name: {{ conferenceDetail.title }} / conference type:
-        {{ conferenceDetail.conferenceType.name }}
-      </p>
-      <p>
-        도서 제목: {{ transStr(conferenceDetail.bookDetail.title) }} / 줄거리:
-        {{ transStr(conferenceDetail.bookDetail.overview) }}
-      </p>
-    </div>
-    <hr />
+    <b-row class="mt-2">
+      <b-col cols="7">
+        <b-row>
+          <span>
+            <user-video :stream-manager="mainStreamManager" />
+            <user-video
+              v-for="sub in subscribers"
+              :key="sub.stream.connection.connectionId"
+              :stream-manager="sub"
+              @click.native="updateMainVideoStreamManager(sub)"
+            />
+          </span>
+        </b-row>
+        <b-row>
+        </b-row>
+      </b-col>
+      <b-col cols="5">
+        <b-container>
+          <b-card border-variant="secondary" style="width:100%; height:100%; background-color:#343a40;">
+            <b-row>
+              <b-col cols="4">
+               <b-card-img :src="transUrl(conferenceDetail.bookDetail.titleUrl)" class="mb-3 d-inline" img-alt="book cover"></b-card-img>
+              </b-col>
+              <b-col>
+                <h5>{{ transStr(conferenceDetail.bookDetail.title) }}</h5>
+                <hr>
+                <p>저자: {{ transStr(conferenceDetail.bookDetail.author) }} </p>
+                <hr>
+                <p>줄거리: {{ transStr(conferenceDetail.bookDetail.overview) }}</p>
+              </b-col>
+            </b-row>
+            <hr>
+            <b-card-text>
+              <h4 class="mb-3">독서모임 제목: {{ conferenceDetail.title }}</h4>
+              <p>독서모임 카테고리: {{ conferenceDetail.conferenceType.name }}</p>
+              <p>독서모임 소개: {{ conferenceDetail.description }}</p>
+            </b-card-text>
+            <hr>
+              <p class="text-white">독서모임 시작시간: {{ conferenceDetail.callStartTime }}</p>
+              <div class="text-end">
+            <span v-if="conferenceDetail.user.userId === userInfo.userId" >
+              <!-- 방 종료 / 수정 관련 -->
+                <conference-detail-update></conference-detail-update>
+                <conference-detail-close @change="change"></conference-detail-close> <!--하위컴포넌트에서 이벤트 받음-->
+            </span>
+              <input
+                class="btn btn-large btn-danger"
+                type="button"
+                id="buttonLeaveSession"
+                @click="leaveSession"
+                value="나가기"
+              />
+            </div>
+          </b-card>
+        </b-container>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col offset="2" cols="5" class="mb-3">
+        <input
+          class="btn btn-large btn-warning me-2"
+          type="button"
+          id="buttonVideo"
+          @click="videoOnOff"
+          value="비디오 켜기 / 끄기"
+        />
+        <input
+          class="btn btn-large btn-warning"
+          type="button"
+          id="buttonAudio"
+          @click="audioOnOff"
+          value="오디오 켜기 / 끄기"
+        />
+      </b-col>
+      <b-col col="4">
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -79,7 +85,8 @@ import axios from "axios";
 import { mapState, mapActions } from "vuex";
 import ConferenceDetailUpdate from "./ConferenceDetailUpdate";
 import ConferenceDetailClose from "./ConferenceDetailClose";
-import ConferenceDetailDelete from "./ConferenceDetailDelete";
+// import ConferenceDetailDelete from "./ConferenceDetailDelete";
+import Swal from "sweetalert2";
 
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "./UserVideo.vue";
@@ -99,14 +106,14 @@ export default {
     UserVideo,
     ConferenceDetailUpdate,
     ConferenceDetailClose,
-    ConferenceDetailDelete,
+    // ConferenceDetailDelete,
   },
   data() {
     return {
       userName: "",
-      message: "",
+      // message: "",
       recvList: [],
-      // 회의 정보 관련
+      // 독서모임 정보 관련
       conferenceId: this.$route.params.contentId,
       OV: undefined,
       session: undefined,
@@ -114,6 +121,7 @@ export default {
       publisher: undefined,
       subscribers: [],
       mySessionId: undefined,
+      isClose: false
     };
   },
   beforecreate() {
@@ -144,11 +152,23 @@ export default {
         // action: 1, // 뭔지 모르겠음 / null값 가능함 / 액션 기본값은 0
       };
     },
+    change() { // 하위컴포넌트에서 emit시 동작하는 이벤트
+      this.isClose = true
+    },
     transStr(str) {
       // return str
       let transedStr = str.replaceAll("<b>", "");
       transedStr = transedStr.replaceAll("</b>", "");
       return transedStr;
+    },
+    transUrl(url) {
+      let transedUrl = ""
+      if(url) {
+        transedUrl = url.replace('=m1&', '=m200&') 
+      } else {
+        transedUrl = require('@/assets/thumbnail/thumbnail_default_img.jpg') 
+      }
+      return transedUrl
     },
     joinSession() {
       // --- Get an OpenVidu object ---
@@ -322,32 +342,48 @@ export default {
       this.publisher.publishAudio(this.audioEnabled);
     },
   },
+  beforeRouteLeave(to, from, next) {
+    // 독서모임 종료 버튼 누른 경우는 작동하면 안됨
+    // 하위컴포넌트에서 이벤트 emit하여 isClose 변경
+    if (!this.isClose) {
+    //swal 적용
+    console.log(this.isClose)
+    Swal.fire({
+        icon: "question",
+        text: '독서모임을 나가시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '네',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (this.session) this.session.disconnect();
+          this.session = undefined;
+          this.mainStreamManager = undefined;
+          this.publisher = undefined;
+          this.subscribers = [];
+          this.OV = undefined;
+          window.removeEventListener("beforeunload", this.leaveSession);
+          next();
+        } else {
+          next(false);
+          Swal.fire({
+            icon: "warning",
+            text: "취소되었습니다.",
+          });
+        }
+      });
+    } else { //독서모임 종료하는 경우
+      if (this.session) this.session.disconnect();
+        this.session = undefined;
+        this.mainStreamManager = undefined;
+        this.publisher = undefined;
+        this.subscribers = [];
+        this.OV = undefined;
+        window.removeEventListener("beforeunload", this.leaveSession);
+        next();
+    }
+  },
 };
 </script>
 
 <style>
-.Conference {
-  border: solid;
-  float: left;
-  width: 70%;
-  height: 1152px;
-}
-.ChatList {
-  border: solid;
-  float: right;
-  width: 30%;
-  height: 1152px;
-}
-.ToolBox {
-  border: solid;
-  float: left;
-  width: 70%;
-  height: 288px;
-}
-.ChatBox {
-  border: solid;
-  float: right;
-  width: 30%;
-  height: 288px;
-}
 </style>

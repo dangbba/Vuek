@@ -92,23 +92,24 @@ public class ConferenceRepositorySupport {
 	@Modifying
 	@Transactional
 	public void enterConference(@RequestBody EnterWrapperDto enterWrapperDto) {
-		QConference qConference = QConference.conference;
-
-		Conference con = (Conference) queryFactory
-				.from(qConference)
-				.where(qConference.id.eq((long) enterWrapperDto.getIdconference()))
-//				.where(qConference.id.eq((long) enterWrapperDto.getConferenceInfoDto().getId()))
+		QUserConference qUserConference = QUserConference.userConference;
+		UserConference con = (UserConference) queryFactory
+				.from(qUserConference)
+				.where(qUserConference.conference.id.eq((long) enterWrapperDto.getIdconference()))
+				.where(qUserConference.user.userId.eq(enterWrapperDto.getUserId()))
 				.fetchOne();
 
-		Query query = em.createNativeQuery(
-						"insert into " +
-								"UserConference (conferenceId, userId) " +
-								"values (:conferenceId, :userId)")
-				.setParameter("conferenceId", enterWrapperDto.getIdconference())
-				.setParameter("userId", enterWrapperDto.getUserId());
+		if(con == null) {
+			Query query = em.createNativeQuery(
+							"insert into " +
+									"UserConference (conferenceId, userId) " +
+									"values (:conferenceId, :userId)")
+					.setParameter("conferenceId", enterWrapperDto.getIdconference())
+					.setParameter("userId", enterWrapperDto.getUserId());
 //				.setParameter("conferenceId", enterWrapperDto.getConferenceInfoDto().getId())
 //				.setParameter("userId", enterWrapperDto.getUser().getUserId());
-		query.executeUpdate();
+			query.executeUpdate();
+		}
 		em.close();
 
 	}

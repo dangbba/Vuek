@@ -23,7 +23,7 @@
               no-body 
               class="overflow-hidden card-image"
               >
-                <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
+                <div class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn13)">
                   <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
                 </div>
                 <b-card-img :src="imgPath(item.itemId, item.isbn)" @error="replaceByDefault"></b-card-img>

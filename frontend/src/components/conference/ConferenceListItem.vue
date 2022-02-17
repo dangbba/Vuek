@@ -3,11 +3,11 @@
     <b-card no-body bg-variant="dark" class="overflow-hidden shadow">
       <b-row no-gutters>
         <b-col md="6">
-          <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" @error="replaceByDefault" alt="Image" class="rounded-3 mt-3 ms-3"></b-card-img>
-          <b-card-img v-else :src="thumbnail_url" alt="book_image" class="rounded-3 mt-3 ms-3"></b-card-img>
+          <b-card-img v-if="transUrl(item.bookDetail.titleUrl)" :src="transUrl(item.bookDetail.titleUrl)" @error="replaceByDefault" alt="Image" class="my-3 ms-3"></b-card-img>
+          <b-card-img v-else :src="thumbnail_url" alt="book_image" class="my-3 ms-3"></b-card-img>
         </b-col>
         <b-col md="6" class="mb-3">
-          <b-card-body :title="item.title" class="my-2"> <!--방 제목-->
+          <b-card-body :title="item.title" class="pb-5"> <!--방 제목-->
           <hr class="my-2">
             <b-card-text>
               <!-- <p class="card-text">회의번호: {{ item.id }}</p> -->
@@ -22,8 +22,8 @@
               
             </b-card-text>
           </b-card-body>
-          <b-button variant="primary" @click="enterConference" v-if="item.isActive" class="float-end me-2">입장</b-button> 
-          <b-button variant="secondary" class="disabled float-end me-2" v-else>입장불가</b-button>
+          <b-button variant="primary" @click="enterConference" v-if="item.isActive" class="submit-button float-end me-2">입장</b-button> 
+          <b-button variant="secondary" class="submit-button disabled float-end me-2" v-else>입장불가</b-button>
         </b-col>
       </b-row>
     </b-card>
@@ -82,5 +82,11 @@ export default {
 <style scoped>
 .card {
   height: 100%;
+}
+
+.submit-button {
+  position: absolute;
+  bottom: 15px;
+  right: 8px;
 }
 </style>

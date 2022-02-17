@@ -36,7 +36,6 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public long createConference(Conference conference) throws Exception {
 		conferenceRepository.save(conference);
-//		conferenceRepositorySupport.createConference(conference);
 		conferenceRepositorySupport.uploadUserConferenceId(conference);
 		marathonRepositorySupport.plusNowPages(conference.getUser().getUserId());
 		return conference.getId();
@@ -99,7 +98,6 @@ public class ConferenceServiceImpl implements ConferenceService {
 
 	@Override
 	public void createConferenceHistory(@RequestBody ConferenceHistory conferenceHistory) throws Exception {
-//		conferenceRepositorySupport.createConferenceHistory(conferenceHistory);
 		conferenceHistoryRepository.save(conferenceHistory);
 	}
 

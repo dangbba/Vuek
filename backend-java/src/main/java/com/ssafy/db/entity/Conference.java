@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class Conference {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "conferenceTypeId")
     private ConferenceType conferenceType;
-    private String callStartTime;
+    private LocalDateTime callStartTime;
     private LocalDateTime callEndTime;
     private String thumbnailUrl;
     private String title;
@@ -47,12 +48,11 @@ public class Conference {
 
     @PrePersist
     public void callStartTime() {
-        String formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
-        this.callStartTime = formatDate;
+        this.callStartTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
     public void callEndTime() {
-        this.callEndTime = LocalDateTime.now();
+        this.callEndTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
 }

@@ -96,7 +96,9 @@
   font-family: "Arial Black", sans-serif;
   font-weight: bold;
   color: #ffffff;
-  margin-bottom: 8rem;
+  text-align: start;
+  margin-bottom: 25rem;
+  margin-left: 3rem;
   /* background: linear-gradient(to top, grey 50%, transparent 50%) */
   /* padding: 15px;
   background-color: rgba(189, 187, 187, 0.4);
