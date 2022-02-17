@@ -5,25 +5,21 @@
         <div id="session-header">
           <h1 id="session-title">{{ conferenceDetail.title }}</h1>
         </div>
-        <div id="main-video" class="col-md-6">
+        <span id="main-video" class="col-md-6">
           <user-video :stream-manager="mainStreamManager" />
-        </div>
-        <div id="video-container" class="col-md-6">
+        </span>
+        <span id="video-container" class="col-md-6">
           <user-video
             v-for="sub in subscribers"
             :key="sub.stream.connection.connectionId"
             :stream-manager="sub"
             @click.native="updateMainVideoStreamManager(sub)"
           />
-        </div>
+        </span>
       </div>
     </div>
-    <div class="ChatList">
-      <b-input v-model="message" type="text" />
-      <div calss="box-body">
-        {{ send }}
-      </div>
-      <chat-message-sender></chat-message-sender>
+    <div class="BookInfo">
+
     </div>
     <div class="ToolBox">
       <div v-if="conferenceDetail.user.userId === userInfo.userId">
@@ -54,8 +50,6 @@
         @click="audioOnOff"
         value="audioOnOff"
       />
-    </div>
-    <div class="ChatBox">
     </div>
     <hr />
     <div>
@@ -327,21 +321,15 @@ export default {
   border: solid;
   float: left;
   width: 70%;
-  height: 1152px;
+  height: 1440px;
 }
-.ChatList {
+.BookInfo {
   border: solid;
   float: right;
   width: 30%;
   height: 1152px;
 }
 .ToolBox {
-  border: solid;
-  float: left;
-  width: 70%;
-  height: 288px;
-}
-.ChatBox {
   border: solid;
   float: right;
   width: 30%;
