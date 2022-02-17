@@ -8,7 +8,7 @@
 | ---- | ---- | ---- | ---- |
 | :white_check_mark: Desktop Web | :black_square_button: AI | :white_check_mark: JavaScript | :white_check_mark: Vue.js |
 | :white_check_mark: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :black_square_button: React |
-| :white_check_mark: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
+| :black_square_button: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
 | :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :black_square_button: Node.js |
 | :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :black_square_button: Python | :black_square_button: Flask/Django |
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
@@ -63,9 +63,8 @@
   - ORM : JPA(Hibernate)
   - Nginx : 1.18.0 (Ubuntu)
   - IDE : Intellij 2021.1.3 / Visual Studio Code 1.59
-  - Dependency tool : gradle-6.7
+  - Dependency tool : gradle-6.9.2
   - Database : MySQL 8.0
-  - Image Server : AWS S3 & CloudFront
 - Frontend - HTML5, CSS3, Javascript(Es6) - Vue 3.0.0 - @vue/cli 4.5.0 - Vuex 4.0.0 - Vue-axios 3.2.4
 
 
@@ -95,14 +94,15 @@
 
 ![신간도서](/문서/팀 회의 자료/핵심 기능 화면/신간도서.PNG)
 
+![베스트셀러](/문서/팀 회의 자료/핵심 기능 화면/베스트셀러.PNG)
+
 - 프로필, 독서마라톤 및 책갈피
 
 ![프로필](/문서/팀 회의 자료/핵심 기능 화면/프로필.PNG)
 
 ![책갈피](/문서/팀 회의 자료/핵심 기능 화면/책갈피.PNG)
 
-- 컨퍼런스 리스트
+- 독서모임 리스트
 
-![컨퍼런스리스트](/문서/팀 회의 자료/핵심 기능 화면/컨퍼런스.PNG)
-
+![독서모임리스트](/문서/팀 회의 자료/핵심 기능 화면/독서모임리스트.PNG)
 
