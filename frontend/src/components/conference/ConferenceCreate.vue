@@ -13,7 +13,7 @@
         <b-form-group
           class="roommodal"
           id="dropdown-1"
-          label="용도"
+          label="컨퍼런스 카테고리"
           label-for="usage-roominput"
         >
           <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
@@ -28,13 +28,13 @@
       <form ref="form">
         <b-form-group
           class="roommodal"
-          label="방 제목"
+          label="컨퍼런스 제목"
           label-for="title"
         >
           <b-form-input
             id="title"
             v-model="roomName"
-            placeholder="방 제목을 입력해주세요"
+            placeholder="컨퍼런스 제목을 입력해주세요"
           ></b-form-input>
         </b-form-group>
       </form>
@@ -42,13 +42,13 @@
         <b-form-group
           type="textarea"
           class="roommodal"
-          label="설명"
+          label="컨퍼런스 소개"
           label-for="description"
         >
           <b-form-textarea
             id="description"
             v-model="roomContent"
-            placeholder="설명을 입력해주세요"
+            placeholder="컨퍼런스 소개를 입력해주세요"
             row="3"
             max-rows="6"
           ></b-form-textarea>

@@ -13,7 +13,7 @@
         <b-form-group
           class="roommodal"
           id="dropdown-1"
-          label="용도"
+          label="컨퍼런스 카테고리"
           label-for="usage-roominput"
         >
           <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">

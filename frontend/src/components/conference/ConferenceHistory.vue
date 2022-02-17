@@ -2,10 +2,10 @@
   <div class="container">
     <h2 class="fw-bold my-5">회의 참여 이력</h2>
     <!-- <h2 class="fw-bold my-5">Conference History</h2> -->
-    <div v-if="conferenceHistory" class="text-center">
+    <div v-if="conferenceHistory.length===0" class="text-center">
       현재 참여한 회의 이력이 없습니다.
     </div>
-    <div v-else class="mt-4">
+    <div class="mt-4">
       <b-card
       v-for="(history, index) in conferenceHistory" 
       :img-src="transUrl(history.conference.bookDetail.titleUrl)"
@@ -17,7 +17,7 @@
       bg-variant="dark"
       >
         <b-card-text>
-          <p>회의 번호: {{ history.conference.id }}</p>
+          <p>컨퍼런스 번호: {{ history.conference.id }}</p>
           <hr>
           <h4 class="d-inline me-3">주제 도서: {{ transStr(history.conference.bookDetail.title) }}</h4>
           <!-- <b-button :href="history.conference.bookDetail.link" onclick="window.open(this.href, '_blank', 'width=800, height=600');">상세정보</b-button> -->
@@ -25,9 +25,12 @@
           <hr>
           <h5 class="mb-3">컨퍼런스 제목: {{ history.conference.title }}</h5>
           <p>컨퍼런스 내용: {{ history.conference.description }}</p>
-          <p>컨퍼런스 시작시간: {{ history.conference.callStartTime }}</p>
-          <p>컨퍼런스 참여시간: {{ transTime(history.insertedTime) }}</p>
-          <p>컨퍼런스 종료시간: {{ transTime(history.conference.callEndTime) }}</p>
+          <p>시작시간: {{ history.conference.callStartTime }}</p>
+          <p>입장시간: {{ transTime(history.insertedTime) }}</p>
+          <p>종료시간: 
+            <span v-if="history.conference.callEndTime">{{ transTime(history.conference.callEndTime) }}</span>
+            <span v-else class="text-primary">{{ transTime(history.conference.callEndTime) }}아직 진행중인 회의입니다.</span>
+          </p>
         </b-card-text>
       </b-card>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-inline">
     <b-button 
     v-b-modal.modal3-prevent-closing 
     variant="primary" 
@@ -14,7 +14,7 @@
         <b-form-group
           class="roommodal"
           id="dropdown-1"
-          label="용도"
+          label="컨퍼런스 카테고리"
           label-for="usage-roominput"
         >
           <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
@@ -27,13 +27,13 @@
       <form ref="form">
         <b-form-group
           class="roommodal"
-          label="방 제목"
+          label="컨퍼런스 제목"
           label-for="name-roominput"
         >
           <b-form-input
             id="name-input"
             v-model="roomName"
-            placeholder="수정할 방 제목을 입력해주세요"
+            placeholder="수정할 컨퍼런스 제목을 입력해주세요"
           ></b-form-input>
         </b-form-group>
       </form>
@@ -41,13 +41,13 @@
         <b-form-group
           type="textarea"
           class="roommodal"
-          label="설명"
+          label="컨퍼런스 소개"
           label-for="content-roominput"
         >
           <b-form-textarea
             id="textarea"
             v-model="roomContent"
-            placeholder="수정할 방 설명을 입력해주세요"
+            placeholder="수정할 컨퍼런스 소개를 입력해주세요"
             row="3"
             max-rows="6"
           ></b-form-textarea>
