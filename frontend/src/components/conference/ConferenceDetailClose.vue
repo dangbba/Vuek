@@ -1,6 +1,6 @@
 <template>
   <div class="d-inline">
-    <b-button class="mx-2" variant="dark" @click="closeConference();">회의 종료</b-button> 
+    <b-button class="mx-2" variant="dark" @click="closeConference();">독서모임 종료</b-button> 
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
     closeConference() {
       Swal.fire({
         icon: "question",
-        text: '회의를 종료하시겠습니까?',
+        text: '독서모임을 종료하시겠습니까?',
         showCancelButton: true,
         confirmButtonText: '네',
       }).then((result) => {

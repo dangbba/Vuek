@@ -25,7 +25,7 @@
     <div v-else class="text-center">
       <i class="far fa-calendar-times" style="font-size:10rem; margin-top:100px;"></i>
       <h3 class="my-5 text-danger">
-        현재 진행중인 컨퍼런스가 없습니다.
+        현재 진행중인 독서모임이 없습니다.
       </h3>
     </div>
 

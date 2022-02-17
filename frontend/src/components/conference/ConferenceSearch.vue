@@ -6,7 +6,7 @@
           type="search"
           class="form-control"
           v-model="text"
-          placeholder="검색어를 입력하여 회의 검색"
+          placeholder="검색어를 입력하여 독서모임 검색"
           @keyup.enter="conferenceSearch"
           trim 
         >

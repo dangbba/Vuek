@@ -1,9 +1,9 @@
  <template>
   <div class="container">
-    <h2 class="fw-bold my-5">회의 참여 이력</h2>
+    <h2 class="fw-bold my-5">독서모임 참여 이력</h2>
     <!-- <h2 class="fw-bold my-5">Conference History</h2> -->
     <div v-if="conferenceHistory.length===0" class="text-center">
-      현재 참여한 회의 이력이 없습니다.
+      현재 참여한 독서모임 이력이 없습니다.
     </div>
     <div class="mt-4">
       <b-card
@@ -17,19 +17,20 @@
       bg-variant="dark"
       >
         <b-card-text>
-          <p>컨퍼런스 번호: {{ history.conference.id }}</p>
+          <p>독서모임 번호: {{ history.conference.id }}</p>
           <hr>
           <h4 class="d-inline me-3">주제 도서: {{ transStr(history.conference.bookDetail.title) }}</h4>
           <!-- <b-button :href="history.conference.bookDetail.link" onclick="window.open(this.href, '_blank', 'width=800, height=600');">상세정보</b-button> -->
           <!--DB에 상세 링크 정보가 없어서 X -->
           <hr>
-          <h5 class="mb-3">컨퍼런스 제목: {{ history.conference.title }}</h5>
-          <p>컨퍼런스 내용: {{ history.conference.description }}</p>
-          <p>시작시간: {{ history.conference.callStartTime }}</p>
-          <p>입장시간: {{ transTime(history.insertedTime) }}</p>
-          <p>종료시간: 
+          <h5 class="historyContent">독서모임 제목: {{ history.conference.title }}</h5>
+          <p class="historyContent">내용: {{ history.conference.description }}</p>
+          <p class="historyContent">카테고리: {{ history.conference.conferenceType.name }}</p>
+          <p class="historyContent">시작시간: {{ history.conference.callStartTime }}</p>
+          <p class="historyContent">입장시간: {{ transTime(history.insertedTime) }}</p>
+          <p class="mb-0">종료시간: 
             <span v-if="history.conference.callEndTime">{{ transTime(history.conference.callEndTime) }}</span>
-            <span v-else class="text-primary">{{ transTime(history.conference.callEndTime) }}아직 진행중인 회의입니다.</span>
+            <span v-else class="text-primary">{{ transTime(history.conference.callEndTime) }}아직 진행중인 독서모임입니다.</span>
           </p>
         </b-card-text>
       </b-card>
@@ -84,5 +85,7 @@ export default {
 </script>
 
 <style>
-
+.historyContent {
+  margin-bottom: 7px;
+}
 </style>

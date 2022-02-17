@@ -33,12 +33,12 @@
             </b-row>
             <hr>
             <b-card-text>
-              <h4 class="mb-3">컨퍼런스 제목: {{ conferenceDetail.title }}</h4>
-              <p>컨퍼런스 카테고리: {{ conferenceDetail.conferenceType.name }}</p>
-              <p>컨퍼런스 소개: {{ conferenceDetail.description }}</p>
+              <h4 class="mb-3">독서모임 제목: {{ conferenceDetail.title }}</h4>
+              <p>독서모임 카테고리: {{ conferenceDetail.conferenceType.name }}</p>
+              <p>독서모임 소개: {{ conferenceDetail.description }}</p>
             </b-card-text>
             <hr>
-              <p class="text-white">회의 시작시간: {{ conferenceDetail.callStartTime }}</p>
+              <p class="text-white">독서모임 시작시간: {{ conferenceDetail.callStartTime }}</p>
               <div class="text-end">
             <span v-if="conferenceDetail.user.userId === userInfo.userId" >
               <!-- 방 종료 / 수정 관련 -->
@@ -50,7 +50,7 @@
                 type="button"
                 id="buttonLeaveSession"
                 @click="leaveSession"
-                value="컨퍼런스 나가기"
+                value="나가기"
               />
             </div>
           </b-card>
@@ -113,7 +113,7 @@ export default {
       userName: "",
       // message: "",
       recvList: [],
-      // 회의 정보 관련
+      // 독서모임 정보 관련
       conferenceId: this.$route.params.contentId,
       OV: undefined,
       session: undefined,
@@ -340,14 +340,14 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    // 회의 종료 버튼 누른 경우는 작동하면 안됨
+    // 독서모임 종료 버튼 누른 경우는 작동하면 안됨
     // 하위컴포넌트에서 이벤트 emit하여 isClose 변경
     if (!this.isClose) {
     //swal 적용
     console.log(this.isClose)
     Swal.fire({
         icon: "question",
-        text: '회의를 나가시겠습니까?',
+        text: '독서모임을 나가시겠습니까?',
         showCancelButton: true,
         confirmButtonText: '네',
       }).then((result) => {
@@ -368,7 +368,7 @@ export default {
           });
         }
       });
-    } else { //회의 종료하는 경우
+    } else { //독서모임 종료하는 경우
       if (this.session) this.session.disconnect();
         this.session = undefined;
         this.mainStreamManager = undefined;

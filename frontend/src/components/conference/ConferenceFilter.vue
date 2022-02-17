@@ -42,6 +42,7 @@ export default {
         { value: "1", text: "책 소개" },
         { value: "2", text: "토의" },
         { value: "3", text: "세미나" },
+        { value: "4", text: "기타" },
       ]
     }
   },

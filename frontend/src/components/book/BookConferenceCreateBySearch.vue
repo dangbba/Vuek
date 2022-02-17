@@ -3,17 +3,17 @@
     <b-button
       variant="primary"
       @click="$bvModal.show(item.isbn); selectBook(item)"
-      >컨퍼런스 생성</b-button
+      >독서모임 생성</b-button
     >
     
-    <b-modal scrollable :id=item.isbn ref="modal" title="컨퍼런스 생성하기" v-if="userInfo">
+    <b-modal scrollable :id=item.isbn ref="modal" title="독서모임 생성하기" v-if="userInfo">
       <h5 class="d-inline">주제 도서: {{ selectedBook }}</h5>
       <hr>
       <form ref="form">
         <b-form-group
           class="roommodal"
           id="dropdown-1"
-          label="컨퍼런스 카테고리"
+          label="독서모임 카테고리"
           label-for="usage-roominput"
         >
           <b-form-select v-model="selectedOption" :options="options" style="width:100%; height:2.5rem; border-color:#ced4da;">
@@ -94,6 +94,7 @@ export default {
         { value: "1", text: "책 소개" },
         { value: "2", text: "토의" },
         { value: "3", text: "세미나" },
+        { value: "4", text: "기타" },
       ],
       bookData: 1,
       selectedBook: '',
@@ -212,7 +213,7 @@ export default {
       } else {
         Swal.fire({
           icon: "warning",
-          text: "컨퍼런스를 생성하려면 로그인해주세요!",
+          text: "독서모임을 생성하려면 로그인해주세요!",
         })
       }
 
