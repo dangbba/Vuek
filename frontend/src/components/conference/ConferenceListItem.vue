@@ -14,7 +14,7 @@
               <p class="card-text my-2">도서명: {{ transStr(item.bookDetail.title) }}</p>
               <hr class="my-2">
               <p class="card-text">카테고리: {{ item.conferenceType.name }}</p> 
-              <p class="card-text">시작시간: {{ item.callStartTime }}</p>
+              <p class="card-text">시작시간: {{ transTime(item.callStartTime) }}</p>
               <!-- <p class="card-text">회의종료시간: {{ item.callEndTime }}</p> -->
               <p v-if="item.isActive" class="card-text">진행중 유무: <span class="text-success">진행중</span> </p> 
               <p v-else class="card-text">진행중 유무: <span class="text-danger">종료</span></p> 
@@ -57,6 +57,12 @@ export default {
       this.$router.push({
         path: `conference/view/${this.item.id}`,
       });
+    },
+    transTime(time) {
+      if (time) { // null값 방지
+        let transedStr = time.split('.')
+        return transedStr[0]
+      }
     },
     transStr(str) {
       let transedStr = str.replaceAll('<b>', '')

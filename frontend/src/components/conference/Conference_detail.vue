@@ -38,7 +38,7 @@
               <p>독서모임 소개: {{ conferenceDetail.description }}</p>
             </b-card-text>
             <hr>
-              <p class="text-white">독서모임 시작시간: {{ conferenceDetail.callStartTime }}</p>
+              <p class="text-white">독서모임 시작시간: {{ transTime(conferenceDetail.callStartTime) }}</p>
               <div class="text-end">
             <span v-if="conferenceDetail.user.userId === userInfo.userId" >
               <!-- 방 종료 / 수정 관련 -->
@@ -148,6 +148,12 @@ export default {
         },
         // action: 1, // 뭔지 모르겠음 / null값 가능함 / 액션 기본값은 0
       };
+    },
+    transTime(time) {
+      if (time) { // null값 방지
+        let transedStr = time.split('.')
+        return transedStr[0]
+      }
     },
     change() { // 하위컴포넌트에서 emit시 동작하는 이벤트
       this.isClose = true
