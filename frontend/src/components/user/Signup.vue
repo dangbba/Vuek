@@ -6,16 +6,6 @@
         <div class="my-5">
           <form id="userform" method="post" action="">
             <div class="text-start">
-              <label for="name">이름</label>
-              <input
-                class="form-control"
-                id="name"
-                type="text"
-                v-model="name"
-                placeholder="이름을 입력해주세요."
-              />
-            </div>
-            <div class="text-start">
               <label for="id">ID</label>
               <input
                 class="form-control"
@@ -25,6 +15,16 @@
                 placeholder="ID를 입력해주세요."
               />
               <div id="idresult" class="mt-1"></div>
+            </div>
+            <div class="text-start">
+              <label for="name">이름</label>
+              <input
+                class="form-control"
+                id="name"
+                type="text"
+                v-model="name"
+                placeholder="이름을 입력해주세요."
+              />
             </div>
             <div class="text-start">
               <label for="pass">Password</label>

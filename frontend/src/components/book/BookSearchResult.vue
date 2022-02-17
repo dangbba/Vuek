@@ -23,7 +23,7 @@
           class="overflow-hidden card-image"
           >
           <div class="container">
-            <div href="#" class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn)">
+            <div class="bookmark-button" title="책갈피 추가" @click="bookmark(item.isbn)">
               <!-- <i class="far fa-bookmark"></i> --> <!-- 클래스 바인딩해서 아이콘 색깔 채워보려 했으나 요소가 여러개라X -->
               <!-- <i :index="index" :class="[{ 'far' : bookmarkSign, 'fas': !bookmarkSign }, 'fa-bookmark']"></i> -->
               <b-button variant="primary" size="lg"><i :index="index" class="fas fa-bookmark"></i></b-button>
