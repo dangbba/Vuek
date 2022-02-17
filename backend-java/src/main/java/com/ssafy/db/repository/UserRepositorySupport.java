@@ -4,11 +4,13 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserUpdateReq;
-import com.ssafy.db.entity.Conference;
 import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -98,9 +100,12 @@ public class UserRepositorySupport {
         userBook.executeUpdate();
         em.close();
 
+        LocalDateTime now = LocalDateTime.now();
+
         Query conference = em.createNativeQuery(
-                        "update Conference set userId = null, isActive = 0 where userId = :userId")
-                .setParameter("userId", user_id);
+                        "update Conference set userId = null, isActive = 0, callEndTime = :callEndTime where userId = :userId")
+                .setParameter("userId", user_id)
+                .setParameter("callEndTime", now);
         conference.executeUpdate();
         em.close();
 
