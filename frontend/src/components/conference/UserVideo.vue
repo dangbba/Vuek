@@ -1,10 +1,8 @@
 <template>
   <span v-if="streamManager">
     <ov-video :stream-manager="streamManager" />
-    <span>
       <span>{{ clientData }}</span>
-    </span>
-  </span>
+  </span >
 </template>
 
 <script>

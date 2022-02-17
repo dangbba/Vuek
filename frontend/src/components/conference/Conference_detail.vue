@@ -3,16 +3,15 @@
     <b-row class="mt-2">
       <b-col cols="7">
         <b-row>
-          <span>
+          <p>
             <user-video :stream-manager="mainStreamManager" />
-            <!-- <div id="video-container"> -->
             <user-video
               v-for="sub in subscribers"
               :key="sub.stream.connection.connectionId"
               :stream-manager="sub"
               @click.native="updateMainVideoStreamManager(sub)"
             />
-          </span>
+          </p>
         </b-row>
         <b-row>
         </b-row>
