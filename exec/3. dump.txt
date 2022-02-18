@@ -1,0 +1,7 @@
+ALTER TABLE ConferenceType convert to charset utf8;
+insert into ConferenceType (conferenceTypeId, name)
+values (1, '책 소개');
+insert into ConferenceType (conferenceTypeId, name)
+values (2, '토의');
+insert into ConferenceType (conferenceTypeId, name)
+values (3, '세미나');
